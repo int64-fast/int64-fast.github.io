@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manim 与 QAManim 社团</title>
+    <!-- 引入Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- 配置Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#10B981',
+                        accent: '#8B5CF6',
+                        dark: '#1E293B',
+                        light: '#F8FAFC'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        display: ['Poppins', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .text-gradient {
+                background-clip: text;
+                -webkit-background-clip: text;
+                color: transparent;
+            }
+            .transition-transform-opacity {
+                transition-property: transform, opacity;
+            }
+        }
+    </style>
+    <!-- 引入Google字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-light text-dark antialiased">
+    <!-- 导航栏 -->
+    <header class="fixed w-full top-0 z-50 transition-all duration-300" id="navbar">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between bg-white/90 backdrop-blur-sm shadow-sm">
+            <div class="flex items-center space-x-2">
+                <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center">
+                    <i class="fa fa-play-circle-o text-white text-xl"></i>
+                </div>
+                <h1 class="text-xl font-display font-bold text-dark">
+                    <span class="lang-manim">Manim</span>
+                </h1>
+            </div>
+            
+            <!-- 语言选择器 -->
+            <div class="flex items-center space-x-1 md:space-x-3">
+                <button class="language-btn px-2 py-1 text-sm md:text-base rounded hover:bg-gray-100 transition-colors active" data-lang="zh">中文</button>
+                <button class="language-btn px-2 py-1 text-sm md:text-base rounded hover:bg-gray-100 transition-colors" data-lang="en">English</button>
+                <button class="language-btn px-2 py-1 text-sm md:text-base rounded hover:bg-gray-100 transition-colors" data-lang="de">Deutsch</button>
+                <button class="language-btn px-2 py-1 text-sm md:text-base rounded hover:bg-gray-100 transition-colors" data-lang="ru">Русский</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主内容 -->
+    <main class="pt-20 pb-16">
+        <!-- 英雄区域 -->
+        <section class="relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 -z-10"></div>
+            <div class="container mx-auto px-4 py-16 md:py-24">
+                <div class="max-w-4xl mx-auto text-center">
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6 leading-tight text-gradient bg-gradient-to-r from-primary to-accent">
+                        <span class="lang-hero-title">数学动画的未来</span>
+                    </h1>
+                    <p class="text-lg md:text-xl text-gray-600 mb-10 lang-hero-subtitle">
+                        Manim 是一个强大的数学动画引擎，由 3Blue1Brown 开发，让复杂的数学概念变得生动易懂
+                    </p>
+                    <div class="flex flex-col sm:flex-row justify-center gap-4">
+                        <a href="#manim-advantages" class="px-8 py-3 bg-primary hover:bg-primary/90 text-white font-medium rounded-lg shadow-lg shadow-primary/20 transition-all hover:translate-y-[-2px]">
+                            <i class="fa fa-star mr-2"></i>
+                            <span class="lang-hero-btn1">探索优点</span>
+                        </a>
+                        <a href="#qamanim" class="px-8 py-3 bg-white hover:bg-gray-50 text-dark font-medium rounded-lg shadow-lg transition-all hover:translate-y-[-2px] border border-gray-200">
+                            <i class="fa fa-users mr-2"></i>
+                            <span class="lang-hero-btn2">了解QAManim</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 装饰图形 -->
+            <div class="hidden lg:block absolute -bottom-10 -left-10 w-64 h-64 bg-primary/10 rounded-full blur-3xl"></div>
+            <div class="hidden lg:block absolute top-20 -right-20 w-80 h-80 bg-accent/10 rounded-full blur-3xl"></div>
+        </section>
+
+        <!-- Manim优点部分 -->
+        <section id="manim-advantages" class="py-16 md:py-24">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-display font-bold mb-4 lang-manim-advantages-title">
+                        Manim 的卓越优势
+                    </h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto lang-manim-advantages-subtitle">
+                        作为一个专为数学可视化设计的动画引擎，Manim 拥有诸多独特优势，使其成为教育工作者和学生的理想选择
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- 优点卡片1 -->
+                    <div class="bg-white rounded-xl shadow-xl p-6 md:p-8 transition-all hover:shadow-2xl hover:translate-y-[-5px] group">
+                        <div class="w-14 h-14 rounded-lg bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
+                            <i class="fa fa-calculator text-primary text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-display font-semibold mb-3 lang-advantage1-title">数学精确性</h3>
+                        <p class="text-gray-600 lang-advantage1-desc">
+                            Manim 专为数学设计，能够精确呈现几何图形、函数曲线和数学符号，确保动画在数学上的准确性。
+                        </p>
+                    </div>
+                    
+                    <!-- 优点卡片2 -->
+                    <div class="bg-white rounded-xl shadow-xl p-6 md:p-8 transition-all hover:shadow-2xl hover:translate-y-[-5px] group">
+                        <div class="w-14 h-14 rounded-lg bg-secondary/10 flex items-center justify-center mb-6 group-hover:bg-secondary/20 transition-colors">
+                            <i class="fa fa-code text-secondary text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-display font-semibold mb-3 lang-advantage2-title">编程驱动</h3>
+                        <p class="text-gray-600 lang-advantage2-desc">
+                            通过Python代码控制动画，使开发者能够精确控制每一个细节，创建可重复、可修改的动画项目。
+                        </p>
+                    </div>
+                    
+                    <!-- 优点卡片3 -->
+                    <div class="bg-white rounded-xl shadow-xl p-6 md:p-8 transition-all hover:shadow-2xl hover:translate-y-[-5px] group">
+                        <div class="w-14 h-14 rounded-lg bg-accent/10 flex items-center justify-center mb-6 group-hover:bg-accent/20 transition-colors">
+                            <i class="fa fa-lightbulb-o text-accent text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-display font-semibold mb-3 lang-advantage3-title">教育价值</h3>
+                        <p class="text-gray-600 lang-advantage3-desc">
+                            能够将抽象的数学概念可视化，帮助学生更好地理解复杂的数学原理，提高学习兴趣和效率。
+                        </p>
+                    </div>
+                    
+                    <!-- 优点卡片4 -->
+                    <div class="bg-white rounded-xl shadow-xl p-6 md:p-8 transition-all hover:shadow-2xl hover:translate-y-[-5px] group">
+                        <div class="w-14 h-14 rounded-lg bg-amber-500/10 flex items-center justify-center mb-6 group-hover:bg-amber-500/20 transition-colors">
+                            <i class="fa fa-paint-brush text-amber-500 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-display font-semibold mb-3 lang-advantage4-title">高度可定制</h3>
+                        <p class="text-gray-600 lang-advantage4-desc">
+                            提供丰富的自定义选项，从颜色、字体到动画速度和过渡效果，都可以根据需求进行调整。
+                        </p>
+                    </div>
+                    
+                    <!-- 优点卡片5 -->
+                    <div class="bg-white rounded-xl shadow-xl p-6 md:p-8 transition-all hover:shadow-2xl hover:translate-y-[-5px] group">
+                        <div class="w-14 h-14 rounded-lg bg-rose-500/10 flex items-center justify-center mb-6 group-hover:bg-rose-500/20 transition-colors">
+                            <i class="fa fa-github text-rose-500 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-display font-semibold mb-3 lang-advantage5-title">开源社区</h3>
+                        <p class="text-gray-600 lang-advantage5-desc">
+                            作为开源项目，拥有活跃的社区支持，不断更新迭代，用户可以共享资源和解决方案。
+                        </p>
+                    </div>
+                    
+                    <!-- 优点卡片6 -->
+                    <div class="bg-white rounded-xl shadow-xl p-6 md:p-8 transition-all hover:shadow-2xl hover:translate-y-[-5px] group">
+                        <div class="w-14 h-14 rounded-lg bg-sky-500/10 flex items-center justify-center mb-6 group-hover:bg-sky-500/20 transition-colors">
+                            <i class="fa fa-film text-sky-500 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-display font-semibold mb-3 lang-advantage6-title">专业级动画</h3>
+                        <p class="text-gray-600 lang-advantage6-desc">
+                            生成高质量的动画效果，支持4K分辨率输出，适合用于教学视频、学术演示和科普内容创作。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 分隔区域 -->
+        <section class="py-12 bg-gradient-to-r from-primary/5 to-accent/5">
+            <div class="container mx-auto px-4 text-center">
+                <blockquote class="max-w-3xl mx-auto">
+                    <p class="text-xl md:text-2xl italic font-light text-gray-700 mb-4 lang-quote">
+                        "数学不仅仅是公式和计算，它是一种思维方式。Manim 帮助我们将这种思维方式可视化。"
+                    </p>
+                    <cite class="text-gray-500 font-medium lang-quote-author">— 3Blue1Brown</cite>
+                </blockquote>
+            </div>
+        </section>
+        
+        <!-- QAManim社团介绍 -->
+        <section id="qamanim" class="py-16 md:py-24">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="order-2 lg:order-1">
+                        <h2 class="text-3xl md:text-4xl font-display font-bold mb-6 lang-qamanim-title">
+                            青岛中学 QAManim 社团
+                        </h2>
+                        <p class="text-gray-600 mb-6 lang-qamanim-desc1">
+                            QAManim 是青岛中学的一个学生社团，致力于通过 Manim 动画引擎创作高质量的数学可视化内容，帮助同学们更好地理解和掌握数学知识。
+                        </p>
+                        <p class="text-gray-600 mb-8 lang-qamanim-desc2">
+                            社团成员来自不同年级，共同学习 Manim 编程技术，探索数学之美，并将复杂的数学概念转化为生动有趣的动画。我们相信，可视化是理解数学的重要途径。
+                        </p>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <div class="mt-1 mr-4 w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+                                    <i class="fa fa-check text-primary text-sm"></i>
+                                </div>
+                                <p class="text-gray-600 lang-qamanim-point1">定期举办 Manim 技术培训和数学可视化研讨会</p>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="mt-1 mr-4 w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+                                    <i class="fa fa-check text-primary text-sm"></i>
+                                </div>
+                                <p class="text-gray-600 lang-qamanim-point2">创作数学教学动画，用于课堂演示和自主学习</p>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="mt-1 mr-4 w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+                                    <i class="fa fa-check text-primary text-sm"></i>
+                                </div>
+                                <p class="text-gray-600 lang-qamanim-point3">参与国内外数学可视化竞赛和交流活动</p>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="mt-1 mr-4 w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+                                    <i class="fa fa-check text-primary text-sm"></i>
+                                </div>
+                                <p class="text-gray-600 lang-qamanim-point4">开发适合中学生的 Manim 学习资源和教程</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="order-1 lg:order-2 relative">
+                        <div class="relative z-10 rounded-2xl overflow-hidden shadow-2xl transform transition-transform hover:scale-[1.02]">
+                            <img src="https://picsum.photos/id/180/600/400" alt="青岛中学QAManim社团活动照片" class="w-full h-auto">
+                        </div>
+                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-gradient-to-r from-primary to-accent rounded-2xl -z-10 blur-xl opacity-20 transform scale-110"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 作品展示 -->
+        <section class="py-16 md:py-24 bg-gray-50">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-display font-bold mb-4 lang-works-title">
+                        精选作品展示
+                    </h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto lang-works-subtitle">
+                        探索 QAManim 社团和 Manim 社区的精彩作品，感受数学可视化的魅力
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- 作品1 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-lg group">
+                        <div class="relative overflow-hidden">
+                            <img src="https://picsum.photos/id/237/400/250" alt="微积分原理动画展示" class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end">
+                                <div class="p-4 w-full">
+                                    <a href="#" class="inline-block w-full text-center bg-white text-dark py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors">
+                                        <i class="fa fa-play mr-1"></i>
+                                        <span class="lang-view">查看</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="font-semibold text-lg mb-2 lang-work1-title">微积分原理可视化</h3>
+                            <p class="text-gray-600 text-sm lang-work1-desc">通过动画演示导数和积分的几何意义，帮助理解微积分基本定理。</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 作品2 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-lg group">
+                        <div class="relative overflow-hidden">
+                            <img src="https://picsum.photos/id/167/400/250" alt="线性代数动画展示" class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end">
+                                <div class="p-4 w-full">
+                                    <a href="#" class="inline-block w-full text-center bg-white text-dark py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors">
+                                        <i class="fa fa-play mr-1"></i>
+                                        <span class="lang-view">查看</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="font-semibold text-lg mb-2 lang-work2-title">线性代数变换</h3>
+                            <p class="text-gray-600 text-sm lang-work2-desc">展示矩阵如何在二维和三维空间中进行线性变换，直观理解特征值概念。</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 作品3 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-lg group">
+                        <div class="relative overflow-hidden">
+                            <img src="https://picsum.photos/id/1015/400/250" alt="分形几何动画展示" class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end">
+                                <div class="p-4 w-full">
+                                    <a href="#" class="inline-block w-full text-center bg-white text-dark py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors">
+                                        <i class="fa fa-play mr-1"></i>
+                                        <span class="lang-view">查看</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="font-semibold text-lg mb-2 lang-work3-title">分形几何探索</h3>
+                            <p class="text-gray-600 text-sm lang-work3-desc">通过动画生成曼德博集合和朱利亚集合，探索分形的自相似性和无限复杂性。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 加入我们 -->
+        <section class="py-16 md:py-24">
+            <div class="container mx-auto px-4">
+                <div class="max-w-4xl mx-auto bg-gradient-to-br from-primary to-accent rounded-2xl shadow-2xl overflow-hidden">
+                    <div class="p-8 md:p-12 text-white">
+                        <h2 class="text-3xl md:text-4xl font-display font-bold mb-6 lang-join-title">
+                            加入我们的社区
+                        </h2>
+                        <p class="mb-8 text-white/90 lang-join-desc">
+                            无论你是数学爱好者、编程学习者，还是对教育技术感兴趣，都欢迎加入我们，一起探索数学可视化的无限可能。
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <a href="#" class="px-6 py-3 bg-white text-primary font-medium rounded-lg shadow-lg transition-all hover:translate-y-[-2px] text-center">
+                                <i class="fa fa-envelope mr-2"></i>
+                                <span class="lang-contact">联系我们</span>
+                            </a>
+                            <a href="#" class="px-6 py-3 bg-transparent border-2 border-white text-white font-medium rounded-lg transition-all hover:bg-white/10 hover:translate-y-[-2px] text-center">
+                                <i class="fa fa-github mr-2"></i>
+                                <span class="lang-github">访问GitHub</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-dark text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center">
+                            <i class="fa fa-play-circle-o text-white text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-display font-bold">
+                            <span class="lang-manim">Manim</span>
+                        </h3>
+                    </div>
+                    <p class="text-gray-400 mb-4 lang-footer-desc">
+                        让数学变得生动有趣的动画引擎，赋能教育与学习的未来。
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fa fa-github text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fa fa-youtube-play text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fa fa-twitter text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4 lang-links">链接</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#manim-advantages" class="text-gray-400 hover:text-white transition-colors lang-link1">Manim 优点</a></li>
+                        <li><a href="#qamanim" class="text-gray-400 hover:text-white transition-colors lang-link2">QAManim 社团</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors lang-link3">学习资源</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors lang-link4">作品展示</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4 lang-contact-us">联系我们</h4>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <i class="fa fa-map-marker mt-1 mr-3 text-gray-400"></i>
+                            <span class="text-gray-400 lang-address">中国山东省青岛市青岛中学</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fa fa-envelope mr-3 text-gray-400"></i>
+                            <a href="mailto:qamanim@example.com" class="text-gray-400 hover:text-white transition-colors">qamanim@example.com</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 text-center text-gray-500 text-sm">
+                <p class="lang-copyright">© 2023 青岛中学 QAManim 社团. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // 语言文本数据
+        const translations = {
+            zh: {
+                manim: "Manim",
+                'hero-title': "数学动画的未来",
+                'hero-subtitle': "Manim 是一个强大的数学动画引擎，由 3Blue1Brown 开发，让复杂的数学概念变得生动易懂",
+                'hero-btn1': "探索优点",
+                'hero-btn2': "了解QAManim",
+                'manim-advantages-title': "Manim 的卓越优势",
+                'manim-advantages-subtitle': "作为一个专为数学可视化设计的动画引擎，Manim 拥有诸多独特优势，使其成为教育工作者和学生的理想选择",
+                'advantage1-title': "数学精确性",
+                'advantage1-desc': "Manim 专为数学设计，能够精确呈现几何图形、函数曲线和数学符号，确保动画在数学上的准确性。",
+                'advantage2-title': "编程驱动",
+                'advantage2-desc': "通过Python代码控制动画，使开发者能够精确控制每一个细节，创建可重复、可修改的动画项目。",
+                'advantage3-title': "教育价值",
+                'advantage3-desc': "能够将抽象的数学概念可视化，帮助学生更好地理解复杂的数学原理，提高学习兴趣和效率。",
+                'advantage4-title': "高度可定制",
+                'advantage4-desc': "提供丰富的自定义选项，从颜色、字体到动画速度和过渡效果，都可以根据需求进行调整。",
+                'advantage5-title': "开源社区",
+                'advantage5-desc': "作为开源项目，拥有活跃的社区支持，不断更新迭代，用户可以共享资源和解决方案。",
+                'advantage6-title': "专业级动画",
+                'advantage6-desc': "生成高质量的动画效果，支持4K分辨率输出，适合用于教学视频、学术演示和科普内容创作。",
+                'quote': "\"数学不仅仅是公式和计算，它是一种思维方式。Manim 帮助我们将这种思维方式可视化。\"",
+                'quote-author': "— 3Blue1Brown",
+                'qamanim-title': "青岛中学 QAManim 社团",
+                'qamanim-desc1': "QAManim 是青岛中学的一个学生社团，致力于通过 Manim 动画引擎创作高质量的数学可视化内容，帮助同学们更好地理解和掌握数学知识。",
+                'qamanim-desc2': "社团成员来自不同年级，共同学习 Manim 编程技术，探索数学之美，并将复杂的数学概念转化为生动有趣的动画。我们相信，可视化是理解数学的重要途径。",
+                'qamanim-point1': "定期举办 Manim 技术培训和数学可视化研讨会",
+                'qamanim-point2': "创作数学教学动画，用于课堂演示和自主学习",
+                'qamanim-point3': "参与国内外数学可视化竞赛和交流活动",
+                'qamanim-point4': "开发适合中学生的 Manim 学习资源和教程",
+                'works-title': "精选作品展示",
+                'works-subtitle': "探索 QAManim 社团和 Manim 社区的精彩作品，感受数学可视化的魅力",
+                'view': "查看",
+                'work1-title': "微积分原理可视化",
+                'work1-desc': "通过动画演示导数和积分的几何意义，帮助理解微积分基本定理。",
+                'work2-title': "线性代数变换",
+                'work2-desc': "展示矩阵如何在二维和三维空间中进行线性变换，直观理解特征值概念。",
+                'work3-title': "分形几何探索",
+                'work3-desc': "通过动画生成曼德博集合和朱利亚集合，探索分形的自相似性和无限复杂性。",
+                'join-title': "加入我们的社区",
+                'join-desc': "无论你是数学爱好者、编程学习者，还是对教育技术感兴趣，都欢迎加入我们，一起探索数学可视化的无限可能。",
+                'contact': "联系我们",
+                'github': "访问GitHub",
+                'footer-desc': "让数学变得生动有趣的动画引擎，赋能教育与学习的未来。",
+                'links': "链接",
+                'link1': "Manim 优点",
+                'link2': "QAManim 社团",
+                'link3': "学习资源",
+                'link4': "作品展示",
+                'contact-us': "联系我们",
+                'address': "中国山东省青岛市青岛中学",
+                'copyright': "© 2023 青岛中学 QAManim 社团. 保留所有权利."
+            },
+            en: {
+                manim: "Manim",
+                'hero-title': "The Future of Mathematical Animation",
+                'hero-subtitle': "Manim is a powerful mathematical animation engine developed by 3Blue1Brown, making complex mathematical concepts vivid and understandable",
+                'hero-btn1': "Explore Advantages",
+                'hero-btn2': "Learn About QAManim",
+                'manim-advantages-title': "Outstanding Advantages of Manim",
+                'manim-advantages-subtitle': "As an animation engine designed specifically for mathematical visualization, Manim has many unique advantages that make it an ideal choice for educators and students",
+                'advantage1-title': "Mathematical Precision",
+                'advantage1-desc': "Designed specifically for mathematics, Manim can accurately present geometric figures, function curves, and mathematical symbols, ensuring mathematical accuracy in animations.",
+                'advantage2-title': "Programming Driven",
+                'advantage2-desc': "Animation controlled through Python code allows developers to precisely control every detail, creating repeatable and modifiable animation projects.",
+                'advantage3-title': "Educational Value",
+                'advantage3-desc': "Able to visualize abstract mathematical concepts, helping students better understand complex mathematical principles and improving learning interest and efficiency.",
+                'advantage4-title': "Highly Customizable",
+                'advantage4-desc': "Offers rich customization options, from colors and fonts to animation speed and transition effects, all adjustable according to needs.",
+                'advantage5-title': "Open Source Community",
+                'advantage5-desc': "As an open-source project, it has active community support, continuous updates and iterations, allowing users to share resources and solutions.",
+                'advantage6-title': "Professional-grade Animation",
+                'advantage6-desc': "Generates high-quality animation effects, supports 4K resolution output, suitable for educational videos, academic presentations, and popular science content creation.",
+                'quote': "\"Mathematics is not just about formulas and calculations, it's a way of thinking. Manim helps us visualize this way of thinking.\"",
+                'quote-author': "— 3Blue1Brown",
+                'qamanim-title': "Qingdao Academy QAManim Club",
+                'qamanim-desc1': "QAManim is a student club at Qingdao Academy, dedicated to creating high-quality mathematical visualization content through the Manim animation engine, helping students better understand and master mathematical knowledge.",
+                'qamanim-desc2': "Club members come from different grades, learning Manim programming technology together, exploring the beauty of mathematics, and transforming complex mathematical concepts into vivid and interesting animations. We believe that visualization is an important way to understand mathematics.",
+                'qamanim-point1': "Regularly organize Manim technical training and mathematical visualization seminars",
+                'qamanim-point2': "Create mathematical teaching animations for classroom demonstrations and independent learning",
+                'qamanim-point3': "Participate in domestic and international mathematical visualization competitions and exchange activities",
+                'qamanim-point4': "Develop Manim learning resources and tutorials suitable for middle school students",
+                'works-title': "Featured Works",
+                'works-subtitle': "Explore wonderful works from QAManim Club and Manim community, and experience the charm of mathematical visualization",
+                'view': "View",
+                'work1-title': "Calculus Principles Visualization",
+                'work1-desc': "Demonstrates the geometric meaning of derivatives and integrals through animation, helping to understand the fundamental theorem of calculus.",
+                'work2-title': "Linear Algebra Transformations",
+                'work2-desc': "Shows how matrices perform linear transformations in 2D and 3D spaces, intuitively understanding eigenvalue concepts.",
+                'work3-title': "Fractal Geometry Exploration",
+                'work3-desc': "Generates Mandelbrot and Julia sets through animation, exploring the self-similarity and infinite complexity of fractals.",
+                'join-title': "Join Our Community",
+                'join-desc': "Whether you are a math enthusiast, programming learner, or interested in educational technology, you are welcome to join us and explore the infinite possibilities of mathematical visualization together.",
+                'contact': "Contact Us",
+                'github': "Visit GitHub",
+                'footer-desc': "An animation engine that makes mathematics vivid and interesting, empowering the future of education and learning.",
+                'links': "Links",
+                'link1': "Manim Advantages",
+                'link2': "QAManim Club",
+                'link3': "Learning Resources",
+                'link4': "Works Showcase",
+                'contact-us': "Contact Us",
+                'address': "Qingdao Academy, Shandong Province, China",
+                'copyright': "© 2023 Qingdao Academy QAManim Club. All rights reserved."
+            },
+            de: {
+                manim: "Manim",
+                'hero-title': "Die Zukunft der mathematischen Animation",
+                'hero-subtitle': "Manim ist eine leistungsstarke mathematische Animationsengine, die von 3Blue1Brown entwickelt wurde und komplexe mathematische Konzepte verständlich macht",
+                'hero-btn1': "Vorteile erkunden",
+                'hero-btn2': "QAManim kennenlernen",
+                'manim-advantages-title': "Herausragende Vorteile von Manim",
+                'manim-advantages-subtitle': "Als spezial für mathematische Visualisierung entwickelte Animationsengine verfügt Manim über viele einzigartige Vorteile, die es zu einer idealen Wahl für Pädagogen und Schüler machen",
+                'advantage1-title': "Mathematische Präzision",
+                'advantage1-desc': "Speziell für Mathematik entwickelt, kann Manim geometrische Figuren, Funktionskurven und mathematische Symbole genau darstellen und so die mathematische Richtigkeit von Animationen gewährleisten.",
+                'advantage2-title': "Programmiergesteuert",
+                'advantage2-desc': "Durch Python-Code gesteuerte Animationen ermöglichen es Entwicklern, jede Detail genau zu steuern und wiederholbare, modifizierbare Animationsprojekte zu erstellen.",
+                'advantage3-title': "Bildungswert",
+                'advantage3-desc': "Fähigkeit, abstrakte mathematische Konzepte zu visualisieren, hilft Schülern, komplexe mathematische Prinzipien besser zu verstehen und steigert das Lerninteresse und die Effizienz.",
+                'advantage4-title': "Hohe Anpassbarkeit",
+                'advantage4-desc': "Bietet reichhaltige Anpassungsoptionen, von Farben und Schriftarten bis zu Animationsgeschwindigkeit und Übergangseffekten, die alle entsprechend den Bedürfnissen angepasst werden können.",
+                'advantage5-title': "Open-Source-Community",
+                'advantage5-desc': "Als Open-Source-Projekt verfügt es über aktive Community-Unterstützung, kontinuierliche Updates und Iterationen, die es Benutzern ermöglichen, Ressourcen und Lösungen zu teilen.",
+                'advantage6-title': "Professionelle Animation",
+                'advantage6-desc': "Erzeugt hochwertige Animationseffekte, unterstützt 4K-Auflösung und eignet sich für Lehrvideos, akademische Präsentationen und populärwissenschaftliche Inhalte.",
+                'quote': "\"Mathematik ist nicht nur Formeln und Berechnungen, es ist eine Denkweise. Manim hilft uns, diese Denkweise zu visualisieren.\"",
+                'quote-author': "— 3Blue1Brown",
+                'qamanim-title': "QAManim-Club der Qingdao-Akademie",
+                'qamanim-desc1': "QAManim ist ein Schülerclub an der Qingdao-Akademie, der sich darauf konzentriert, hochwertige mathematische Visualisierungsinhalte durch die Manim-Animationsengine zu erstellen und Schülern zu helfen, mathematisches Wissen besser zu verstehen und zu meistern.",
+                'qamanim-desc2': "Clubmitglieder stammen aus verschiedenen Klassen, lernen gemeinsam Manim-Programmiertechniken, erkunden die Schönheit der Mathematik und verwandeln komplexe mathematische Konzepte in lebendige und interessante Animationen. Wir glauben, dass Visualisierung ein wichtiger Weg ist, um Mathematik zu verstehen.",
+                'qamanim-point1': "Regelmäßige Durchführung von Manim-Technikschulungen und Seminaren zur mathematischen Visualisierung",
+                'qamanim-point2': "Erstellung von mathematischen Lehranimationen für Unterrichtsvorführungen und selbstständiges Lernen",
+                'qamanim-point3': "Teilnahme an nationalen und internationalen Wettbewerben und Austauschaktivitäten zur mathematischen Visualisierung",
+                'qamanim-point4': "Entwicklung von Manim-Lernressourcen und -Tutorials für Mittelschüler",
+                'works-title': "Ausgewählte Werke",
+                'works-subtitle': "Entdecken Sie wunderbare Werke aus dem QAManim-Club und der Manim-Community und erleben Sie den Charme der mathematischen Visualisierung",
+                'view': "Ansehen",
+                'work1-title': "Visualisierung von Analysisprinzipien",
+                'work1-desc': "Demonstriert die geometrische Bedeutung von Ableitungen und Integralen durch Animationen, um das Fundamentalsatz der Analysis zu verstehen.",
+                'work2-title': "Lineare Algebra-Transformationen",
+                'work2-desc': "Zeigt, wie Matrizen lineare Transformationen in 2D- und 3D-Räumen durchführen, um Eigenwertkonzepte intuitiv zu verstehen.",
+                'work3-title': "Exploration der fraktalen Geometrie",
+                'work3-desc': "Erzeugt Mandelbrot- und Julia-Mengen durch Animationen, um die Selbstähnlichkeit und unendliche Komplexität von Fraktalen zu erkunden.",
+                'join-title': "Tritt unserer Community bei",
+                'join-desc': "Egal, ob Sie ein Mathematikbegeisterter, Programmierlerner oder an Bildungstechnologie interessiert sind – Sie sind herzlich willkommen, sich uns anzuschließen und die unendlichen Möglichkeiten der mathematischen Visualisierung gemeinsam zu erkunden.",
+                'contact': "Kontaktieren Sie uns",
+                'github': "GitHub besuchen",
+                'footer-desc': "Eine Animationsengine, die Mathematik lebendig und interessant macht und die Zukunft von Bildung und Lernen stärkt.",
+                'links': "Links",
+                'link1': "Manim-Vorteile",
+                'link2': "QAManim-Club",
+                'link3': "Lernressourcen",
+                'link4': "Werkeausstellung",
+                'contact-us': "Kontaktieren Sie uns",
+                'address': "Qingdao-Akademie, Provinz Shandong, China",
+                'copyright': "© 2023 QAManim-Club der Qingdao-Akademie. Alle Rechte vorbehalten."
+            },
+            ru: {
+                manim: "Manim",
+                'hero-title': "Будущее математической анимации",
+                'hero-subtitle': "Manim — мощный математический анимационный движок, разработанный 3Blue1Brown, делающий сложные математические понятия наглядными и понятными",
+                'hero-btn1': "Изучить преимущества",
+                'hero-btn2': "Ознакомиться с QAManim",
+                'manim-advantages-title': "Превосходные преимущества Manim",
+                'manim-advantages-subtitle': "Как анимационный движок, специально разработанный для математической визуализации, Manim обладает многими уникальными преимуществами, делающими его идеальным выбором для преподавателей и студентов",
+                'advantage1-title': "Математическая точность",
+                'advantage1-desc': "Разработанный специально для математики, Manim может точно представлять геометрические фигуры, функционные кривые и математические символы, обеспечивая математическую точность анимаций.",
+                'advantage2-title': "Программное управление",
+                'advantage2-desc': "Анимация, управляемая кодом на Python, позволяет разработчикам точно контролировать каждый деталь, создавая повторяемые и изменяемые анимационные проекты.",
+                'advantage3-title': "Образовательная ценность",
+                'advantage3-desc': "Способность визуализировать абстрактные математические понятия помогает студентам лучше понять сложные математические принципы и повышает интерес к обучению и его эффективность.",
+                'advantage4-title': "Высокая настраиваемость",
+                'advantage4-desc': "Предоставляет обширные возможности настройки — от цветов и шрифтов до скорости анимации и переходных эффектов, все можно регулировать в соответствии с потребностями.",
+                'advantage5-title': "Открытое сообщество",
+                'advantage5-desc': "Как открытый проект, он имеет активную поддержку сообщества, постоянные обновления и итерации, позволяющие пользователям делиться ресурсами и решениями.",
+                'advantage6-title': "Профессиональная анимация",
+                'advantage6-desc': "Генерирует высококачественные анимационные эффекты, поддерживает вывод в 4K-разрешении, подходит для образовательных видео, академических презентаций и создания научно-популярного контента.",
+                'quote': "\"Математика — это не только формулы и вычисления, это образ мышления. Manim помогает нам визуализировать этот образ мышления.\"",
+                'quote-author': "— 3Blue1Brown",
+                'qamanim-title': "Клуб QAManim Qingdaoской академии",
+                'qamanim-desc1': "QAManim — это студенческий клуб Qingdaoской академии, занимающийся созданием высококачественного математического визуального контента с помощью анимационного движка Manim, помогая студентам лучше понять и усвоить математические знания.",
+                'qamanim-desc2': "Члены клуба из разных классов вместе изучают программирование на Manim, исследуют красоту математики и преобразуют сложные математические понятия в живые и интересные анимации. Мы считаем, что визуализация — важный способ понимания математики.",
+                'qamanim-point1': "Регулярное проведение технических тренингов по Manim и семинаров по математической визуализации",
+                'qamanim-point2': "Создание математических обучающих анимаций для классных демонстраций и самостоятельного обучения",
+                'qamanim-point3': "Участие в национальных и международных конкурсах и обменных мероприятиях по математической визуализации",
+                'qamanim-point4': "Разработка обучающих ресурсов и туториалов по Manim для средних школьников",
+                'works-title': "Избранные работы",
+                'works-subtitle': "Изучите замечательные работы клуба QAManim и сообщества Manim, ощутите очарование математической визуализации",
+                'view': "Посмотреть",
+                'work1-title': "Визуализация принципов исчисления",
+                'work1-desc': "Демонстрирует геометрическое значение производных и интегралов через анимацию, помогая понять основную теорему исчисления.",
+                'work2-title': "Преобразования линейной алгебры",
+                'work2-desc': "Показывает, как матрицы выполняют линейные преобразования в 2D и 3D пространствах, интуитивно объясняя понятия собственных значений.",
+                'work3-title': "Исследование фрактальной геометрии",
+                'work3-desc': "Генерирует множества Мандельброта и Жюлиа через анимацию, исследуя самоподобие и бесконечную сложность фракталов.",
+                'join-title': "Присоединяйтесь к нашему сообществу",
+                'join-desc': "Без разницы, являетесь ли вы любителем математики, учащимся программированию или интересующимся образовательной технологией — вас приглашают присоединиться к нам и вместе исследовать бесконечные возможности математической визуализации.",
+                'contact': "Связаться с нами",
+                'github': "Посетить GitHub",
+                'footer-desc': "Анимационный движок, делающий математику живой и интересной, способствующий развитию образования и обучения.",
+                'links': "Ссылки",
+                'link1': "Преимущества Manim",
+                'link2': "Клуб QAManim",
+                'link3': "Обучающие ресурсы",
+                'link4': "Выставка работ",
+                'contact-us': "Связаться с нами",
+                'address': "Циндаоская академия, провинция Шаньдун, Китай",
+                'copyright': "© 2023 Клуб QAManim Циндаоской академии. Все права защищены."
+            }
+        };
+
+        // 语言切换功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const languageButtons = document.querySelectorAll('.language-btn');
+            
+            // 设置默认语言
+            setLanguage('zh');
+            
+            // 语言按钮点击事件
+            languageButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    setLanguage(lang);
+                    
+                    // 更新活跃状态
+                    languageButtons.forEach(btn => btn.classList.remove('active', 'bg-primary/10'));
+                    this.classList.add('active', 'bg-primary/10');
+                });
+            });
+            
+            // 导航栏滚动效果
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('py-2', 'shadow');
+                    navbar.classList.remove('py-3');
+                } else {
+                    navbar.classList.add('py-3');
+                    navbar.classList.remove('py-2', 'shadow');
+                }
+            });
+            
+            // 平滑滚动
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // 添加元素进入视图时的动画
+            const animateOnScroll = function() {
+                const elements = document.querySelectorAll('section > div > div');
+                
+                elements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const windowHeight = window.innerHeight;
+                    
+                    if (elementPosition < windowHeight * 0.85) {
+                        element.classList.add('opacity-100', 'translate-y-0');
+                        element.classList.remove('opacity-0', 'translate-y-8');
+                    }
+                });
+            };
+            
+            // 初始设置
+            document.querySelectorAll('section > div > div').forEach(el => {
+                el.classList.add('transition-transform-opacity', 'duration-700', 'ease-out', 'opacity-0', 'translate-y-8');
+            });
+            
+            // 初始检查
+            animateOnScroll();
+            
+            // 滚动时检查
+            window.addEventListener('scroll', animateOnScroll);
+        });
+        
+        // 设置语言函数
+        function setLanguage(lang) {
+            if (!translations[lang]) return;
+            
+            const elements = document.querySelectorAll('[class^="lang-"]');
+            
+            elements.forEach(element => {
+                // 获取语言键
+                const classes = Array.from(element.classList);
+                const langClass = classes.find(cls => cls.startsWith('lang-'));
+                if (!langClass) return;
+                
+                const key = langClass.substring(5); // 移除 "lang-" 前缀
+                
+                // 设置文本
+                if (translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+        }
+    </script>
+</body>
+</html>
