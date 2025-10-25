@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manim 与 QAManim 社团</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="https://i0.wp.com/mrshed.net/wp-content/uploads/2022/07/mr-shed-emblom-7.jpg">
+    <link rel="shortcut icon" href="https://i0.wp.com/mrshed.net/wp-content/uploads/2022/07/mr-shed-emblom-7.jpg">
+    <link rel="apple-touch-icon" href="https://i0.wp.com/mrshed.net/wp-content/uploads/2022/07/mr-shed-emblom-7.jpg">
     <!-- 引入Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- 引入Font Awesome -->
@@ -699,7 +703,8 @@
         function setLanguage(lang) {
             if (!translations[lang]) return;
             
-            const elements = document.querySelectorAll('[class^="lang-"]');
+            // 获取所有带有 lang- 类的元素
+            const elements = document.querySelectorAll('[class*="lang-"]');
             
             elements.forEach(element => {
                 // 获取语言键
