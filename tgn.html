@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tang Gino</title>
+  <style>
+    body {
+      background: #111;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      height: 100vh;
+      align-items: center;
+      justify-content: center;
+    }
+    .impactful {
+      font-family: 'Impact', 'Arial Black', 'Arial', sans-serif;
+      font-size: 8vw;
+      color: #fff;
+      letter-spacing: 0.15em;
+      text-shadow:
+        0 4px 20px #00ffe7, 
+        0 1px 0 #444,
+        0 8px 40px #ff00c8,
+        0 0px 100px #fff;
+      animation: shockwave 1.5s infinite alternate cubic-bezier(.5,2,.5,.8);
+    }
+    @keyframes shockwave {
+      0% { transform: scale(1) rotate(-1deg); }
+      20% { transform: scale(1.07) rotate(1.5deg); }
+      35% { transform: scale(0.97) rotate(-2deg);}
+      50% { transform: scale(1.08) rotate(2deg);}
+      70% { transform: scale(1.02) rotate(-1.5deg);}
+      100% { transform: scale(1) rotate(1deg);}
+    }
+  </style>
+</head>
+<body>
+  <div class="impactful">Tang Gino</div>
+</body>
+</html>
