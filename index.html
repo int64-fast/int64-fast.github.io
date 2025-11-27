@@ -3,30 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manim 与 QAManim 社团</title>
-    <!-- Favicon -->
-    <link rel="icon" type="image/jpeg" href="https://i0.wp.com/mrshed.net/wp-content/uploads/2022/07/mr-shed-emblom-7.jpg">
-    <link rel="shortcut icon" href="https://i0.wp.com/mrshed.net/wp-content/uploads/2022/07/mr-shed-emblom-7.jpg">
-    <link rel="apple-touch-icon" href="https://i0.wp.com/mrshed.net/wp-content/uploads/2022/07/mr-shed-emblom-7.jpg">
-    <!-- 引入Tailwind CSS -->
+    <title>Figno 91 - 匿名Issue分享平台</title>
+    <!-- 引入Favicon -->
+    <link rel="icon" href="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc_gen_image/9a35906bcae7429f87f8d474501dd5e8preview.jpeg~tplv-a9rns2rl98-downsize_watermark_1_5_b.png?rcl=20251126191905E29E6A40DFF7151FFA75&amp;rk3s=8e244e95&amp;rrcfp=ddbb2dc7&amp;x-expires=2079515964&amp;x-signature=rg2%2FrqpIfY%2FOEBWP8UJTVM%2FBIeA%3D" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- 引入Font Awesome -->
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <!-- 配置Tailwind -->
     <script>
+        // Tailwind配置
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        primary: '#3B82F6',
-                        secondary: '#10B981',
-                        accent: '#8B5CF6',
-                        dark: '#1E293B',
-                        light: '#F8FAFC'
+                        primary: '#2563eb',
+                        secondary: '#64748b',
+                        light: '#f8fafc',
+                        dark: '#1e293b'
                     },
                     fontFamily: {
-                        sans: ['Inter', 'system-ui', 'sans-serif'],
-                        display: ['Poppins', 'sans-serif']
+                        sans: ['Inter', 'system-ui', 'sans-serif']
                     }
                 }
             }
@@ -34,692 +28,570 @@
     </script>
     <style type="text/tailwindcss">
         @layer utilities {
-            .text-shadow {
-                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            .content-auto {
+                content-visibility: auto;
             }
-            .text-gradient {
-                background-clip: text;
-                -webkit-background-clip: text;
-                color: transparent;
+            .issue-card {
+                @apply bg-white rounded-lg shadow-md p-4 mb-4 transition-all duration-300 hover:shadow-lg;
             }
-            .transition-transform-opacity {
-                transition-property: transform, opacity;
+            .btn-primary {
+                @apply bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/90 transition-all duration-300 focus:ring-2 focus:ring-primary/50;
+            }
+            .btn-outline {
+                @apply border border-primary text-primary px-4 py-2 rounded-md hover:bg-primary/5 transition-all duration-300;
+            }
+            .input-field {
+                @apply w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary;
             }
         }
     </style>
-    <!-- 引入Google字体 -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-</head>
-<body class="bg-light text-dark antialiased">
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:Inter, system-ui, sans-serif;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.container{width:100%}@media (min-width: 640px){.container{max-width:640px}}@media (min-width: 768px){.container{max-width:768px}}@media (min-width: 1024px){.container{max-width:1024px}}@media (min-width: 1280px){.container{max-width:1280px}}@media (min-width: 1536px){.container{max-width:1536px}}.fixed{position:fixed}.sticky{position:sticky}.inset-0{inset:0px}.top-0{top:0px}.bottom-4{bottom:1rem}.right-4{right:1rem}.z-50{z-index:50}.mx-2{margin-left:0.5rem;margin-right:0.5rem}.mx-auto{margin-left:auto;margin-right:auto}.mb-1{margin-bottom:0.25rem}.mb-2{margin-bottom:0.5rem}.mb-4{margin-bottom:1rem}.mb-8{margin-bottom:2rem}.mr-1{margin-right:0.25rem}.mr-2{margin-right:0.5rem}.mt-12{margin-top:3rem}.mt-2{margin-top:0.5rem}.mt-4{margin-top:1rem}.mt-1{margin-top:0.25rem}.block{display:block}.flex{display:flex}.hidden{display:none}.h-10{height:2.5rem}.h-20{height:5rem}.h-32{height:8rem}.w-10{width:2.5rem}.w-full{width:100%}.max-w-md{max-width:28rem}.translate-y-0{--tw-translate-y:0px;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.translate-y-4{--tw-translate-y:1rem;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.transform{transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.resize-none{resize:none}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-end{justify-content:flex-end}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.space-x-1 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.25rem * var(--tw-space-x-reverse));margin-left:calc(0.25rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-2 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.5rem * var(--tw-space-x-reverse));margin-left:calc(0.5rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-3 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.75rem * var(--tw-space-x-reverse));margin-left:calc(0.75rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-4 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(1rem * var(--tw-space-x-reverse));margin-left:calc(1rem * calc(1 - var(--tw-space-x-reverse)))}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-6 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem * var(--tw-space-y-reverse))}.rounded-lg{border-radius:0.5rem}.rounded-md{border-radius:0.375rem}.border-t{border-top-width:1px}.border-gray-100{--tw-border-opacity:1;border-color:rgb(243 244 246 / var(--tw-border-opacity, 1))}.border-gray-200{--tw-border-opacity:1;border-color:rgb(229 231 235 / var(--tw-border-opacity, 1))}.bg-black\/50{background-color:rgb(0 0 0 / 0.5)}.bg-gray-50{--tw-bg-opacity:1;background-color:rgb(249 250 251 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-red-500{--tw-bg-opacity:1;background-color:rgb(239 68 68 / var(--tw-bg-opacity, 1))}.bg-green-500{--tw-bg-opacity:1;background-color:rgb(34 197 94 / var(--tw-bg-opacity, 1))}.p-3{padding:0.75rem}.p-6{padding:1.5rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-4{padding-left:1rem;padding-right:1rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-6{padding-top:1.5rem;padding-bottom:1.5rem}.py-8{padding-top:2rem;padding-bottom:2rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.pt-4{padding-top:1rem}.text-center{text-align:center}.font-sans{font-family:Inter, system-ui, sans-serif}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-semibold{font-weight:600}.text-dark{--tw-text-opacity:1;color:rgb(30 41 59 / var(--tw-text-opacity, 1))}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128 / var(--tw-text-opacity, 1))}.text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.text-gray-700{--tw-text-opacity:1;color:rgb(55 65 81 / var(--tw-text-opacity, 1))}.text-primary{--tw-text-opacity:1;color:rgb(37 99 235 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-red-500{--tw-text-opacity:1;color:rgb(239 68 68 / var(--tw-text-opacity, 1))}.opacity-100{opacity:1}.opacity-0{opacity:0}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.transition-colors{transition-property:color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-300{transition-duration:300ms}.issue-card{margin-bottom:1rem;border-radius:0.5rem;--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1));padding:1rem;--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:300ms}.issue-card:hover{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.btn-primary{border-radius:0.375rem;--tw-bg-opacity:1;background-color:rgb(37 99 235 / var(--tw-bg-opacity, 1));padding-left:1rem;padding-right:1rem;padding-top:0.5rem;padding-bottom:0.5rem;--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1));transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:300ms}.btn-primary:hover{background-color:rgb(37 99 235 / 0.9)}.btn-primary:focus{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);--tw-ring-color:rgb(37 99 235 / 0.5)}.btn-outline{border-radius:0.375rem;border-width:1px;--tw-border-opacity:1;border-color:rgb(37 99 235 / var(--tw-border-opacity, 1));padding-left:1rem;padding-right:1rem;padding-top:0.5rem;padding-bottom:0.5rem;--tw-text-opacity:1;color:rgb(37 99 235 / var(--tw-text-opacity, 1));transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:300ms}.btn-outline:hover{background-color:rgb(37 99 235 / 0.05)}.input-field{width:100%;border-radius:0.375rem;border-width:1px;--tw-border-opacity:1;border-color:rgb(209 213 219 / var(--tw-border-opacity, 1));padding-left:1rem;padding-right:1rem;padding-top:0.5rem;padding-bottom:0.5rem}.input-field:focus{--tw-border-opacity:1;border-color:rgb(37 99 235 / var(--tw-border-opacity, 1));outline:2px solid transparent;outline-offset:2px;--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);--tw-ring-color:rgb(37 99 235 / 0.5)}
+        .hover\:text-gray-700:hover{--tw-text-opacity:1;color:rgb(55 65 81 / var(--tw-text-opacity, 1))}
+        .hover\:text-primary:hover{--tw-text-opacity:1;color:rgb(37 99 235 / var(--tw-text-opacity, 1))}
+        @media (min-width: 768px){.md\:text-2xl{font-size:1.5rem;line-height:2rem}}
+    </style></head>
+<body class="bg-gray-50 font-sans text-dark">
     <!-- 导航栏 -->
-    <header class="fixed w-full top-0 z-50 transition-all duration-300" id="navbar">
-        <div class="container mx-auto px-4 py-3 flex items-center justify-between bg-white/90 backdrop-blur-sm shadow-sm">
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
             <div class="flex items-center space-x-2">
-                <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center">
-                    <i class="fa fa-play-circle-o text-white text-xl"></i>
-                </div>
-                <h1 class="text-xl font-display font-bold text-dark">
-                    <span class="lang-manim">Manim</span>
-                </h1>
+                <!-- Logo -->
+                <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc_gen_image/9a35906bcae7429f87f8d474501dd5e8preview.jpeg~tplv-a9rns2rl98-downsize_watermark_1_5_b.png?rcl=20251126191905E29E6A40DFF7151FFA75&amp;rk3s=8e244e95&amp;rrcfp=ddbb2dc7&amp;x-expires=2079515964&amp;x-signature=rg2%2FrqpIfY%2FOEBWP8UJTVM%2FBIeA%3D" alt="Figno 91 Logo" class="h-10 w-10">
+                <h1 class="text-xl md:text-2xl font-bold text-primary">∫igno 91</h1>
             </div>
-            
-            <!-- 语言选择器 -->
-            <div class="flex items-center space-x-1 md:space-x-3">
-                <button class="language-btn px-2 py-1 text-sm md:text-base rounded hover:bg-gray-100 transition-colors active" data-lang="zh">中文</button>
-                <button class="language-btn px-2 py-1 text-sm md:text-base rounded hover:bg-gray-100 transition-colors" data-lang="en">English</button>
-                <button class="language-btn px-2 py-1 text-sm md:text-base rounded hover:bg-gray-100 transition-colors" data-lang="de">Deutsch</button>
-                <button class="language-btn px-2 py-1 text-sm md:text-base rounded hover:bg-gray-100 transition-colors" data-lang="ru">Русский</button>
+            <div class="flex items-center space-x-3">
+                <button id="nameSettingsBtn" class="btn-outline flex items-center space-x-1">
+                    <i class="fa fa-user-circle-o"></i>
+                    <span id="displayName">Liu Jinxuan/刘锦轩</span>
+                </button>
             </div>
         </div>
     </header>
 
-    <!-- 主内容 -->
-    <main class="pt-20 pb-16">
-        <!-- 英雄区域 -->
-        <section class="relative overflow-hidden">
-            <div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 -z-10"></div>
-            <div class="container mx-auto px-4 py-16 md:py-24">
-                <div class="max-w-4xl mx-auto text-center">
-                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6 leading-tight text-gradient bg-gradient-to-r from-primary to-accent">
-                        <span class="lang-hero-title">数学动画的未来</span>
-                    </h1>
-                    <p class="text-lg md:text-xl text-gray-600 mb-10 lang-hero-subtitle">
-                        Manim 是一个强大的数学动画引擎，由 3Blue1Brown 开发，让复杂的数学概念变得生动易懂
-                    </p>
-                    <div class="flex flex-col sm:flex-row justify-center gap-4">
-                        <a href="#manim-advantages" class="px-8 py-3 bg-primary hover:bg-primary/90 text-white font-medium rounded-lg shadow-lg shadow-primary/20 transition-all hover:translate-y-[-2px]">
-                            <i class="fa fa-star mr-2"></i>
-                            <span class="lang-hero-btn1">探索优点</span>
-                        </a>
-                        <a href="#qamanim" class="px-8 py-3 bg-white hover:bg-gray-50 text-dark font-medium rounded-lg shadow-lg transition-all hover:translate-y-[-2px] border border-gray-200">
-                            <i class="fa fa-users mr-2"></i>
-                            <span class="lang-hero-btn2">了解QAManim</span>
-                        </a>
-                    </div>
+    <!-- 主内容区 -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- 发布Issue区域 -->
+        <section class="issue-card mb-8">
+            <h2 class="text-xl font-bold mb-4 flex items-center">
+                <i class="fa fa-pencil-square-o text-primary mr-2"></i>
+                发布新文章
+            </h2>
+            <form id="issueForm" class="space-y-4">
+                <div>
+                    <label for="issueTitle" class="block text-sm font-medium text-gray-700 mb-1">标题</label>
+                    <input type="text" id="issueTitle" class="input-field" placeholder="输入文章标题..." required="">
                 </div>
-            </div>
-            
-            <!-- 装饰图形 -->
-            <div class="hidden lg:block absolute -bottom-10 -left-10 w-64 h-64 bg-primary/10 rounded-full blur-3xl"></div>
-            <div class="hidden lg:block absolute top-20 -right-20 w-80 h-80 bg-accent/10 rounded-full blur-3xl"></div>
+                <div>
+                    <label for="issueContent" class="block text-sm font-medium text-gray-700 mb-1">内容</label>
+                    <textarea id="issueContent" class="input-field h-32 resize-none" placeholder="详细描述你的想法、问题或建议..." required=""></textarea>
+                </div>
+                <div class="flex justify-end">
+                    <button type="submit" class="btn-primary flex items-center space-x-1">
+                        <i class="fa fa-paper-plane"></i>
+                        <span>发布</span>
+                    </button>
+                </div>
+            </form>
         </section>
 
-        <!-- Manim优点部分 -->
-        <section id="manim-advantages" class="py-16 md:py-24">
-            <div class="container mx-auto px-4">
-                <div class="text-center mb-16">
-                    <h2 class="text-3xl md:text-4xl font-display font-bold mb-4 lang-manim-advantages-title">
-                        Manim 的卓越优势
-                    </h2>
-                    <p class="text-gray-600 max-w-2xl mx-auto lang-manim-advantages-subtitle">
-                        作为一个专为数学可视化设计的动画引擎，Manim 拥有诸多独特优势，使其成为教育工作者和学生的理想选择
-                    </p>
+        <!-- Issue列表区域 -->
+        <section>
+            <h2 class="text-xl font-bold mb-4 flex items-center">
+                <i class="fa fa-list-alt text-primary mr-2"></i>
+                最新Issue
+            </h2>
+            <div id="issuesContainer" class="space-y-6"><div class="issue-card" data-issue-id="1764249813294">
+                <div class="flex justify-between items-start mb-2">
+                    <h3 class="text-lg font-semibold text-dark">Test</h3>
+                    <span class="text-xs text-gray-500">2025/11/27 21:23</span>
                 </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- 优点卡片1 -->
-                    <div class="bg-white rounded-xl shadow-xl p-6 md:p-8 transition-all hover:shadow-2xl hover:translate-y-[-5px] group">
-                        <div class="w-14 h-14 rounded-lg bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
-                            <i class="fa fa-calculator text-primary text-2xl"></i>
-                        </div>
-                        <h3 class="text-xl font-display font-semibold mb-3 lang-advantage1-title">数学精确性</h3>
-                        <p class="text-gray-600 lang-advantage1-desc">
-                            Manim 专为数学设计，能够精确呈现几何图形、函数曲线和数学符号，确保动画在数学上的准确性。
-                        </p>
+                <div class="text-gray-700 mb-4">
+                    这是一个示例 issue。
+                </div>
+                <div class="flex justify-between items-center text-sm text-gray-500 mb-4">
+                    <div class="flex items-center">
+                        <i class="fa fa-user-o mr-1"></i>
+                        <span>Liu Jinxuan/刘锦轩</span>
                     </div>
-                    
-                    <!-- 优点卡片2 -->
-                    <div class="bg-white rounded-xl shadow-xl p-6 md:p-8 transition-all hover:shadow-2xl hover:translate-y-[-5px] group">
-                        <div class="w-14 h-14 rounded-lg bg-secondary/10 flex items-center justify-center mb-6 group-hover:bg-secondary/20 transition-colors">
-                            <i class="fa fa-code text-secondary text-2xl"></i>
-                        </div>
-                        <h3 class="text-xl font-display font-semibold mb-3 lang-advantage2-title">编程驱动</h3>
-                        <p class="text-gray-600 lang-advantage2-desc">
-                            通过Python代码控制动画，使开发者能够精确控制每一个细节，创建可重复、可修改的动画项目。
-                        </p>
-                    </div>
-                    
-                    <!-- 优点卡片3 -->
-                    <div class="bg-white rounded-xl shadow-xl p-6 md:p-8 transition-all hover:shadow-2xl hover:translate-y-[-5px] group">
-                        <div class="w-14 h-14 rounded-lg bg-accent/10 flex items-center justify-center mb-6 group-hover:bg-accent/20 transition-colors">
-                            <i class="fa fa-lightbulb-o text-accent text-2xl"></i>
-                        </div>
-                        <h3 class="text-xl font-display font-semibold mb-3 lang-advantage3-title">教育价值</h3>
-                        <p class="text-gray-600 lang-advantage3-desc">
-                            能够将抽象的数学概念可视化，帮助学生更好地理解复杂的数学原理，提高学习兴趣和效率。
-                        </p>
-                    </div>
-                    
-                    <!-- 优点卡片4 -->
-                    <div class="bg-white rounded-xl shadow-xl p-6 md:p-8 transition-all hover:shadow-2xl hover:translate-y-[-5px] group">
-                        <div class="w-14 h-14 rounded-lg bg-amber-500/10 flex items-center justify-center mb-6 group-hover:bg-amber-500/20 transition-colors">
-                            <i class="fa fa-paint-brush text-amber-500 text-2xl"></i>
-                        </div>
-                        <h3 class="text-xl font-display font-semibold mb-3 lang-advantage4-title">高度可定制</h3>
-                        <p class="text-gray-600 lang-advantage4-desc">
-                            提供丰富的自定义选项，从颜色、字体到动画速度和过渡效果，都可以根据需求进行调整。
-                        </p>
-                    </div>
-                    
-                    <!-- 优点卡片5 -->
-                    <div class="bg-white rounded-xl shadow-xl p-6 md:p-8 transition-all hover:shadow-2xl hover:translate-y-[-5px] group">
-                        <div class="w-14 h-14 rounded-lg bg-rose-500/10 flex items-center justify-center mb-6 group-hover:bg-rose-500/20 transition-colors">
-                            <i class="fa fa-github text-rose-500 text-2xl"></i>
-                        </div>
-                        <h3 class="text-xl font-display font-semibold mb-3 lang-advantage5-title">开源社区</h3>
-                        <p class="text-gray-600 lang-advantage5-desc">
-                            作为开源项目，拥有活跃的社区支持，不断更新迭代，用户可以共享资源和解决方案。
-                        </p>
-                    </div>
-                    
-                    <!-- 优点卡片6 -->
-                    <div class="bg-white rounded-xl shadow-xl p-6 md:p-8 transition-all hover:shadow-2xl hover:translate-y-[-5px] group">
-                        <div class="w-14 h-14 rounded-lg bg-sky-500/10 flex items-center justify-center mb-6 group-hover:bg-sky-500/20 transition-colors">
-                            <i class="fa fa-film text-sky-500 text-2xl"></i>
-                        </div>
-                        <h3 class="text-xl font-display font-semibold mb-3 lang-advantage6-title">专业级动画</h3>
-                        <p class="text-gray-600 lang-advantage6-desc">
-                            生成高质量的动画效果，支持4K分辨率输出，适合用于教学视频、学术演示和科普内容创作。
-                        </p>
+                    <div class="flex items-center space-x-4">
+                        <button class="replyToggle flex items-center hover:text-primary transition-colors">
+                            <i class="fa fa-reply mr-1"></i>
+                            <span>回复</span>
+                        </button>
+                        <span class="flex items-center">
+                            <i class="fa fa-comment-o mr-1"></i>
+                            <span>1条回复</span>
+                        </span>
                     </div>
                 </div>
-            </div>
-        </section>
-        
-        <!-- 分隔区域 -->
-        <section class="py-12 bg-gradient-to-r from-primary/5 to-accent/5">
-            <div class="container mx-auto px-4 text-center">
-                <blockquote class="max-w-3xl mx-auto">
-                    <p class="text-xl md:text-2xl italic font-light text-gray-700 mb-4 lang-quote">
-                        "数学不仅仅是公式和计算，它是一种思维方式。Manim 帮助我们将这种思维方式可视化。"
-                    </p>
-                    <cite class="text-gray-500 font-medium lang-quote-author">— 3Blue1Brown</cite>
-                </blockquote>
-            </div>
-        </section>
-        
-        <!-- QAManim社团介绍 -->
-        <section id="qamanim" class="py-16 md:py-24">
-            <div class="container mx-auto px-4">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                    <div class="order-2 lg:order-1">
-                        <h2 class="text-3xl md:text-4xl font-display font-bold mb-6 lang-qamanim-title">
-                            青岛中学 QAManim 社团
-                        </h2>
-                        <p class="text-gray-600 mb-6 lang-qamanim-desc1">
-                            QAManim 是青岛中学的一个学生社团，致力于通过 Manim 动画引擎创作高质量的数学可视化内容，帮助同学们更好地理解和掌握数学知识。
-                        </p>
-                        <p class="text-gray-600 mb-8 lang-qamanim-desc2">
-                            社团成员来自不同年级，共同学习 Manim 编程技术，探索数学之美，并将复杂的数学概念转化为生动有趣的动画。我们相信，可视化是理解数学的重要途径。
-                        </p>
+                <div class="replies-container mt-4 pt-4 border-t border-gray-100">
+                    <form class="replyForm space-y-2 mb-4">
+                        <textarea class="input-field h-20 resize-none" placeholder="输入你的回复..." required=""></textarea>
+                        <div class="flex justify-end">
+                            <button type="submit" class="btn-primary text-sm px-3 py-1">
+                                提交回复
+                            </button>
+                        </div>
+                    </form>
+                    <div class="replies-list space-y-3">
                         
-                        <div class="space-y-4">
-                            <div class="flex items-start">
-                                <div class="mt-1 mr-4 w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
-                                    <i class="fa fa-check text-primary text-sm"></i>
-                                </div>
-                                <p class="text-gray-600 lang-qamanim-point1">定期举办 Manim 技术培训和数学可视化研讨会</p>
-                            </div>
-                            <div class="flex items-start">
-                                <div class="mt-1 mr-4 w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
-                                    <i class="fa fa-check text-primary text-sm"></i>
-                                </div>
-                                <p class="text-gray-600 lang-qamanim-point2">创作数学教学动画，用于课堂演示和自主学习</p>
-                            </div>
-                            <div class="flex items-start">
-                                <div class="mt-1 mr-4 w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
-                                    <i class="fa fa-check text-primary text-sm"></i>
-                                </div>
-                                <p class="text-gray-600 lang-qamanim-point3">参与国内外数学可视化竞赛和交流活动</p>
-                            </div>
-                            <div class="flex items-start">
-                                <div class="mt-1 mr-4 w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
-                                    <i class="fa fa-check text-primary text-sm"></i>
-                                </div>
-                                <p class="text-gray-600 lang-qamanim-point4">开发适合中学生的 Manim 学习资源和教程</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="order-1 lg:order-2 relative">
-                        <div class="relative z-10 rounded-2xl overflow-hidden shadow-2xl transform transition-transform hover:scale-[1.02]">
-                            <img src="https://picsum.photos/id/180/600/400" alt="青岛中学QAManim社团活动照片" class="w-full h-auto">
-                        </div>
-                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-gradient-to-r from-primary to-accent rounded-2xl -z-10 blur-xl opacity-20 transform scale-110"></div>
-                    </div>
+                    <div class="bg-gray-50 p-3 rounded-md">
+                <div class="flex justify-between items-center mb-1">
+                    <span class="text-sm font-medium">Liu Jinxuan/刘锦轩</span>
+                    <span class="text-xs text-gray-500">2025/11/27 21:23</span>
                 </div>
-            </div>
-        </section>
-        
-        <!-- 作品展示 -->
-        <section class="py-16 md:py-24 bg-gray-50">
-            <div class="container mx-auto px-4">
-                <div class="text-center mb-16">
-                    <h2 class="text-3xl md:text-4xl font-display font-bold mb-4 lang-works-title">
-                        精选作品展示
-                    </h2>
-                    <p class="text-gray-600 max-w-2xl mx-auto lang-works-subtitle">
-                        探索 QAManim 社团和 Manim 社区的精彩作品，感受数学可视化的魅力
-                    </p>
+                <p class="text-sm text-gray-700">test?</p>
+            </div></div>
                 </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- 作品1 -->
-                    <div class="bg-white rounded-xl overflow-hidden shadow-lg group">
-                        <div class="relative overflow-hidden">
-                            <img src="https://picsum.photos/id/237/400/250" alt="微积分原理动画展示" class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end">
-                                <div class="p-4 w-full">
-                                    <a href="#" class="inline-block w-full text-center bg-white text-dark py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors">
-                                        <i class="fa fa-play mr-1"></i>
-                                        <span class="lang-view">查看</span>
-                                    </a>
+            </div><div class="issue-card">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-lg font-semibold text-dark">这是一个示例Issue</h3>
+                        <span class="text-xs text-gray-500">2025-11-26 10:00</span>
+                    </div>
+                    <div class="text-gray-700 mb-4">
+                        这是示例Issue的内容，游客可以在这里分享想法、提出问题或交流讨论。无需注册即可参与，快来发表你的观点吧！
+                    </div>
+                    <div class="flex justify-between items-center text-sm text-gray-500 mb-4">
+                        <div class="flex items-center">
+                            <i class="fa fa-user-o mr-1"></i>
+                            <span>示例用户</span>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <button class="replyToggle flex items-center hover:text-primary transition-colors">
+                                <i class="fa fa-reply mr-1"></i>
+                                <span>回复</span>
+                            </button>
+                            <span class="flex items-center">
+                                <i class="fa fa-comment-o mr-1"></i>
+                                <span>2条回复</span>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- 回复区域 -->
+                    <div class="replies-container mt-4 pt-4 border-t border-gray-100">
+                        <!-- 回复表单 -->
+                        <form class="replyForm space-y-2 mb-4">
+                            <textarea class="input-field h-20 resize-none" placeholder="输入你的回复..." required="" dir="ltr"></textarea>
+                            <div class="flex justify-end">
+                                <button type="submit" class="btn-primary text-sm px-3 py-1">
+                                    提交回复
+                                </button>
+                            </div>
+                        </form>
+                        <!-- 回复列表 -->
+                        <div class="replies-list space-y-3">
+                            <div class="bg-gray-50 p-3 rounded-md">
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="text-sm font-medium">用户A</span>
+                                    <span class="text-xs text-gray-500">2025-11-26 10:30</span>
                                 </div>
+                                <p class="text-sm text-gray-700">这个示例很有帮助，我也想分享我的想法！</p>
+                            </div>
+                            <div class="bg-gray-50 p-3 rounded-md">
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="text-sm font-medium">用户B</span>
+                                    <span class="text-xs text-gray-500">2025-11-26 11:15</span>
+                                </div>
+                                <p class="text-sm text-gray-700">支持这种匿名分享的方式，非常方便！</p>
                             </div>
                         </div>
-                        <div class="p-5">
-                            <h3 class="font-semibold text-lg mb-2 lang-work1-title">微积分原理可视化</h3>
-                            <p class="text-gray-600 text-sm lang-work1-desc">通过动画演示导数和积分的几何意义，帮助理解微积分基本定理。</p>
-                        </div>
                     </div>
-                    
-                    <!-- 作品2 -->
-                    <div class="bg-white rounded-xl overflow-hidden shadow-lg group">
-                        <div class="relative overflow-hidden">
-                            <img src="https://picsum.photos/id/167/400/250" alt="线性代数动画展示" class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end">
-                                <div class="p-4 w-full">
-                                    <a href="#" class="inline-block w-full text-center bg-white text-dark py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors">
-                                        <i class="fa fa-play mr-1"></i>
-                                        <span class="lang-view">查看</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="p-5">
-                            <h3 class="font-semibold text-lg mb-2 lang-work2-title">线性代数变换</h3>
-                            <p class="text-gray-600 text-sm lang-work2-desc">展示矩阵如何在二维和三维空间中进行线性变换，直观理解特征值概念。</p>
-                        </div>
-                    </div>
-                    
-                    <!-- 作品3 -->
-                    <div class="bg-white rounded-xl overflow-hidden shadow-lg group">
-                        <div class="relative overflow-hidden">
-                            <img src="https://picsum.photos/id/1015/400/250" alt="分形几何动画展示" class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end">
-                                <div class="p-4 w-full">
-                                    <a href="#" class="inline-block w-full text-center bg-white text-dark py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors">
-                                        <i class="fa fa-play mr-1"></i>
-                                        <span class="lang-view">查看</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="p-5">
-                            <h3 class="font-semibold text-lg mb-2 lang-work3-title">分形几何探索</h3>
-                            <p class="text-gray-600 text-sm lang-work3-desc">通过动画生成曼德博集合和朱利亚集合，探索分形的自相似性和无限复杂性。</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- 加入我们 -->
-        <section class="py-16 md:py-24">
-            <div class="container mx-auto px-4">
-                <div class="max-w-4xl mx-auto bg-gradient-to-br from-primary to-accent rounded-2xl shadow-2xl overflow-hidden">
-                    <div class="p-8 md:p-12 text-white">
-                        <h2 class="text-3xl md:text-4xl font-display font-bold mb-6 lang-join-title">
-                            加入我们的社区
-                        </h2>
-                        <p class="mb-8 text-white/90 lang-join-desc">
-                            无论你是数学爱好者、编程学习者，还是对教育技术感兴趣，都欢迎加入我们，一起探索数学可视化的无限可能。
-                        </p>
-                        <div class="flex flex-col sm:flex-row gap-4">
-                            <a href="#" class="px-6 py-3 bg-white text-primary font-medium rounded-lg shadow-lg transition-all hover:translate-y-[-2px] text-center">
-                                <i class="fa fa-envelope mr-2"></i>
-                                <span class="lang-contact">联系我们</span>
-                            </a>
-                            <a href="#" class="px-6 py-3 bg-transparent border-2 border-white text-white font-medium rounded-lg transition-all hover:bg-white/10 hover:translate-y-[-2px] text-center">
-                                <i class="fa fa-github mr-2"></i>
-                                <span class="lang-github">访问GitHub</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                </div></div>
         </section>
     </main>
 
     <!-- 页脚 -->
-    <footer class="bg-dark text-white py-12">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-                <div>
-                    <div class="flex items-center space-x-2 mb-4">
-                        <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center">
-                            <i class="fa fa-play-circle-o text-white text-xl"></i>
-                        </div>
-                        <h3 class="text-xl font-display font-bold">
-                            <span class="lang-manim">Manim</span>
-                        </h3>
-                    </div>
-                    <p class="text-gray-400 mb-4 lang-footer-desc">
-                        让数学变得生动有趣的动画引擎，赋能教育与学习的未来。
-                    </p>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                            <i class="fa fa-github text-xl"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                            <i class="fa fa-youtube-play text-xl"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                            <i class="fa fa-twitter text-xl"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <div>
-                    <h4 class="text-lg font-semibold mb-4 lang-links">链接</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#manim-advantages" class="text-gray-400 hover:text-white transition-colors lang-link1">Manim 优点</a></li>
-                        <li><a href="#qamanim" class="text-gray-400 hover:text-white transition-colors lang-link2">QAManim 社团</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors lang-link3">学习资源</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors lang-link4">作品展示</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="text-lg font-semibold mb-4 lang-contact-us">联系我们</h4>
-                    <ul class="space-y-2">
-                        <li class="flex items-start">
-                            <i class="fa fa-map-marker mt-1 mr-3 text-gray-400"></i>
-                            <span class="text-gray-400 lang-address">中国山东省青岛市青岛中学</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fa fa-envelope mr-3 text-gray-400"></i>
-                            <a href="mailto:qamanim@example.com" class="text-gray-400 hover:text-white transition-colors">qamanim@example.com</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="border-t border-gray-800 pt-8 text-center text-gray-500 text-sm">
-                <p class="lang-copyright">© 2023 青岛中学 QAManim 社团. 保留所有权利.</p>
-            </div>
+    <footer class="bg-white border-t border-gray-200 py-6 mt-12">
+        <div class="container mx-auto px-4 text-center text-gray-600 text-sm">
+            <p>© 2025 ∫igno 91 - 匿名Issue分享平台 | 无需注册，自由交流</p>
+            <p class="mt-2">
+                <a href="#" class="hover:text-primary transition-colors mx-2">使用说明</a>
+                <a href="#" class="hover:text-primary transition-colors mx-2">隐私政策</a>
+                <a href="#" class="hover:text-primary transition-colors mx-2">联系我们</a>
+            </p>
         </div>
     </footer>
 
-    <!-- JavaScript -->
+    <!-- 名称设置模态框 -->
+    <div id="nameModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-md p-6 space-y-4">
+            <div class="flex justify-between items-center mb-2">
+                <h3 class="text-lg font-bold">设置你的名称</h3>
+                <button id="closeModal" class="text-gray-500 hover:text-gray-700">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+            <form id="nameForm" class="space-y-4">
+                <div>
+                    <label for="userName" class="block text-sm font-medium text-gray-700">显示名称</label>
+                    <input type="text" id="userName" class="input-field" placeholder="输入你想显示的名称" required="" disabled="">
+                <p class="text-sm text-red-500 mt-1">距离上次修改不足3个月，暂时无法修改</p></div>
+                <div class="text-sm text-gray-500">
+                    <p>提示：每个IP地址每3个月可修改一次名称</p>
+                </div>
+                <div class="flex justify-end space-x-3">
+                    <button type="button" id="cancelName" class="btn-outline">取消</button>
+                    <button type="submit" class="btn-primary">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
-        // 语言文本数据
-        const translations = {
-            zh: {
-                manim: "Manim",
-                'hero-title': "数学动画的未来",
-                'hero-subtitle': "Manim 是一个强大的数学动画引擎，由 3Blue1Brown 开发，让复杂的数学概念变得生动易懂",
-                'hero-btn1': "探索优点",
-                'hero-btn2': "了解QAManim",
-                'manim-advantages-title': "Manim 的卓越优势",
-                'manim-advantages-subtitle': "作为一个专为数学可视化设计的动画引擎，Manim 拥有诸多独特优势，使其成为教育工作者和学生的理想选择",
-                'advantage1-title': "数学精确性",
-                'advantage1-desc': "Manim 专为数学设计，能够精确呈现几何图形、函数曲线和数学符号，确保动画在数学上的准确性。",
-                'advantage2-title': "编程驱动",
-                'advantage2-desc': "通过Python代码控制动画，使开发者能够精确控制每一个细节，创建可重复、可修改的动画项目。",
-                'advantage3-title': "教育价值",
-                'advantage3-desc': "能够将抽象的数学概念可视化，帮助学生更好地理解复杂的数学原理，提高学习兴趣和效率。",
-                'advantage4-title': "高度可定制",
-                'advantage4-desc': "提供丰富的自定义选项，从颜色、字体到动画速度和过渡效果，都可以根据需求进行调整。",
-                'advantage5-title': "开源社区",
-                'advantage5-desc': "作为开源项目，拥有活跃的社区支持，不断更新迭代，用户可以共享资源和解决方案。",
-                'advantage6-title': "专业级动画",
-                'advantage6-desc': "生成高质量的动画效果，支持4K分辨率输出，适合用于教学视频、学术演示和科普内容创作。",
-                'quote': "\"数学不仅仅是公式和计算，它是一种思维方式。Manim 帮助我们将这种思维方式可视化。\"",
-                'quote-author': "— 3Blue1Brown",
-                'qamanim-title': "青岛中学 QAManim 社团",
-                'qamanim-desc1': "QAManim 是青岛中学的一个学生社团，致力于通过 Manim 动画引擎创作高质量的数学可视化内容，帮助同学们更好地理解和掌握数学知识。",
-                'qamanim-desc2': "社团成员来自不同年级，共同学习 Manim 编程技术，探索数学之美，并将复杂的数学概念转化为生动有趣的动画。我们相信，可视化是理解数学的重要途径。",
-                'qamanim-point1': "定期举办 Manim 技术培训和数学可视化研讨会",
-                'qamanim-point2': "创作数学教学动画，用于课堂演示和自主学习",
-                'qamanim-point3': "参与国内外数学可视化竞赛和交流活动",
-                'qamanim-point4': "开发适合中学生的 Manim 学习资源和教程",
-                'works-title': "精选作品展示",
-                'works-subtitle': "探索 QAManim 社团和 Manim 社区的精彩作品，感受数学可视化的魅力",
-                'view': "查看",
-                'work1-title': "微积分原理可视化",
-                'work1-desc': "通过动画演示导数和积分的几何意义，帮助理解微积分基本定理。",
-                'work2-title': "线性代数变换",
-                'work2-desc': "展示矩阵如何在二维和三维空间中进行线性变换，直观理解特征值概念。",
-                'work3-title': "分形几何探索",
-                'work3-desc': "通过动画生成曼德博集合和朱利亚集合，探索分形的自相似性和无限复杂性。",
-                'join-title': "加入我们的社区",
-                'join-desc': "无论你是数学爱好者、编程学习者，还是对教育技术感兴趣，都欢迎加入我们，一起探索数学可视化的无限可能。",
-                'contact': "联系我们",
-                'github': "访问GitHub",
-                'footer-desc': "让数学变得生动有趣的动画引擎，赋能教育与学习的未来。",
-                'links': "链接",
-                'link1': "Manim 优点",
-                'link2': "QAManim 社团",
-                'link3': "学习资源",
-                'link4': "作品展示",
-                'contact-us': "联系我们",
-                'address': "中国山东省青岛市青岛中学",
-                'copyright': "© 2023 青岛中学 QAManim 社团. 保留所有权利."
-            },
-            en: {
-                manim: "Manim",
-                'hero-title': "The Future of Mathematical Animation",
-                'hero-subtitle': "Manim is a powerful mathematical animation engine developed by 3Blue1Brown, making complex mathematical concepts vivid and understandable",
-                'hero-btn1': "Explore Advantages",
-                'hero-btn2': "Learn About QAManim",
-                'manim-advantages-title': "Outstanding Advantages of Manim",
-                'manim-advantages-subtitle': "As an animation engine designed specifically for mathematical visualization, Manim has many unique advantages that make it an ideal choice for educators and students",
-                'advantage1-title': "Mathematical Precision",
-                'advantage1-desc': "Designed specifically for mathematics, Manim can accurately present geometric figures, function curves, and mathematical symbols, ensuring mathematical accuracy in animations.",
-                'advantage2-title': "Programming Driven",
-                'advantage2-desc': "Animation controlled through Python code allows developers to precisely control every detail, creating repeatable and modifiable animation projects.",
-                'advantage3-title': "Educational Value",
-                'advantage3-desc': "Able to visualize abstract mathematical concepts, helping students better understand complex mathematical principles and improving learning interest and efficiency.",
-                'advantage4-title': "Highly Customizable",
-                'advantage4-desc': "Offers rich customization options, from colors and fonts to animation speed and transition effects, all adjustable according to needs.",
-                'advantage5-title': "Open Source Community",
-                'advantage5-desc': "As an open-source project, it has active community support, continuous updates and iterations, allowing users to share resources and solutions.",
-                'advantage6-title': "Professional-grade Animation",
-                'advantage6-desc': "Generates high-quality animation effects, supports 4K resolution output, suitable for educational videos, academic presentations, and popular science content creation.",
-                'quote': "\"Mathematics is not just about formulas and calculations, it's a way of thinking. Manim helps us visualize this way of thinking.\"",
-                'quote-author': "— 3Blue1Brown",
-                'qamanim-title': "Qingdao Academy QAManim Club",
-                'qamanim-desc1': "QAManim is a student club at Qingdao Academy, dedicated to creating high-quality mathematical visualization content through the Manim animation engine, helping students better understand and master mathematical knowledge.",
-                'qamanim-desc2': "Club members come from different grades, learning Manim programming technology together, exploring the beauty of mathematics, and transforming complex mathematical concepts into vivid and interesting animations. We believe that visualization is an important way to understand mathematics.",
-                'qamanim-point1': "Regularly organize Manim technical training and mathematical visualization seminars",
-                'qamanim-point2': "Create mathematical teaching animations for classroom demonstrations and independent learning",
-                'qamanim-point3': "Participate in domestic and international mathematical visualization competitions and exchange activities",
-                'qamanim-point4': "Develop Manim learning resources and tutorials suitable for middle school students",
-                'works-title': "Featured Works",
-                'works-subtitle': "Explore wonderful works from QAManim Club and Manim community, and experience the charm of mathematical visualization",
-                'view': "View",
-                'work1-title': "Calculus Principles Visualization",
-                'work1-desc': "Demonstrates the geometric meaning of derivatives and integrals through animation, helping to understand the fundamental theorem of calculus.",
-                'work2-title': "Linear Algebra Transformations",
-                'work2-desc': "Shows how matrices perform linear transformations in 2D and 3D spaces, intuitively understanding eigenvalue concepts.",
-                'work3-title': "Fractal Geometry Exploration",
-                'work3-desc': "Generates Mandelbrot and Julia sets through animation, exploring the self-similarity and infinite complexity of fractals.",
-                'join-title': "Join Our Community",
-                'join-desc': "Whether you are a math enthusiast, programming learner, or interested in educational technology, you are welcome to join us and explore the infinite possibilities of mathematical visualization together.",
-                'contact': "Contact Us",
-                'github': "Visit GitHub",
-                'footer-desc': "An animation engine that makes mathematics vivid and interesting, empowering the future of education and learning.",
-                'links': "Links",
-                'link1': "Manim Advantages",
-                'link2': "QAManim Club",
-                'link3': "Learning Resources",
-                'link4': "Works Showcase",
-                'contact-us': "Contact Us",
-                'address': "Qingdao Academy, Shandong Province, China",
-                'copyright': "© 2023 Qingdao Academy QAManim Club. All rights reserved."
-            },
-            de: {
-                manim: "Manim",
-                'hero-title': "Die Zukunft der mathematischen Animation",
-                'hero-subtitle': "Manim ist eine leistungsstarke mathematische Animationsengine, die von 3Blue1Brown entwickelt wurde und komplexe mathematische Konzepte verständlich macht",
-                'hero-btn1': "Vorteile erkunden",
-                'hero-btn2': "QAManim kennenlernen",
-                'manim-advantages-title': "Herausragende Vorteile von Manim",
-                'manim-advantages-subtitle': "Als spezial für mathematische Visualisierung entwickelte Animationsengine verfügt Manim über viele einzigartige Vorteile, die es zu einer idealen Wahl für Pädagogen und Schüler machen",
-                'advantage1-title': "Mathematische Präzision",
-                'advantage1-desc': "Speziell für Mathematik entwickelt, kann Manim geometrische Figuren, Funktionskurven und mathematische Symbole genau darstellen und so die mathematische Richtigkeit von Animationen gewährleisten.",
-                'advantage2-title': "Programmiergesteuert",
-                'advantage2-desc': "Durch Python-Code gesteuerte Animationen ermöglichen es Entwicklern, jede Detail genau zu steuern und wiederholbare, modifizierbare Animationsprojekte zu erstellen.",
-                'advantage3-title': "Bildungswert",
-                'advantage3-desc': "Fähigkeit, abstrakte mathematische Konzepte zu visualisieren, hilft Schülern, komplexe mathematische Prinzipien besser zu verstehen und steigert das Lerninteresse und die Effizienz.",
-                'advantage4-title': "Hohe Anpassbarkeit",
-                'advantage4-desc': "Bietet reichhaltige Anpassungsoptionen, von Farben und Schriftarten bis zu Animationsgeschwindigkeit und Übergangseffekten, die alle entsprechend den Bedürfnissen angepasst werden können.",
-                'advantage5-title': "Open-Source-Community",
-                'advantage5-desc': "Als Open-Source-Projekt verfügt es über aktive Community-Unterstützung, kontinuierliche Updates und Iterationen, die es Benutzern ermöglichen, Ressourcen und Lösungen zu teilen.",
-                'advantage6-title': "Professionelle Animation",
-                'advantage6-desc': "Erzeugt hochwertige Animationseffekte, unterstützt 4K-Auflösung und eignet sich für Lehrvideos, akademische Präsentationen und populärwissenschaftliche Inhalte.",
-                'quote': "\"Mathematik ist nicht nur Formeln und Berechnungen, es ist eine Denkweise. Manim hilft uns, diese Denkweise zu visualisieren.\"",
-                'quote-author': "— 3Blue1Brown",
-                'qamanim-title': "QAManim-Club der Qingdao-Akademie",
-                'qamanim-desc1': "QAManim ist ein Schülerclub an der Qingdao-Akademie, der sich darauf konzentriert, hochwertige mathematische Visualisierungsinhalte durch die Manim-Animationsengine zu erstellen und Schülern zu helfen, mathematisches Wissen besser zu verstehen und zu meistern.",
-                'qamanim-desc2': "Clubmitglieder stammen aus verschiedenen Klassen, lernen gemeinsam Manim-Programmiertechniken, erkunden die Schönheit der Mathematik und verwandeln komplexe mathematische Konzepte in lebendige und interessante Animationen. Wir glauben, dass Visualisierung ein wichtiger Weg ist, um Mathematik zu verstehen.",
-                'qamanim-point1': "Regelmäßige Durchführung von Manim-Technikschulungen und Seminaren zur mathematischen Visualisierung",
-                'qamanim-point2': "Erstellung von mathematischen Lehranimationen für Unterrichtsvorführungen und selbstständiges Lernen",
-                'qamanim-point3': "Teilnahme an nationalen und internationalen Wettbewerben und Austauschaktivitäten zur mathematischen Visualisierung",
-                'qamanim-point4': "Entwicklung von Manim-Lernressourcen und -Tutorials für Mittelschüler",
-                'works-title': "Ausgewählte Werke",
-                'works-subtitle': "Entdecken Sie wunderbare Werke aus dem QAManim-Club und der Manim-Community und erleben Sie den Charme der mathematischen Visualisierung",
-                'view': "Ansehen",
-                'work1-title': "Visualisierung von Analysisprinzipien",
-                'work1-desc': "Demonstriert die geometrische Bedeutung von Ableitungen und Integralen durch Animationen, um das Fundamentalsatz der Analysis zu verstehen.",
-                'work2-title': "Lineare Algebra-Transformationen",
-                'work2-desc': "Zeigt, wie Matrizen lineare Transformationen in 2D- und 3D-Räumen durchführen, um Eigenwertkonzepte intuitiv zu verstehen.",
-                'work3-title': "Exploration der fraktalen Geometrie",
-                'work3-desc': "Erzeugt Mandelbrot- und Julia-Mengen durch Animationen, um die Selbstähnlichkeit und unendliche Komplexität von Fraktalen zu erkunden.",
-                'join-title': "Tritt unserer Community bei",
-                'join-desc': "Egal, ob Sie ein Mathematikbegeisterter, Programmierlerner oder an Bildungstechnologie interessiert sind – Sie sind herzlich willkommen, sich uns anzuschließen und die unendlichen Möglichkeiten der mathematischen Visualisierung gemeinsam zu erkunden.",
-                'contact': "Kontaktieren Sie uns",
-                'github': "GitHub besuchen",
-                'footer-desc': "Eine Animationsengine, die Mathematik lebendig und interessant macht und die Zukunft von Bildung und Lernen stärkt.",
-                'links': "Links",
-                'link1': "Manim-Vorteile",
-                'link2': "QAManim-Club",
-                'link3': "Lernressourcen",
-                'link4': "Werkeausstellung",
-                'contact-us': "Kontaktieren Sie uns",
-                'address': "Qingdao-Akademie, Provinz Shandong, China",
-                'copyright': "© 2023 QAManim-Club der Qingdao-Akademie. Alle Rechte vorbehalten."
-            },
-            ru: {
-                manim: "Manim",
-                'hero-title': "Будущее математической анимации",
-                'hero-subtitle': "Manim — мощный математический анимационный движок, разработанный 3Blue1Brown, делающий сложные математические понятия наглядными и понятными",
-                'hero-btn1': "Изучить преимущества",
-                'hero-btn2': "Ознакомиться с QAManim",
-                'manim-advantages-title': "Превосходные преимущества Manim",
-                'manim-advantages-subtitle': "Как анимационный движок, специально разработанный для математической визуализации, Manim обладает многими уникальными преимуществами, делающими его идеальным выбором для преподавателей и студентов",
-                'advantage1-title': "Математическая точность",
-                'advantage1-desc': "Разработанный специально для математики, Manim может точно представлять геометрические фигуры, функционные кривые и математические символы, обеспечивая математическую точность анимаций.",
-                'advantage2-title': "Программное управление",
-                'advantage2-desc': "Анимация, управляемая кодом на Python, позволяет разработчикам точно контролировать каждый деталь, создавая повторяемые и изменяемые анимационные проекты.",
-                'advantage3-title': "Образовательная ценность",
-                'advantage3-desc': "Способность визуализировать абстрактные математические понятия помогает студентам лучше понять сложные математические принципы и повышает интерес к обучению и его эффективность.",
-                'advantage4-title': "Высокая настраиваемость",
-                'advantage4-desc': "Предоставляет обширные возможности настройки — от цветов и шрифтов до скорости анимации и переходных эффектов, все можно регулировать в соответствии с потребностями.",
-                'advantage5-title': "Открытое сообщество",
-                'advantage5-desc': "Как открытый проект, он имеет активную поддержку сообщества, постоянные обновления и итерации, позволяющие пользователям делиться ресурсами и решениями.",
-                'advantage6-title': "Профессиональная анимация",
-                'advantage6-desc': "Генерирует высококачественные анимационные эффекты, поддерживает вывод в 4K-разрешении, подходит для образовательных видео, академических презентаций и создания научно-популярного контента.",
-                'quote': "\"Математика — это не только формулы и вычисления, это образ мышления. Manim помогает нам визуализировать этот образ мышления.\"",
-                'quote-author': "— 3Blue1Brown",
-                'qamanim-title': "Клуб QAManim Qingdaoской академии",
-                'qamanim-desc1': "QAManim — это студенческий клуб Qingdaoской академии, занимающийся созданием высококачественного математического визуального контента с помощью анимационного движка Manim, помогая студентам лучше понять и усвоить математические знания.",
-                'qamanim-desc2': "Члены клуба из разных классов вместе изучают программирование на Manim, исследуют красоту математики и преобразуют сложные математические понятия в живые и интересные анимации. Мы считаем, что визуализация — важный способ понимания математики.",
-                'qamanim-point1': "Регулярное проведение технических тренингов по Manim и семинаров по математической визуализации",
-                'qamanim-point2': "Создание математических обучающих анимаций для классных демонстраций и самостоятельного обучения",
-                'qamanim-point3': "Участие в национальных и международных конкурсах и обменных мероприятиях по математической визуализации",
-                'qamanim-point4': "Разработка обучающих ресурсов и туториалов по Manim для средних школьников",
-                'works-title': "Избранные работы",
-                'works-subtitle': "Изучите замечательные работы клуба QAManim и сообщества Manim, ощутите очарование математической визуализации",
-                'view': "Посмотреть",
-                'work1-title': "Визуализация принципов исчисления",
-                'work1-desc': "Демонстрирует геометрическое значение производных и интегралов через анимацию, помогая понять основную теорему исчисления.",
-                'work2-title': "Преобразования линейной алгебры",
-                'work2-desc': "Показывает, как матрицы выполняют линейные преобразования в 2D и 3D пространствах, интуитивно объясняя понятия собственных значений.",
-                'work3-title': "Исследование фрактальной геометрии",
-                'work3-desc': "Генерирует множества Мандельброта и Жюлиа через анимацию, исследуя самоподобие и бесконечную сложность фракталов.",
-                'join-title': "Присоединяйтесь к нашему сообществу",
-                'join-desc': "Без разницы, являетесь ли вы любителем математики, учащимся программированию или интересующимся образовательной технологией — вас приглашают присоединиться к нам и вместе исследовать бесконечные возможности математической визуализации.",
-                'contact': "Связаться с нами",
-                'github': "Посетить GitHub",
-                'footer-desc': "Анимационный движок, делающий математику живой и интересной, способствующий развитию образования и обучения.",
-                'links': "Ссылки",
-                'link1': "Преимущества Manim",
-                'link2': "Клуб QAManim",
-                'link3': "Обучающие ресурсы",
-                'link4': "Выставка работ",
-                'contact-us': "Связаться с нами",
-                'address': "Циндаоская академия, провинция Шаньдун, Китай",
-                'copyright': "© 2023 Клуб QAManim Циндаоской академии. Все права защищены."
-            }
+        // 存储数据的键名
+        const STORAGE_KEY = {
+            USER_NAME: 'figno91_user_name',
+            NAME_UPDATE_TIME: 'figno91_name_update_time',
+            ISSUES: 'figno91_issues'
         };
 
-        // 语言切换功能
+        // 初始化页面
         document.addEventListener('DOMContentLoaded', function() {
-            const languageButtons = document.querySelectorAll('.language-btn');
+            // 加载用户名称
+            loadUserName();
+            // 加载Issue列表
+            loadIssues();
+            // 绑定事件
+            bindEvents();
+        });
+
+        // 加载用户名称
+        function loadUserName() {
+            const userName = localStorage.getItem(STORAGE_KEY.USER_NAME);
+            const displayNameEl = document.getElementById('displayName');
             
-            // 设置默认语言
-            setLanguage('zh');
+            if (userName) {
+                displayNameEl.textContent = userName;
+            } else {
+                displayNameEl.textContent = '游客';
+            }
+        }
+
+        // 加载Issue列表
+        function loadIssues() {
+            const issues = JSON.parse(localStorage.getItem(STORAGE_KEY.ISSUES)) || [];
+            const issuesContainer = document.getElementById('issuesContainer');
             
-            // 语言按钮点击事件
-            languageButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const lang = this.getAttribute('data-lang');
-                    setLanguage(lang);
-                    
-                    // 更新活跃状态
-                    languageButtons.forEach(btn => btn.classList.remove('active', 'bg-primary/10'));
-                    this.classList.add('active', 'bg-primary/10');
-                });
+            // 清空现有内容（保留示例）
+            const exampleIssue = issuesContainer.querySelector('.issue-card');
+            issuesContainer.innerHTML = '';
+            if (exampleIssue) issuesContainer.appendChild(exampleIssue);
+            
+            // 渲染存储的Issue
+            issues.reverse().forEach(issue => {
+                const issueElement = createIssueElement(issue);
+                issuesContainer.insertBefore(issueElement, issuesContainer.firstChild);
             });
+        }
+
+        // 绑定所有事件
+        function bindEvents() {
+            // 名称设置相关
+            const nameSettingsBtn = document.getElementById('nameSettingsBtn');
+            const nameModal = document.getElementById('nameModal');
+            const closeModal = document.getElementById('closeModal');
+            const cancelName = document.getElementById('cancelName');
+            const nameForm = document.getElementById('nameForm');
             
-            // 导航栏滚动效果
-            const navbar = document.getElementById('navbar');
-            window.addEventListener('scroll', function() {
-                if (window.scrollY > 50) {
-                    navbar.classList.add('py-2', 'shadow');
-                    navbar.classList.remove('py-3');
-                } else {
-                    navbar.classList.add('py-3');
-                    navbar.classList.remove('py-2', 'shadow');
+            nameSettingsBtn.addEventListener('click', openNameModal);
+            closeModal.addEventListener('click', closeNameModal);
+            cancelName.addEventListener('click', closeNameModal);
+            nameForm.addEventListener('submit', handleNameSubmit);
+
+            // 点击模态框外部关闭
+            nameModal.addEventListener('click', function(e) {
+                if (e.target === nameModal) closeNameModal();
+            });
+
+            // 发布Issue
+            const issueForm = document.getElementById('issueForm');
+            issueForm.addEventListener('submit', handleIssueSubmit);
+
+            // 回复相关
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.replyToggle')) {
+                    const replyForm = e.target.closest('.issue-card').querySelector('.replyForm');
+                    replyForm.classList.toggle('hidden');
                 }
             });
-            
-            // 平滑滚动
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
+
+            // 回复提交
+            document.addEventListener('submit', function(e) {
+                if (e.target.classList.contains('replyForm')) {
                     e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    const targetElement = document.querySelector(targetId);
-                    
-                    if (targetElement) {
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 80,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
-            
-            // 添加元素进入视图时的动画
-            const animateOnScroll = function() {
-                const elements = document.querySelectorAll('section > div > div');
-                
-                elements.forEach(element => {
-                    const elementPosition = element.getBoundingClientRect().top;
-                    const windowHeight = window.innerHeight;
-                    
-                    if (elementPosition < windowHeight * 0.85) {
-                        element.classList.add('opacity-100', 'translate-y-0');
-                        element.classList.remove('opacity-0', 'translate-y-8');
-                    }
-                });
-            };
-            
-            // 初始设置
-            document.querySelectorAll('section > div > div').forEach(el => {
-                el.classList.add('transition-transform-opacity', 'duration-700', 'ease-out', 'opacity-0', 'translate-y-8');
-            });
-            
-            // 初始检查
-            animateOnScroll();
-            
-            // 滚动时检查
-            window.addEventListener('scroll', animateOnScroll);
-        });
-        
-        // 设置语言函数
-        function setLanguage(lang) {
-            if (!translations[lang]) return;
-            
-            // 获取所有带有 lang- 类的元素
-            const elements = document.querySelectorAll('[class*="lang-"]');
-            
-            elements.forEach(element => {
-                // 获取语言键
-                const classes = Array.from(element.classList);
-                const langClass = classes.find(cls => cls.startsWith('lang-'));
-                if (!langClass) return;
-                
-                const key = langClass.substring(5); // 移除 "lang-" 前缀
-                
-                // 设置文本
-                if (translations[lang][key]) {
-                    element.textContent = translations[lang][key];
+                    handleReplySubmit(e.target);
                 }
             });
         }
+
+        // 打开名称设置模态框
+        function openNameModal() {
+            const userName = localStorage.getItem(STORAGE_KEY.USER_NAME);
+            const userNameInput = document.getElementById('userName');
+            const nameModal = document.getElementById('nameModal');
+            
+            userNameInput.value = userName || '';
+            nameModal.classList.remove('hidden');
+            
+            // 检查是否可以修改名称
+            const lastUpdateTime = localStorage.getItem(STORAGE_KEY.NAME_UPDATE_TIME);
+            const now = new Date().getTime();
+            const threeMonths = 3 * 30 * 24 * 60 * 60 * 1000; // 3个月毫秒数
+            
+            if (lastUpdateTime && now - lastUpdateTime < threeMonths) {
+                userNameInput.disabled = true;
+                const disableMessage = document.createElement('p');
+                disableMessage.className = 'text-sm text-red-500 mt-1';
+                disableMessage.textContent = '距离上次修改不足3个月，暂时无法修改';
+                
+                const parent = userNameInput.parentElement;
+                if (!parent.querySelector('.text-red-500')) {
+                    parent.appendChild(disableMessage);
+                }
+            } else {
+                userNameInput.disabled = false;
+                const disableMessage = userNameInput.parentElement.querySelector('.text-red-500');
+                if (disableMessage) disableMessage.remove();
+            }
+        }
+
+        // 关闭名称设置模态框
+        function closeNameModal() {
+            document.getElementById('nameModal').classList.add('hidden');
+        }
+
+        // 处理名称提交
+        function handleNameSubmit(e) {
+            e.preventDefault();
+            
+            const userNameInput = document.getElementById('userName');
+            const userName = userNameInput.value.trim();
+            
+            if (userName && userName.length <= 20) { // 限制名称长度
+                localStorage.setItem(STORAGE_KEY.USER_NAME, userName);
+                localStorage.setItem(STORAGE_KEY.NAME_UPDATE_TIME, new Date().getTime().toString());
+                
+                document.getElementById('displayName').textContent = userName;
+                closeNameModal();
+                
+                // 显示成功提示
+                showToast('名称设置成功！');
+            } else {
+                showToast('请输入有效的名称（1-20个字符）', 'error');
+            }
+        }
+
+        // 处理Issue提交
+        function handleIssueSubmit(e) {
+            e.preventDefault();
+            
+            const titleInput = document.getElementById('issueTitle');
+            const contentInput = document.getElementById('issueContent');
+            
+            const title = titleInput.value.trim();
+            const content = contentInput.value.trim();
+            const userName = localStorage.getItem(STORAGE_KEY.USER_NAME) || '游客';
+            const timestamp = new Date().getTime();
+            const dateStr = new Date(timestamp).toLocaleString('zh-CN', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            
+            // 创建新Issue
+            const newIssue = {
+                id: timestamp.toString(),
+                title,
+                content,
+                author: userName,
+                date: dateStr,
+                timestamp,
+                replies: []
+            };
+            
+            // 保存到本地存储
+            const issues = JSON.parse(localStorage.getItem(STORAGE_KEY.ISSUES)) || [];
+            issues.push(newIssue);
+            localStorage.setItem(STORAGE_KEY.ISSUES, JSON.stringify(issues));
+            
+            // 渲染新Issue
+            const issuesContainer = document.getElementById('issuesContainer');
+            const exampleIssue = issuesContainer.querySelector('.issue-card');
+            const newIssueElement = createIssueElement(newIssue);
+            
+            issuesContainer.insertBefore(newIssueElement, exampleIssue);
+            
+            // 清空表单
+            titleInput.value = '';
+            contentInput.value = '';
+            
+            // 显示成功提示
+            showToast('Issue发布成功！');
+        }
+
+        // 处理回复提交
+        function handleReplySubmit(replyForm) {
+            const contentInput = replyForm.querySelector('textarea');
+            const content = contentInput.value.trim();
+            const issueCard = replyForm.closest('.issue-card');
+            const issueId = issueCard.dataset.issueId;
+            const userName = localStorage.getItem(STORAGE_KEY.USER_NAME) || '游客';
+            
+            if (!content) {
+                showToast('请输入回复内容', 'error');
+                return;
+            }
+            
+            // 创建新回复
+            const timestamp = new Date().getTime();
+            const dateStr = new Date(timestamp).toLocaleString('zh-CN', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            
+            const newReply = {
+                id: timestamp.toString(),
+                author: userName,
+                content,
+                date: dateStr,
+                timestamp
+            };
+            
+            // 更新本地存储
+            const issues = JSON.parse(localStorage.getItem(STORAGE_KEY.ISSUES)) || [];
+            const issueIndex = issues.findIndex(issue => issue.id === issueId);
+            
+            if (issueIndex !== -1) {
+                issues[issueIndex].replies.push(newReply);
+                localStorage.setItem(STORAGE_KEY.ISSUES, JSON.stringify(issues));
+                
+                // 渲染新回复
+                const repliesList = issueCard.querySelector('.replies-list');
+                const replyElement = createReplyElement(newReply);
+                repliesList.appendChild(replyElement);
+                
+                // 清空回复框
+                contentInput.value = '';
+                
+                // 更新回复计数
+                const replyCountEl = issueCard.querySelector('.fa-comment-o').nextElementSibling;
+                const currentCount = parseInt(replyCountEl.textContent);
+                replyCountEl.textContent = (currentCount + 1) + '条回复';
+                
+                // 显示成功提示
+                showToast('回复成功！');
+            }
+        }
+
+        // 创建Issue元素
+        function createIssueElement(issue) {
+            const div = document.createElement('div');
+            div.className = 'issue-card';
+            div.dataset.issueId = issue.id;
+            
+            // 计算回复数
+            const replyCount = issue.replies ? issue.replies.length : 0;
+            
+            div.innerHTML = `
+                <div class="flex justify-between items-start mb-2">
+                    <h3 class="text-lg font-semibold text-dark">${escapeHtml(issue.title)}</h3>
+                    <span class="text-xs text-gray-500">${issue.date}</span>
+                </div>
+                <div class="text-gray-700 mb-4">
+                    ${escapeHtml(issue.content).replace(/\n/g, '<br>')}
+                </div>
+                <div class="flex justify-between items-center text-sm text-gray-500 mb-4">
+                    <div class="flex items-center">
+                        <i class="fa fa-user-o mr-1"></i>
+                        <span>${escapeHtml(issue.author)}</span>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <button class="replyToggle flex items-center hover:text-primary transition-colors">
+                            <i class="fa fa-reply mr-1"></i>
+                            <span>回复</span>
+                        </button>
+                        <span class="flex items-center">
+                            <i class="fa fa-comment-o mr-1"></i>
+                            <span>${replyCount}条回复</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="replies-container mt-4 pt-4 border-t border-gray-100">
+                    <form class="replyForm space-y-2 mb-4 hidden">
+                        <textarea class="input-field h-20 resize-none" placeholder="输入你的回复..." required></textarea>
+                        <div class="flex justify-end">
+                            <button type="submit" class="btn-primary text-sm px-3 py-1">
+                                提交回复
+                            </button>
+                        </div>
+                    </form>
+                    <div class="replies-list space-y-3">
+                        ${issue.replies ? issue.replies.map(reply => createReplyElement(reply).outerHTML).join('') : ''}
+                    </div>
+                </div>
+            `;
+            
+            return div;
+        }
+
+        // 创建回复元素
+        function createReplyElement(reply) {
+            const div = document.createElement('div');
+            div.className = 'bg-gray-50 p-3 rounded-md';
+            
+            div.innerHTML = `
+                <div class="flex justify-between items-center mb-1">
+                    <span class="text-sm font-medium">${escapeHtml(reply.author)}</span>
+                    <span class="text-xs text-gray-500">${reply.date}</span>
+                </div>
+                <p class="text-sm text-gray-700">${escapeHtml(reply.content).replace(/\n/g, '<br>')}</p>
+            `;
+            
+            return div;
+        }
+
+        // 显示提示框
+        function showToast(message, type = 'success') {
+            // 移除已存在的toast
+            const existingToast = document.querySelector('.toast');
+            if (existingToast) existingToast.remove();
+            
+            // 创建新toast
+            const toast = document.createElement('div');
+            toast.className = `toast fixed bottom-4 right-4 px-4 py-2 rounded-md shadow-lg flex items-center space-x-2 z-50 transition-all duration-300 transform translate-y-0 opacity-100`;
+            
+            if (type === 'success') {
+                toast.classList.add('bg-green-500', 'text-white');
+                toast.innerHTML = `<i class="fa fa-check-circle"></i><span>${message}</span>`;
+            } else {
+                toast.classList.add('bg-red-500', 'text-white');
+                toast.innerHTML = `<i class="fa fa-exclamation-circle"></i><span>${message}</span>`;
+            }
+            
+            document.body.appendChild(toast);
+            
+            // 3秒后隐藏
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-4');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // HTML转义，防止XSS攻击
+        function escapeHtml(unsafe) {
+            if (!unsafe) return '';
+            return unsafe
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
     </script>
-</body>
-</html>
+
+</body></html>
