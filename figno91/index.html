@@ -207,10 +207,26 @@
                 <h1 class="text-xl md:text-2xl font-bold text-primary">∫igno 91</h1>
             </div>
             <div class="flex items-center space-x-3">
-                <button id="nameSettingsBtn" class="btn-outline flex items-center space-x-1">
-                    <i class="fa fa-user-circle-o"></i>
-                    <span id="displayName">Liu Jinxuan/刘锦轩</span>
-                </button>
+                <div id="guestActions" class="flex items-center space-x-3">
+                    <button id="loginBtn" class="btn-outline flex items-center space-x-1">
+                        <i class="fa fa-sign-in"></i>
+                        <span>登录</span>
+                    </button>
+                    <button id="registerBtn" class="btn-primary flex items-center space-x-1">
+                        <i class="fa fa-user-plus"></i>
+                        <span>注册</span>
+                    </button>
+                </div>
+                <div id="userActions" class="flex items-center space-x-3 hidden">
+                    <button id="nameSettingsBtn" class="btn-outline flex items-center space-x-1">
+                        <i class="fa fa-user-circle-o"></i>
+                        <span id="displayName">用户</span>
+                    </button>
+                    <button id="logoutBtn" class="btn-outline flex items-center space-x-1">
+                        <i class="fa fa-sign-out"></i>
+                        <span>退出</span>
+                    </button>
+                </div>
             </div>
         </div>
     </header>
@@ -218,7 +234,7 @@
     <!-- 主内容区 -->
     <main class="container mx-auto px-4 py-8">
         <!-- 发布Issue区域 -->
-        <section class="issue-card mb-8">
+        <section id="publishSection" class="issue-card mb-8 hidden">
             <h2 class="text-xl font-bold mb-4 flex items-center">
                 <i class="fa fa-pencil-square-o text-primary mr-2"></i>
                 发布新文章
@@ -241,6 +257,14 @@
             </form>
         </section>
 
+        <!-- 未登录提示 -->
+        <section id="loginPrompt" class="issue-card mb-8 text-center py-8">
+            <i class="fa fa-info-circle text-4xl text-primary mb-4"></i>
+            <h2 class="text-xl font-bold mb-2">需要登录才能发布内容</h2>
+            <p class="text-gray-600 mb-4">登录后可以发布文章、回复评论，参与社区讨论</p>
+            <button id="promptLoginBtn" class="btn-primary">立即登录</button>
+        </section>
+
         <!-- Issue列表区域 -->
         <section>
             <h2 class="text-xl font-bold mb-4 flex items-center">
@@ -254,7 +278,7 @@
     <!-- 页脚 -->
     <footer class="bg-white border-t border-gray-200 py-6 mt-12">
         <div class="container mx-auto px-4 text-center text-gray-600 text-sm">
-            <p>© 2025 ∫igno 91 - 匿名Issue分享平台 | 无需注册，自由交流</p>
+            <p>© 2025 ∫igno 91 - 匿名Issue分享平台 | 登录后可自由交流</p>
             <p class="mt-2">
                 <a href="#" class="hover:text-primary transition-colors mx-2">使用说明</a>
                 <a href="#" class="hover:text-primary transition-colors mx-2">隐私政策</a>
@@ -263,12 +287,83 @@
         </div>
     </footer>
 
+    <!-- 登录模态框 -->
+    <div id="loginModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-md p-6 space-y-4">
+            <div class="flex justify-between items-center mb-2">
+                <h3 class="text-lg font-bold">用户登录</h3>
+                <button class="closeModal text-gray-500 hover:text-gray-700">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+            <form id="loginForm" class="space-y-4">
+                <div>
+                    <label for="loginUsername" class="block text-sm font-medium text-gray-700">用户名</label>
+                    <input type="text" id="loginUsername" class="input-field" placeholder="输入用户名" required>
+                </div>
+                <div>
+                    <label for="loginPassword" class="block text-sm font-medium text-gray-700">密码</label>
+                    <input type="password" id="loginPassword" class="input-field" placeholder="输入密码" required>
+                </div>
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center">
+                        <input type="checkbox" id="rememberMe" class="mr-2">
+                        <label for="rememberMe" class="text-sm text-gray-600">记住我</label>
+                    </div>
+                    <a href="#" class="text-sm text-primary hover:underline">忘记密码?</a>
+                </div>
+                <div class="flex justify-end space-x-3">
+                    <button type="button" class="cancelBtn btn-outline">取消</button>
+                    <button type="submit" class="btn-primary">登录</button>
+                </div>
+            </form>
+            <div class="text-center text-sm text-gray-600">
+                还没有账号? <a href="#" id="switchToRegister" class="text-primary hover:underline">立即注册</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 注册模态框 -->
+    <div id="registerModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-md p-6 space-y-4">
+            <div class="flex justify-between items-center mb-2">
+                <h3 class="text-lg font-bold">用户注册</h3>
+                <button class="closeModal text-gray-500 hover:text-gray-700">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+            <form id="registerForm" class="space-y-4">
+                <div>
+                    <label for="regUsername" class="block text-sm font-medium text-gray-700">用户名</label>
+                    <input type="text" id="regUsername" class="input-field" placeholder="输入用户名 (3-20个字符)" required>
+                    <p id="usernameError" class="text-sm text-red-500 mt-1 hidden">用户名已存在</p>
+                </div>
+                <div>
+                    <label for="regPassword" class="block text-sm font-medium text-gray-700">密码</label>
+                    <input type="password" id="regPassword" class="input-field" placeholder="输入密码 (至少6个字符)" required>
+                </div>
+                <div>
+                    <label for="regConfirmPassword" class="block text-sm font-medium text-gray-700">确认密码</label>
+                    <input type="password" id="regConfirmPassword" class="input-field" placeholder="再次输入密码" required>
+                    <p id="passwordError" class="text-sm text-red-500 mt-1 hidden">两次密码不一致</p>
+                </div>
+                <div class="flex justify-end space-x-3">
+                    <button type="button" class="cancelBtn btn-outline">取消</button>
+                    <button type="submit" class="btn-primary">注册</button>
+                </div>
+            </form>
+            <div class="text-center text-sm text-gray-600">
+                已有账号? <a href="#" id="switchToLogin" class="text-primary hover:underline">立即登录</a>
+            </div>
+        </div>
+    </div>
+
     <!-- 名称设置模态框 -->
     <div id="nameModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
         <div class="bg-white rounded-lg shadow-xl w-full max-w-md p-6 space-y-4">
             <div class="flex justify-between items-center mb-2">
                 <h3 class="text-lg font-bold">设置你的名称</h3>
-                <button id="closeModal" class="text-gray-500 hover:text-gray-700">
+                <button class="closeModal text-gray-500 hover:text-gray-700">
                     <i class="fa fa-times"></i>
                 </button>
             </div>
@@ -276,13 +371,13 @@
                 <div>
                     <label for="userName" class="block text-sm font-medium text-gray-700">显示名称</label>
                     <input type="text" id="userName" class="input-field" placeholder="输入你想显示的名称" required disabled>
-                    <p class="text-sm text-red-500 mt-1">距离上次修改不足3个月，暂时无法修改</p>
+                    <p class="text-sm text-red-500 mt-1 hidden">距离上次修改不足3个月，暂时无法修改</p>
                 </div>
                 <div class="text-sm text-gray-500">
-                    <p>提示：每个IP地址每3个月可修改一次名称</p>
+                    <p>提示：每个用户每3个月可修改一次名称</p>
                 </div>
                 <div class="flex justify-end space-x-3">
-                    <button type="button" id="cancelName" class="btn-outline">取消</button>
+                    <button type="button" class="cancelBtn btn-outline">取消</button>
                     <button type="submit" class="btn-primary">保存</button>
                 </div>
             </form>
@@ -292,8 +387,10 @@
     <script>
         // 存储数据的键名
         const STORAGE_KEY = {
-            USER_NAME: 'figno91_user_name',
-            NAME_UPDATE_TIME: 'figno91_name_update_time',
+            USERS: 'figno91_users',
+            CURRENT_USER: 'figno91_current_user',
+            USER_NAME: 'figno91_user_name_', // 后面加上用户名
+            NAME_UPDATE_TIME: 'figno91_name_update_time_', // 后面加上用户名
             ISSUES: 'figno91_issues'
         };
 
@@ -301,13 +398,26 @@
         document.addEventListener('DOMContentLoaded', function() {
             // 初始化默认Issue（如果本地存储为空）
             initDefaultIssues();
-            // 加载用户名称
-            loadUserName();
+            // 初始化用户数据（如果本地存储为空）
+            initDefaultUsers();
+            // 检查登录状态
+            checkLoginStatus();
             // 加载Issue列表
             loadIssues();
             // 绑定事件
             bindEvents();
         });
+
+        // 初始化默认用户数据
+        function initDefaultUsers() {
+            if (!localStorage.getItem(STORAGE_KEY.USERS)) {
+                // 默认用户（仅用于测试）
+                const defaultUsers = [
+                    { username: 'testuser', password: 'test123', displayName: '测试用户' }
+                ];
+                localStorage.setItem(STORAGE_KEY.USERS, JSON.stringify(defaultUsers));
+            }
+        }
 
         // 初始化默认Issue
         function initDefaultIssues() {
@@ -319,11 +429,13 @@
                     title: 'Test',
                     content: '这是一个示例 issue。',
                     author: 'Liu Jinxuan/刘锦轩',
+                    authorUsername: 'testuser',
                     date: '2025/11/27 21:23',
                     timestamp: 1764249813294,
                     replies: [{
                         id: '1764249814000',
                         author: 'Liu Jinxuan/刘锦轩',
+                        authorUsername: 'testuser',
                         content: 'test?',
                         date: '2025/11/27 21:23',
                         timestamp: 1764249814000
@@ -334,20 +446,23 @@
                 const exampleIssue2 = {
                     id: '1764163200000',
                     title: '这是一个示例Issue',
-                    content: '这是示例Issue的内容，游客可以在这里分享想法、提出问题或交流讨论。无需注册即可参与，快来发表你的观点吧！',
+                    content: '这是示例Issue的内容，登录用户可以在这里分享想法、提出问题或交流讨论。登录后即可参与，快来发表你的观点吧！',
                     author: '示例用户',
+                    authorUsername: 'testuser',
                     date: '2025-11-26 10:00',
                     timestamp: 1764163200000,
                     replies: [{
                         id: '1764165000000',
                         author: '用户A',
+                        authorUsername: 'userA',
                         content: '这个示例很有帮助，我也想分享我的想法！',
                         date: '2025-11-26 10:30',
                         timestamp: 1764165000000
                     }, {
                         id: '1764167700000',
                         author: '用户B',
-                        content: '支持这种匿名分享的方式，非常方便！',
+                        authorUsername: 'userB',
+                        content: '支持这个平台，非常方便！',
                         date: '2025-11-26 11:15',
                         timestamp: 1764167700000
                     }]
@@ -357,16 +472,36 @@
             }
         }
 
-        // 加载用户名称
-        function loadUserName() {
-            const userName = localStorage.getItem(STORAGE_KEY.USER_NAME);
-            const displayNameEl = document.getElementById('displayName');
-            
-            if (userName) {
-                displayNameEl.textContent = userName;
+        // 检查登录状态
+        function checkLoginStatus() {
+            const currentUser = getCurrentUser();
+            if (currentUser) {
+                // 已登录状态
+                document.getElementById('guestActions').classList.add('hidden');
+                document.getElementById('userActions').classList.remove('hidden');
+                document.getElementById('publishSection').classList.remove('hidden');
+                document.getElementById('loginPrompt').classList.add('hidden');
+                
+                // 加载用户显示名称
+                const displayName = getUserDisplayName(currentUser.username);
+                document.getElementById('displayName').textContent = displayName || currentUser.username;
             } else {
-                displayNameEl.textContent = '游客';
+                // 未登录状态
+                document.getElementById('guestActions').classList.remove('hidden');
+                document.getElementById('userActions').classList.add('hidden');
+                document.getElementById('publishSection').classList.add('hidden');
+                document.getElementById('loginPrompt').classList.remove('hidden');
             }
+        }
+
+        // 获取当前登录用户
+        function getCurrentUser() {
+            return JSON.parse(localStorage.getItem(STORAGE_KEY.CURRENT_USER));
+        }
+
+        // 获取用户显示名称
+        function getUserDisplayName(username) {
+            return localStorage.getItem(STORAGE_KEY.USER_NAME + username);
         }
 
         // 加载Issue列表
@@ -386,30 +521,81 @@
 
         // 绑定所有事件
         function bindEvents() {
-            // 名称设置相关
-            const nameSettingsBtn = document.getElementById('nameSettingsBtn');
-            const nameModal = document.getElementById('nameModal');
-            const closeModal = document.getElementById('closeModal');
-            const cancelName = document.getElementById('cancelName');
-            const nameForm = document.getElementById('nameForm');
-            
-            nameSettingsBtn.addEventListener('click', openNameModal);
-            closeModal.addEventListener('click', closeNameModal);
-            cancelName.addEventListener('click', closeNameModal);
-            nameForm.addEventListener('submit', handleNameSubmit);
-
-            // 点击模态框外部关闭
-            nameModal.addEventListener('click', function(e) {
-                if (e.target === nameModal) closeNameModal();
+            // 模态框通用关闭事件
+            document.querySelectorAll('.closeModal, .cancelBtn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.fixed.inset-0').forEach(modal => {
+                        modal.classList.add('hidden');
+                    });
+                });
             });
 
+            // 点击模态框外部关闭
+            document.querySelectorAll('.fixed.inset-0').forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === modal) {
+                        modal.classList.add('hidden');
+                    }
+                });
+            });
+
+            // 登录/注册切换
+            document.getElementById('switchToRegister').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('loginModal').classList.add('hidden');
+                document.getElementById('registerModal').classList.remove('hidden');
+            });
+
+            document.getElementById('switchToLogin').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('registerModal').classList.add('hidden');
+                document.getElementById('loginModal').classList.remove('hidden');
+            });
+
+            // 登录相关
+            document.getElementById('loginBtn').addEventListener('click', function() {
+                document.getElementById('loginModal').classList.remove('hidden');
+            });
+
+            document.getElementById('promptLoginBtn').addEventListener('click', function() {
+                document.getElementById('loginModal').classList.remove('hidden');
+            });
+
+            document.getElementById('loginForm').addEventListener('submit', handleLogin);
+
+            // 注册相关
+            document.getElementById('registerBtn').addEventListener('click', function() {
+                document.getElementById('registerModal').classList.remove('hidden');
+            });
+
+            document.getElementById('registerForm').addEventListener('submit', handleRegister);
+            
+            // 检查用户名是否存在
+            document.getElementById('regUsername').addEventListener('blur', checkUsernameExists);
+            
+            // 检查密码是否一致
+            document.getElementById('regConfirmPassword').addEventListener('blur', checkPasswordMatch);
+
+            // 退出登录
+            document.getElementById('logoutBtn').addEventListener('click', handleLogout);
+
+            // 名称设置相关
+            document.getElementById('nameSettingsBtn').addEventListener('click', openNameModal);
+            document.getElementById('nameForm').addEventListener('submit', handleNameSubmit);
+
             // 发布Issue
-            const issueForm = document.getElementById('issueForm');
-            issueForm.addEventListener('submit', handleIssueSubmit);
+            document.getElementById('issueForm').addEventListener('submit', handleIssueSubmit);
 
             // 回复切换显示
             document.addEventListener('click', function(e) {
                 if (e.target.closest('.replyToggle')) {
+                    const currentUser = getCurrentUser();
+                    if (!currentUser) {
+                        showToast('请先登录后再回复', 'error');
+                        document.getElementById('loginModal').classList.remove('hidden');
+                        return;
+                    }
+                    
                     const replyToggle = e.target.closest('.replyToggle');
                     const issueCard = replyToggle.closest('.issue-card');
                     const replyForm = issueCard.querySelector('.replyForm');
@@ -427,55 +613,165 @@
             });
         }
 
+        // 处理登录
+        function handleLogin(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            const rememberMe = document.getElementById('rememberMe').checked;
+            
+            const users = JSON.parse(localStorage.getItem(STORAGE_KEY.USERS)) || [];
+            const user = users.find(u => u.username === username && u.password === password);
+            
+            if (user) {
+                // 登录成功
+                if (rememberMe) {
+                    localStorage.setItem(STORAGE_KEY.CURRENT_USER, JSON.stringify(user));
+                } else {
+                    sessionStorage.setItem(STORAGE_KEY.CURRENT_USER, JSON.stringify(user));
+                }
+                
+                document.getElementById('loginModal').classList.add('hidden');
+                showToast('登录成功！');
+                checkLoginStatus();
+            } else {
+                // 登录失败
+                showToast('用户名或密码错误', 'error');
+            }
+        }
+
+        // 处理注册
+        function handleRegister(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('regUsername').value.trim();
+            const password = document.getElementById('regPassword').value;
+            
+            // 再次检查用户名是否存在和密码是否一致
+            if (checkUsernameExists() || checkPasswordMatch()) {
+                return;
+            }
+            
+            const users = JSON.parse(localStorage.getItem(STORAGE_KEY.USERS)) || [];
+            
+            // 创建新用户
+            const newUser = {
+                username: username,
+                password: password,
+                displayName: username // 默认显示名称为用户名
+            };
+            
+            users.push(newUser);
+            localStorage.setItem(STORAGE_KEY.USERS, JSON.stringify(users));
+            
+            // 自动登录新用户
+            localStorage.setItem(STORAGE_KEY.CURRENT_USER, JSON.stringify(newUser));
+            
+            // 保存初始显示名称
+            localStorage.setItem(STORAGE_KEY.USER_NAME + username, username);
+            localStorage.setItem(STORAGE_KEY.NAME_UPDATE_TIME + username, new Date().getTime().toString());
+            
+            document.getElementById('registerModal').classList.add('hidden');
+            showToast('注册成功！已自动登录');
+            checkLoginStatus();
+        }
+
+        // 检查用户名是否存在
+        function checkUsernameExists() {
+            const username = document.getElementById('regUsername').value.trim();
+            const usernameError = document.getElementById('usernameError');
+            
+            if (!username) {
+                usernameError.classList.add('hidden');
+                return false;
+            }
+            
+            const users = JSON.parse(localStorage.getItem(STORAGE_KEY.USERS)) || [];
+            const exists = users.some(u => u.username === username);
+            
+            if (exists) {
+                usernameError.classList.remove('hidden');
+                return true;
+            } else {
+                usernameError.classList.add('hidden');
+                return false;
+            }
+        }
+
+        // 检查密码是否一致
+        function checkPasswordMatch() {
+            const password = document.getElementById('regPassword').value;
+            const confirmPassword = document.getElementById('regConfirmPassword').value;
+            const passwordError = document.getElementById('passwordError');
+            
+            if (password !== confirmPassword) {
+                passwordError.classList.remove('hidden');
+                return true;
+            } else {
+                passwordError.classList.add('hidden');
+                return false;
+            }
+        }
+
+        // 处理退出登录
+        function handleLogout() {
+            localStorage.removeItem(STORAGE_KEY.CURRENT_USER);
+            sessionStorage.removeItem(STORAGE_KEY.CURRENT_USER);
+            
+            showToast('已退出登录');
+            checkLoginStatus();
+        }
+
         // 打开名称设置模态框
         function openNameModal() {
-            const userName = localStorage.getItem(STORAGE_KEY.USER_NAME);
+            const currentUser = getCurrentUser();
+            if (!currentUser) return;
+            
+            const username = currentUser.username;
+            const displayName = getUserDisplayName(username) || username;
             const userNameInput = document.getElementById('userName');
             const nameModal = document.getElementById('nameModal');
             
-            userNameInput.value = userName || '';
+            userNameInput.value = displayName;
             nameModal.classList.remove('hidden');
             
             // 检查是否可以修改名称
-            const lastUpdateTime = localStorage.getItem(STORAGE_KEY.NAME_UPDATE_TIME);
+            const lastUpdateTime = localStorage.getItem(STORAGE_KEY.NAME_UPDATE_TIME + username);
             const now = new Date().getTime();
             const threeMonths = 3 * 30 * 24 * 60 * 60 * 1000; // 3个月毫秒数
             
             if (lastUpdateTime && now - lastUpdateTime < threeMonths) {
                 userNameInput.disabled = true;
-                const disableMessage = document.createElement('p');
-                disableMessage.className = 'text-sm text-red-500 mt-1';
-                disableMessage.textContent = '距离上次修改不足3个月，暂时无法修改';
-                
-                const parent = userNameInput.parentElement;
-                if (!parent.querySelector('.text-red-500')) {
-                    parent.appendChild(disableMessage);
-                }
+                const disableMessage = userNameInput.parentElement.querySelector('.text-red-500');
+                if (disableMessage) disableMessage.classList.remove('hidden');
             } else {
                 userNameInput.disabled = false;
                 const disableMessage = userNameInput.parentElement.querySelector('.text-red-500');
-                if (disableMessage) disableMessage.remove();
+                if (disableMessage) disableMessage.classList.add('hidden');
             }
-        }
-
-        // 关闭名称设置模态框
-        function closeNameModal() {
-            document.getElementById('nameModal').classList.add('hidden');
         }
 
         // 处理名称提交
         function handleNameSubmit(e) {
             e.preventDefault();
             
+            const currentUser = getCurrentUser();
+            if (!currentUser) return;
+            
+            const username = currentUser.username;
             const userNameInput = document.getElementById('userName');
             const userName = userNameInput.value.trim();
             
             if (userName && userName.length <= 20) { // 限制名称长度
-                localStorage.setItem(STORAGE_KEY.USER_NAME, userName);
-                localStorage.setItem(STORAGE_KEY.NAME_UPDATE_TIME, new Date().getTime().toString());
+                localStorage.setItem(STORAGE_KEY.USER_NAME + username, userName);
+                localStorage.setItem(STORAGE_KEY.NAME_UPDATE_TIME + username, new Date().getTime().toString());
                 
                 document.getElementById('displayName').textContent = userName;
-                closeNameModal();
+                document.getElementById('nameModal').classList.add('hidden');
+                
+                // 更新所有相关Issue和回复的作者名称
+                updateAuthorNames(username, userName);
                 
                 // 显示成功提示
                 showToast('名称设置成功！');
@@ -484,16 +780,47 @@
             }
         }
 
+        // 更新所有相关Issue和回复的作者名称
+        function updateAuthorNames(username, newName) {
+            const issues = JSON.parse(localStorage.getItem(STORAGE_KEY.ISSUES)) || [];
+            
+            // 更新Issue的作者名称
+            issues.forEach(issue => {
+                if (issue.authorUsername === username) {
+                    issue.author = newName;
+                }
+                
+                // 更新回复的作者名称
+                if (issue.replies) {
+                    issue.replies.forEach(reply => {
+                        if (reply.authorUsername === username) {
+                            reply.author = newName;
+                        }
+                    });
+                }
+            });
+            
+            localStorage.setItem(STORAGE_KEY.ISSUES, JSON.stringify(issues));
+            loadIssues(); // 重新加载Issue列表
+        }
+
         // 处理Issue提交
         function handleIssueSubmit(e) {
             e.preventDefault();
+            
+            const currentUser = getCurrentUser();
+            if (!currentUser) {
+                showToast('请先登录后再发布内容', 'error');
+                document.getElementById('loginModal').classList.remove('hidden');
+                return;
+            }
             
             const titleInput = document.getElementById('issueTitle');
             const contentInput = document.getElementById('issueContent');
             
             const title = titleInput.value.trim();
             const content = contentInput.value.trim();
-            const userName = localStorage.getItem(STORAGE_KEY.USER_NAME) || '游客';
+            const displayName = getUserDisplayName(currentUser.username) || currentUser.username;
             const timestamp = new Date().getTime();
             const dateStr = new Date(timestamp).toLocaleString('zh-CN', {
                 year: 'numeric',
@@ -508,7 +835,8 @@
                 id: timestamp.toString(),
                 title,
                 content,
-                author: userName,
+                author: displayName,
+                authorUsername: currentUser.username,
                 date: dateStr,
                 timestamp,
                 replies: []
@@ -532,11 +860,18 @@
 
         // 处理回复提交
         function handleReplySubmit(replyForm) {
+            const currentUser = getCurrentUser();
+            if (!currentUser) {
+                showToast('请先登录后再回复', 'error');
+                document.getElementById('loginModal').classList.remove('hidden');
+                return;
+            }
+            
             const contentInput = replyForm.querySelector('textarea');
             const content = contentInput.value.trim();
             const issueCard = replyForm.closest('.issue-card');
             const issueId = issueCard.dataset.issueId;
-            const userName = localStorage.getItem(STORAGE_KEY.USER_NAME) || '游客';
+            const displayName = getUserDisplayName(currentUser.username) || currentUser.username;
             
             if (!content) {
                 showToast('请输入回复内容', 'error');
@@ -555,7 +890,8 @@
             
             const newReply = {
                 id: timestamp.toString(),
-                author: userName,
+                author: displayName,
+                authorUsername: currentUser.username,
                 content,
                 date: dateStr,
                 timestamp
@@ -571,6 +907,9 @@
                 
                 // 重新加载Issue列表
                 loadIssues();
+                
+                // 清空回复框
+                contentInput.value = '';
                 
                 // 显示成功提示
                 showToast('回复成功！');
