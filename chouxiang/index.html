@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>奶龙与暴暴龙角色剖面密度研究</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', 'Noto Sans SC', sans-serif;
+            background-color: #FFFFFF;
+        }
+        .card {
+            background-color: white;
+            border: 1px solid #E5E7EB;
+            border-radius: 1.25rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            overflow: hidden;
+            position: relative;
+        }
+        .card:hover {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        .highlight-gradient-yellow {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0), rgba(251, 191, 36, 0.05));
+        }
+        .highlight-gradient-blue {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0), rgba(59, 130, 246, 0.05));
+        }
+        .highlight-gradient-purple {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0), rgba(139, 92, 246, 0.05));
+        }
+        .highlight-gradient-green {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0), rgba(34, 197, 94, 0.05));
+        }
+        .highlight-gradient-red {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0), rgba(239, 68, 68, 0.05));
+        }
+        .highlight-gradient-orange {
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0), rgba(249, 115, 22, 0.05));
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <div class="max-w-7xl mx-auto p-4 md:p-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6">
+            <!-- 标题卡片 -->
+            <div class="card md:col-span-4 p-8 flex flex-col justify-center items-center text-center relative">
+                <div class="absolute top-0 left-0 w-full h-full highlight-gradient-purple"></div>
+                <h1 class="text-4xl md:text-6xl font-black text-gray-800 mb-4">奶龙与暴暴龙</h1>
+                <p class="text-xl md:text-2xl font-bold text-purple-600 mb-2">角色剖面密度研究</p>
+                <p class="text-gray-500">剖析动画角色重要性与出现次数的关系</p>
+            </div>
+
+            <!-- 奶龙角色卡片 -->
+            <div class="card md:col-span-2 p-6 flex items-center relative">
+                <div class="absolute top-0 left-0 w-full h-full highlight-gradient-yellow"></div>
+                <div class="w-24 h-24 rounded-full bg-yellow-100 flex items-center justify-center mr-6">
+                    <i class="fas fa-dragon text-4xl text-yellow-500"></i>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold text-gray-800">奶龙</h3>
+                    <p class="text-gray-600">黄色异星幼龙，主角</p>
+                    <p class="text-sm text-gray-500 mt-2">呆萌可爱，大吃货，梦想成为"村里头最大的龙"</p>
+                </div>
+            </div>
+
+            <!-- 暴暴龙角色卡片 -->
+            <div class="card md:col-span-2 p-6 flex items-center relative">
+                <div class="absolute top-0 left-0 w-full h-full highlight-gradient-blue"></div>
+                <div class="w-24 h-24 rounded-full bg-blue-100 flex items-center justify-center mr-6">
+                    <i class="fas fa-dragon text-4xl text-blue-500 transform -scale-x-100"></i>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold text-gray-800">暴暴龙</h3>
+                    <p class="text-gray-600">蓝色蛋壳龙，宿敌</p>
+                    <p class="text-sm text-gray-500 mt-2">"坏萌"与"傲娇"，目标是成为"全宇宙最强的龙"</p>
+                </div>
+            </div>
+
+            <!-- 研究目的卡片 -->
+            <div class="card md:col-span-3 p-6 relative">
+                <div class="absolute top-0 left-0 w-full h-full highlight-gradient-green"></div>
+                <h3 class="text-xl font-bold text-gray-800 mb-4">研究目的</h3>
+                <ul class="space-y-2 text-gray-600">
+                    <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i><span>探讨角色"剖面密度"与出现次数之间的关系</span></li>
+                    <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i><span>分析奶龙和暴暴龙在不同动画作品中的出现模式</span></li>
+                    <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i><span>为动画角色设计、IP运营和观众研究提供量化视角</span></li>
+                </ul>
+            </div>
+
+            <!-- 关键问题卡片 -->
+            <div class="card md:col-span-1 p-6 relative">
+                <div class="absolute top-0 left-0 w-full h-full highlight-gradient-red"></div>
+                <h3 class="text-xl font-bold text-gray-800 mb-4">核心问题</h3>
+                <div class="text-4xl font-black text-red-500">4</div>
+                <p class="text-gray-600 mt-2">个关键研究问题</p>
+            </div>
+
+            <!-- 剖面密度定义卡片 -->
+            <div class="card md:col-span-4 p-6 relative">
+                <div class="absolute top-0 left-0 w-full h-full highlight-gradient-orange"></div>
+                <h3 class="text-xl font-bold text-gray-800 mb-4">剖面密度定义</h3>
+                <p class="text-gray-600 mb-4">一个综合反映角色在动画中重要程度的量化指标，包括以下五个维度：</p>
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                    <div class="bg-orange-50 p-4 rounded-lg">
+                        <div class="text-2xl font-bold text-orange-600 mb-2">F</div>
+                        <h4 class="font-semibold text-gray-700">出现频率密度</h4>
+                        <p class="text-xs text-gray-500 mt-1">角色出现集数/总集数</p>
+                    </div>
+                    <div class="bg-orange-50 p-4 rounded-lg">
+                        <div class="text-2xl font-bold text-orange-600 mb-2">T</div>
+                        <h4 class="font-semibold text-gray-700">镜头时长密度</h4>
+                        <p class="text-xs text-gray-500 mt-1">角色镜头时长/总时长</p>
+                    </div>
+                    <div class="bg-orange-50 p-4 rounded-lg">
+                        <div class="text-2xl font-bold text-orange-600 mb-2">L</div>
+                        <h4 class="font-semibold text-gray-700">台词密度</h4>
+                        <p class="text-xs text-gray-500 mt-1">角色台词时长/总台词时长</p>
+                    </div>
+                    <div class="bg-orange-50 p-4 rounded-lg">
+                        <div class="text-2xl font-bold text-orange-600 mb-2">P</div>
+                        <h4 class="font-semibold text-gray-700">情节推动密度</h4>
+                        <p class="text-xs text-gray-500 mt-1">专家评分(0-100分)</p>
+                    </div>
+                    <div class="bg-orange-50 p-4 rounded-lg">
+                        <div class="text-2xl font-bold text-orange-600 mb-2">A</div>
+                        <h4 class="font-semibold text-gray-700">观众关注度密度</h4>
+                        <p class="text-xs text-gray-500 mt-1">弹幕+社交媒体+搜索指数</p>
+                    </div>
+                </div>
+                <div class="mt-4 text-center">
+                    <p class="text-lg font-semibold text-gray-700">综合剖面密度: D = 0.25F + 0.25T + 0.2L + 0.2P + 0.1A</p>
+                </div>
+            </div>
+
+            <!-- 作品概览表格卡片 -->
+            <div class="card md:col-span-4 p-6 relative">
+                <div class="absolute top-0 left-0 w-full h-full highlight-gradient-purple"></div>
+                <h3 class="text-xl font-bold text-gray-800 mb-4">奶龙系列动画作品概览</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="bg-gray-50">
+                                <th class="text-left p-3 font-semibold text-gray-700">作品名称</th>
+                                <th class="text-center p-3 font-semibold text-gray-700">集数</th>
+                                <th class="text-center p-3 font-semibold text-gray-700">每集时长</th>
+                                <th class="text-center p-3 font-semibold text-gray-700">播出时间</th>
+                                <th class="text-center p-3 font-semibold text-gray-700">主要平台</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                            <tr>
+                                <td class="p-3 font-medium text-gray-800">奶龙主系列（短视频）</td>
+                                <td class="p-3 text-center text-gray-600">288集</td>
+                                <td class="p-3 text-center text-gray-600">约60秒</td>
+                                <td class="p-3 text-center text-gray-600">2021年起</td>
+                                <td class="p-3 text-center text-gray-600">抖音、快手</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-medium text-gray-800">奶龙搞怪大作战</td>
+                                <td class="p-3 text-center text-gray-600">40集</td>
+                                <td class="p-3 text-center text-gray-600">约8分钟</td>
+                                <td class="p-3 text-center text-gray-600">2023年1月</td>
+                                <td class="p-3 text-center text-gray-600">优爱腾</td>
+                            </tr>
+                            <tr class="bg-yellow-50">
+                                <td class="p-3 font-medium text-gray-800">奶龙与小七之大战暴暴龙</td>
+                                <td class="p-3 text-center text-gray-600">26集</td>
+                                <td class="p-3 text-center text-gray-600">8.5分钟</td>
+                                <td class="p-3 text-center text-gray-600">2024年1月</td>
+                                <td class="p-3 text-center text-gray-600">优爱腾等</td>
+                            </tr>
+                            <tr class="bg-blue-50">
+                                <td class="p-3 font-medium text-gray-800">奶龙之奇妙冒险</td>
+                                <td class="p-3 text-center text-gray-600">40集</td>
+                                <td class="p-3 text-center text-gray-600">9分钟</td>
+                                <td class="p-3 text-center text-gray-600">2025年1月</td>
+                                <td class="p-3 text-center text-gray-600">优爱腾</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 角色出现率图表卡片 -->
+            <div class="card md:col-span-2 p-6 relative">
+                <div class="absolute top-0 left-0 w-full h-full highlight-gradient-yellow"></div>
+                <h3 class="text-xl font-bold text-gray-800 mb-4">角色出现率比较</h3>
+                <div class="h-64">
+                    <canvas id="appearanceChart"></canvas>
+                </div>
+            </div>
+
+            <!-- 大战暴暴龙分析卡片 -->
+            <div class="card md:col-span-2 p-6 relative">
+                <div class="absolute top-0 left-0 w-full h-full highlight-gradient-red"></div>
+                <h3 class="text-xl font-bold text-gray-800 mb-4">《大战暴暴龙》深度分析</h3>
+                <div class="space-y-4">
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span class="text-sm font-medium text-gray-700">奶龙镜头时长</span>
+                            <span class="text-sm text-gray-600">51.5%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-yellow-500 h-2 rounded-full" style="width: 51.5%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span class="text-sm font-medium text-gray-700">暴暴龙镜头时长</span>
+                            <span class="text-sm text-gray-600">42.1%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-blue-500 h-2 rounded-full" style="width: 42.1%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span class="text-sm font-medium text-gray-700">同框镜头时长</span>
+                            <span class="text-sm text-gray-600">33.3%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-purple-500 h-2 rounded-full" style="width: 33.3%"></div>
+                        </div>
+                    </div>
+                    <div class="mt-4 p-3 bg-red-50 rounded-lg">
+                        <p class="text-sm text-gray-600">首日3小时热度突破万，腾讯视频搜索指数突破60万，优爱腾三平台播放量超3亿次</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 角色关系演变卡片 -->
+            <div class="card md:col-span-4 p-6 relative">
+                <div class="absolute top-0 left-0 w-full h-full highlight-gradient-green"></div>
+                <h3 class="text-xl font-bold text-gray-800 mb-4">角色关系演变</h3>
+                <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                    <div class="flex-1 p-4 bg-gray-50 rounded-lg text-center">
+                        <div class="text-2xl mb-2"><i class="fas fa-sword text-red-500"></i></div>
+                        <h4 class="font-semibold text-gray-700 mb-2">早期作品</h4>
+                        <p class="text-sm text-gray-600">暴暴龙作为反派，一心想要刺杀奶龙或取代其地位</p>
+                    </div>
+                    <div class="text-3xl text-gray-300">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <div class="flex-1 p-4 bg-gray-50 rounded-lg text-center">
+                        <div class="text-2xl mb-2"><i class="fas fa-handshake text-yellow-500"></i></div>
+                        <h4 class="font-semibold text-gray-700 mb-2">《大战暴暴龙》</h4>
+                        <p class="text-sm text-gray-600">暴暴龙戏份增加，与奶龙形成双主角模式</p>
+                    </div>
+                    <div class="text-3xl text-gray-300">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <div class="flex-1 p-4 bg-gray-50 rounded-lg text-center">
+                        <div class="text-2xl mb-2"><i class="fas fa-exchange-alt text-blue-500"></i></div>
+                        <h4 class="font-semibold text-gray-700 mb-2">《奇妙冒险》</h4>
+                        <p class="text-sm text-gray-600">角色关系反转，暴暴龙意外失忆被收留，成为明星</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 相关性分析卡片 -->
+            <div class="card md:col-span-2 p-6 relative">
+                <div class="absolute top-0 left-0 w-full h-full highlight-gradient-purple"></div>
+                <h3 class="text-xl font-bold text-gray-800 mb-4">剖面密度与出现次数相关性</h3>
+                <div class="h-64">
+                    <canvas id="correlationChart"></canvas>
+                </div>
+                <div class="mt-4 text-center">
+                    <p class="text-lg font-bold text-purple-600">相关系数: r = 0.61</p>
+                    <p class="text-sm text-gray-500">表明存在中等强度的正相关关系</p>
+                </div>
+            </div>
+
+            <!-- 影响因素卡片 -->
+            <div class="card md:col-span-2 p-6 relative">
+                <div class="absolute top-0 left-0 w-full h-full highlight-gradient-orange"></div>
+                <h3 class="text-xl font-bold text-gray-800 mb-4">剖面密度影响因素权重</h3>
+                <div class="space-y-3">
+                    <div class="flex items-center">
+                        <div class="w-32 text-sm font-medium text-gray-700">情节重要性</div>
+                        <div class="flex-1 mx-4">
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-orange-500 h-2 rounded-full" style="width: 35%"></div>
+                            </div>
+                        </div>
+                        <div class="w-12 text-right text-sm font-bold text-orange-600">35%</div>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-32 text-sm font-medium text-gray-700">镜头表现力</div>
+                        <div class="flex-1 mx-4">
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-orange-500 h-2 rounded-full" style="width: 25%"></div>
+                            </div>
+                        </div>
+                        <div class="w-12 text-right text-sm font-bold text-orange-600">25%</div>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-32 text-sm font-medium text-gray-700">台词质量</div>
+                        <div class="flex-1 mx-4">
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-orange-500 h-2 rounded-full" style="width: 20%"></div>
+                            </div>
+                        </div>
+                        <div class="w-12 text-right text-sm font-bold text-orange-600">20%</div>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-32 text-sm font-medium text-gray-700">出现次数</div>
+                        <div class="flex-1 mx-4">
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-orange-500 h-2 rounded-full" style="width: 15%"></div>
+                            </div>
+                        </div>
+                        <div class="w-12 text-right text-sm font-bold text-orange-600">15%</div>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-32 text-sm font-medium text-gray-700">观众互动</div>
+                        <div class="flex-1 mx-4">
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-orange-500 h-2 rounded-full" style="width: 5%"></div>
+                            </div>
+                        </div>
+                        <div class="w-12 text-right text-sm font-bold text-orange-600">5%</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 核心发现卡片 -->
+            <div class="card md:col-span-4 p-6 relative">
+                <div class="absolute top-0 left-0 w-full h-full highlight-gradient-blue"></div>
+                <h3 class="text-xl font-bold text-gray-800 mb-4">核心发现</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="bg-blue-100 p-2 rounded-full mr-3 mt-1">
+                                <i class="fas fa-chart-line text-blue-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-700">正相关但非决定性关系</h4>
+                                <p class="text-sm text-gray-600">剖面密度与出现次数存在显著正相关关系(r=0.61)，但不是唯一决定因素</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="bg-blue-100 p-2 rounded-full mr-3 mt-1">
+                                <i class="fas fa-chart-area text-blue-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-700">角色发展的非线性特征</h4>
+                                <p class="text-sm text-gray-600">暴暴龙在特定集数的剖面密度超过奶龙，反映角色塑造的复杂性</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="bg-blue-100 p-2 rounded-full mr-3 mt-1">
+                                <i class="fas fa-film text-blue-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-700">剧情驱动的密度变化</h4>
+                                <p class="text-sm text-gray-600">角色在关键剧情节点的剖面密度显著提升，剧情设计至关重要</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="bg-blue-100 p-2 rounded-full mr-3 mt-1">
+                                <i class="fas fa-layer-group text-blue-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-700">跨作品的累积效应</h4>
+                                <p class="text-sm text-gray-600">系列化创作建立更稳定的角色-观众关系，提升角色商业价值</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 实践意义卡片 -->
+            <div class="card md:col-span-3 p-6 relative">
+                <div class="absolute top-0 left-0 w-full h-full highlight-gradient-green"></div>
+                <h3 class="text-xl font-bold text-gray-800 mb-4">实践意义</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <div class="text-green-600 text-xl mb-2"><i class="fas fa-lightbulb"></i></div>
+                        <h4 class="font-semibold text-gray-700 mb-2">对动画创作者</h4>
+                        <p class="text-sm text-gray-600">注重角色在关键情节中的表现，通过剧情转折点提升观众关注度</p>
+                    </div>
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <div class="text-green-600 text-xl mb-2"><i class="fas fa-crown"></i></div>
+                        <h4 class="font-semibold text-gray-700 mb-2">对IP运营</h4>
+                        <p class="text-sm text-gray-600">角色关系反转带来新的商业机会，建立角色重要性监测体系</p>
+                    </div>
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <div class="text-green-600 text-xl mb-2"><i class="fas fa-users"></i></div>
+                        <h4 class="font-semibold text-gray-700 mb-2">对观众研究</h4>
+                        <p class="text-sm text-gray-600">观众更看重角色个性魅力，社交媒体数据可作为重要补充指标</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 未来展望卡片 -->
+            <div class="card md:col-span-1 p-6 relative">
+                <div class="absolute top-0 left-0 w-full h-full highlight-gradient-red"></div>
+                <h3 class="text-xl font-bold text-gray-800 mb-4">未来展望</h3>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li class="flex items-start"><i class="fas fa-arrow-right text-red-500 mt-1 mr-2"></i><span>扩展研究对象至其他动画角色</span></li>
+                    <li class="flex items-start"><i class="fas fa-arrow-right text-red-500 mt-1 mr-2"></i><span>引入情感分析技术</span></li>
+                    <li class="flex items-start"><i class="fas fa-arrow-right text-red-500 mt-1 mr-2"></i><span>开发自动化分析工具</span></li>
+                    <li class="flex items-start"><i class="fas fa-arrow-right text-red-500 mt-1 mr-2"></i><span>建立角色发展预测模型</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    // 角色出现率比较图表
+    const appearanceCtx = document.getElementById('appearanceChart').getContext('2d');
+    const appearanceChart = new Chart(appearanceCtx, {
+        type: 'bar',
+        data: {
+            labels: ['主系列', '搞怪大作战', '大战暴暴龙', '奇妙冒险'],
+            datasets: [
+                {
+                    label: '奶龙出现率',
+                    data: [100, 100, 100, 100],
+                    backgroundColor: 'rgba(251, 191, 36, 0.7)',
+                    borderColor: 'rgba(251, 191, 36, 1)',
+                    borderWidth: 1
+                },
+                {
+                    label: '暴暴龙出现率',
+                    data: [52, 50, 100, 87.5],
+                    backgroundColor: 'rgba(59, 130, 246, 0.7)',
+                    borderColor: 'rgba(59, 130, 246, 1)',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100,
+                    ticks: {
+                        callback: function(value) {
+                            return value + '%';
+                        }
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return context.dataset.label + ': ' + context.raw + '%';
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // 相关性分析图表
+    const correlationCtx = document.getElementById('correlationChart').getContext('2d');
+    const correlationChart = new Chart(correlationCtx, {
+        type: 'scatter',
+        data: {
+            datasets: [
+                {
+                    label: '奶龙',
+                    data: [
+                        {x: 100, y: 78.5}, {x: 100, y: 76.2}, {x: 100, y: 80.1}, {x: 100, y: 79.3},
+                        {x: 100, y: 77.8}, {x: 100, y: 81.2}, {x: 100, y: 79.7}, {x: 100, y: 78.9}
+                    ],
+                    backgroundColor: 'rgba(251, 191, 36, 0.7)',
+                    borderColor: 'rgba(251, 191, 36, 1)',
+                    pointRadius: 6
+                },
+                {
+                    label: '暴暴龙',
+                    data: [
+                        {x: 52, y: 45.3}, {x: 50, y: 43.7}, {x: 100, y: 71.2}, {x: 87.5, y: 74.6},
+                        {x: 100, y: 68.9}, {x: 85, y: 70.3}, {x: 90, y: 72.8}, {x: 80, y: 65.4}
+                    ],
+                    backgroundColor: 'rgba(59, 130, 246, 0.7)',
+                    borderColor: 'rgba(59, 130, 246, 1)',
+                    pointRadius: 6
+                }
+            ]
+        },
+        options: {
+            maintainAspectRatio: false,
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: '出现次数 (%)'
+                    },
+                    min: 40,
+                    max: 100
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: '剖面密度'
+                    },
+                    min: 40,
+                    max: 85
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'top',
+                }
+            }
+        }
+    });
+</script>
+</html>
