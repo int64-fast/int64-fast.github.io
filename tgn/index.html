@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="utf-8" />
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
   <title>The Coolest Tang Gino Video Generator</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Montserrat:wght@600;800&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&amp;family=Montserrat:wght@600;800&amp;display=swap" rel="stylesheet">
   <style>
     :root{
       --bg1:#0f0f16;
@@ -39,7 +38,7 @@
       <div class="muted">即时预览与导出视频（WebM）。建议用 Chrome/Edge，导出会生成较大文件。</div>
 
       <label>文字内容</label>
-      <input id="textInput" type="text" value="Tang Gino" />
+      <input id="textInput" type="text" value="Tang Gino">
 
       <div class="controls-grid">
         <div>
@@ -53,45 +52,45 @@
         </div>
         <div>
           <label>字号 (px)</label>
-          <input id="fontSize" type="range" min="48" max="420" value="160"/>
+          <input id="fontSize" type="range" min="48" max="420" value="160">
           <div class="muted" id="fontSizeVal">160 px</div>
         </div>
       </div>
 
       <label>主旋转幅度 (度)</label>
-      <input id="mainAmp" type="range" min="0" max="40" value="8"/>
+      <input id="mainAmp" type="range" min="0" max="40" value="8">
       <div class="muted" id="mainAmpVal">8°</div>
 
       <label>主旋转频率 (Hz)</label>
-      <input id="mainFreq" type="range" min="0.05" max="3" step="0.01" value="0.9"/>
-      <div class="muted" id="mainFreqVal">0.90 Hz</div>
+      <input id="mainFreq" type="range" min="0.05" max="3" step="0.01" value="0.9">
+      <div class="muted" id="mainFreqVal">0.9 Hz</div>
 
       <label>阴影：开启</label>
       <div class="row">
-        <input id="shadowEnable" type="checkbox" checked />
+        <input id="shadowEnable" type="checkbox" checked="">
         <div class="muted">是否显示阴影</div>
       </div>
 
       <label>阴影旋转独立（勾选后阴影有独立频率/相位）</label>
       <div class="row">
-        <input id="shadowSeparate" type="checkbox" />
+        <input id="shadowSeparate" type="checkbox">
         <div class="muted">勾选：阴影单独旋转</div>
       </div>
 
       <label>阴影旋转幅度 (像素，半径)</label>
-      <input id="shadowAmp" type="range" min="0" max="150" value="36"/>
+      <input id="shadowAmp" type="range" min="0" max="150" value="36">
       <div class="muted" id="shadowAmpVal">36 px</div>
 
       <label>阴影频率 (Hz)</label>
-      <input id="shadowFreq" type="range" min="0.01" max="3" step="0.01" value="1.10"/>
-      <div class="muted" id="shadowFreqVal">1.10 Hz</div>
+      <input id="shadowFreq" type="range" min="0.01" max="3" step="0.01" value="1.10">
+      <div class="muted" id="shadowFreqVal">1.1 Hz</div>
 
       <label>阴影模糊 (px)</label>
-      <input id="shadowBlur" type="range" min="0" max="60" value="18"/>
+      <input id="shadowBlur" type="range" min="0" max="60" value="18">
       <div class="muted" id="shadowBlurVal">18 px</div>
 
       <label>阴影颜色</label>
-      <input id="shadowColor" type="color" value="#000000" style="width:100%;height:36px"/>
+      <input id="shadowColor" type="color" value="#000000" style="width:100%;height:36px">
 
       <label>特效</label>
       <select id="effect">
@@ -102,30 +101,30 @@
       </select>
 
       <label>发光/描边颜色</label>
-      <input id="glowColor" type="color" value="#00ffd5" style="width:100%;height:36px"/>
+      <input id="glowColor" type="color" value="#00ffd5" style="width:100%;height:36px">
 
       <div class="row" style="margin-top:14px;">
         <div style="flex:1">
           <label>背景色A</label>
-          <input id="bgA" type="color" value="#111017" style="width:100%;height:36px"/>
+          <input id="bgA" type="color" value="#111017" style="width:100%;height:36px">
         </div>
         <div style="flex:1">
           <label>背景色B</label>
-          <input id="bgB" type="color" value="#04030a" style="width:100%;height:36px"/>
+          <input id="bgB" type="color" value="#04030a" style="width:100%;height:36px">
         </div>
       </div>
 
       <label>视频: 时长 (秒) / 帧率 (fps)</label>
       <div class="row">
-        <input id="duration" type="number" min="1" max="60" value="6" style="width:92px;padding:8px;border-radius:6px"/>
-        <input id="fps" type="number" min="12" max="60" value="30" style="width:92px;padding:8px;border-radius:6px"/>
+        <input id="duration" type="number" min="1" max="60" value="6" style="width:92px;padding:8px;border-radius:6px">
+        <input id="fps" type="number" min="12" max="60" value="30" style="width:92px;padding:8px;border-radius:6px">
         <div style="flex:1"></div>
       </div>
 
       <div class="row" style="margin-top:12px;">
         <button id="previewBtn" class="small">开始预览</button>
         <button id="recordBtn" class="small">开始录制并下载</button>
-        <button id="stopBtn" class="small secondary">停止录制</button>
+        <button id="stopBtn" class="small secondary" disabled="">停止录制</button>
       </div>
 
       <footer>提示：录制会以 canvas.captureStream 导出 WebM。若想 MP4，请使用转换工具（FFmpeg）。</footer>
@@ -138,7 +137,7 @@
           <div class="muted">按需调整参数并录制</div>
         </div>
         <div style="flex:1;min-height:0;">
-          <canvas id="preview" width="1280" height="720"></canvas>
+          <canvas id="preview" width="1280" height="720" style="width: 1280px; height: 720px;"></canvas>
         </div>
         <div style="display:flex;gap:8px;align-items:center">
           <div class="muted">下载:</div>
@@ -525,5 +524,5 @@
 
   })();
   </script>
-</body>
-</html>
+
+</body></html>
