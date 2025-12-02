@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <title>The Coolest Tang Gino Video Generator</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Montserrat:wght@600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg1:#0f0f16;
+      --bg2:#07050a;
+      --panel:#0b0b10;
+      --accent:#00ffd5;
+      --muted:#9aa0a6;
+      --ui-bg: rgba(255,255,255,0.03);
+    }
+    html,body{height:100%;margin:0;font-family:Montserrat, Arial, sans-serif;background:linear-gradient(180deg,var(--bg1),var(--bg2));color:#e6eef7}
+    .app {display:grid;grid-template-columns:360px 1fr;gap:18px;padding:18px;height:100%}
+    .panel{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.04);padding:14px;border-radius:10px;overflow:auto}
+    h1{font-family:Bungee, Impact, sans-serif;margin:0 0 8px 0;font-size:20px;color:var(--accent)}
+    label{display:block;margin-top:10px;font-size:13px;color:var(--muted)}
+    .row{display:flex;gap:8px;align-items:center;margin-top:8px}
+    input[type="text"], select {width:100%;padding:8px;border-radius:6px;border:1px solid rgba(255,255,255,0.06);background:var(--ui-bg);color:inherit}
+    input[type="range"]{width:100%}
+    .controls-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    button{background:linear-gradient(90deg,var(--accent),#ff58c8);border:0;padding:10px 12px;color:#061018;border-radius:8px;cursor:pointer;font-weight:700}
+    button.secondary{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
+    .small{padding:6px 8px;font-size:13px}
+    .muted{color:var(--muted);font-size:13px}
+    canvas{border-radius:12px;display:block;width:100%;height:100%;background:transparent}
+    .preview-wrap{display:flex;flex-direction:column;gap:12px;height:100%}
+    footer{margin-top:14px;font-size:12px;color:var(--muted)}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="panel" style="max-height:calc(100vh - 36px);">
+      <h1>The Coolest Tang Gino Video Generator</h1>
+      <div class="muted">即时预览与导出视频（WebM）。建议用 Chrome/Edge，导出会生成较大文件。</div>
+
+      <label>文字内容</label>
+      <input id="textInput" type="text" value="Tang Gino" />
+
+      <div class="controls-grid">
+        <div>
+          <label>字体</label>
+          <select id="fontFamily">
+            <option value="Bungee, Impact, Arial">Bungee (大冲击)</option>
+            <option value="Impact, 'Arial Black', sans-serif">Impact / Arial Black</option>
+            <option value="'Montserrat', Arial">Montserrat</option>
+            <option value="serif">Serif</option>
+          </select>
+        </div>
+        <div>
+          <label>字号 (px)</label>
+          <input id="fontSize" type="range" min="48" max="420" value="160"/>
+          <div class="muted" id="fontSizeVal">160 px</div>
+        </div>
+      </div>
+
+      <label>主旋转幅度 (度)</label>
+      <input id="mainAmp" type="range" min="0" max="40" value="8"/>
+      <div class="muted" id="mainAmpVal">8°</div>
+
+      <label>主旋转频率 (Hz)</label>
+      <input id="mainFreq" type="range" min="0.05" max="3" step="0.01" value="0.9"/>
+      <div class="muted" id="mainFreqVal">0.90 Hz</div>
+
+      <label>阴影：开启</label>
+      <div class="row">
+        <input id="shadowEnable" type="checkbox" checked />
+        <div class="muted">是否显示阴影</div>
+      </div>
+
+      <label>阴影旋转独立（勾选后阴影有独立频率/相位）</label>
+      <div class="row">
+        <input id="shadowSeparate" type="checkbox" />
+        <div class="muted">勾选：阴影单独旋转</div>
+      </div>
+
+      <label>阴影旋转幅度 (像素，半径)</label>
+      <input id="shadowAmp" type="range" min="0" max="150" value="36"/>
+      <div class="muted" id="shadowAmpVal">36 px</div>
+
+      <label>阴影频率 (Hz)</label>
+      <input id="shadowFreq" type="range" min="0.01" max="3" step="0.01" value="1.10"/>
+      <div class="muted" id="shadowFreqVal">1.10 Hz</div>
+
+      <label>阴影模糊 (px)</label>
+      <input id="shadowBlur" type="range" min="0" max="60" value="18"/>
+      <div class="muted" id="shadowBlurVal">18 px</div>
+
+      <label>阴影颜色</label>
+      <input id="shadowColor" type="color" value="#000000" style="width:100%;height:36px"/>
+
+      <label>特效</label>
+      <select id="effect">
+        <option value="none">无</option>
+        <option value="glow">发光</option>
+        <option value="chromatic">色差（RGB 分离）</option>
+        <option value="scan">扫描线</option>
+      </select>
+
+      <label>发光/描边颜色</label>
+      <input id="glowColor" type="color" value="#00ffd5" style="width:100%;height:36px"/>
+
+      <div class="row" style="margin-top:14px;">
+        <div style="flex:1">
+          <label>背景色A</label>
+          <input id="bgA" type="color" value="#111017" style="width:100%;height:36px"/>
+        </div>
+        <div style="flex:1">
+          <label>背景色B</label>
+          <input id="bgB" type="color" value="#04030a" style="width:100%;height:36px"/>
+        </div>
+      </div>
+
+      <label>视频: 时长 (秒) / 帧率 (fps)</label>
+      <div class="row">
+        <input id="duration" type="number" min="1" max="60" value="6" style="width:92px;padding:8px;border-radius:6px"/>
+        <input id="fps" type="number" min="12" max="60" value="30" style="width:92px;padding:8px;border-radius:6px"/>
+        <div style="flex:1"></div>
+      </div>
+
+      <div class="row" style="margin-top:12px;">
+        <button id="previewBtn" class="small">开始预览</button>
+        <button id="recordBtn" class="small">开始录制并下载</button>
+        <button id="stopBtn" class="small secondary">停止录制</button>
+      </div>
+
+      <footer>提示：录制会以 canvas.captureStream 导出 WebM。若想 MP4，请使用转换工具（FFmpeg）。</footer>
+    </div>
+
+    <div class="preview-wrap">
+      <div class="panel" style="display:flex;flex-direction:column;gap:10px;height:100%;">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div style="font-weight:700">预览 (1280×720)</div>
+          <div class="muted">按需调整参数并录制</div>
+        </div>
+        <div style="flex:1;min-height:0;">
+          <canvas id="preview" width="1280" height="720"></canvas>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <div class="muted">下载:</div>
+          <a id="downloadLink" style="color:var(--accent);text-decoration:none" href="#" download="tang-gino.webm">无录制</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  (function(){
+    // Elements
+    const canvas = document.getElementById('preview');
+    const ctx = canvas.getContext('2d', { alpha: true });
+    const DPR = Math.max(1, window.devicePixelRatio || 1);
+    const W = canvas.width;
+    const H = canvas.height;
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    canvas.width = W * DPR;
+    canvas.height = H * DPR;
+    ctx.scale(DPR, DPR);
+
+    const q = id => document.getElementById(id);
+
+    const cfgElements = {
+      textInput: q('textInput'),
+      fontFamily: q('fontFamily'),
+      fontSize: q('fontSize'),
+      fontSizeVal: q('fontSizeVal'),
+      mainAmp: q('mainAmp'),
+      mainAmpVal: q('mainAmpVal'),
+      mainFreq: q('mainFreq'),
+      mainFreqVal: q('mainFreqVal'),
+      shadowEnable: q('shadowEnable'),
+      shadowSeparate: q('shadowSeparate'),
+      shadowAmp: q('shadowAmp'),
+      shadowAmpVal: q('shadowAmpVal'),
+      shadowFreq: q('shadowFreq'),
+      shadowFreqVal: q('shadowFreqVal'),
+      shadowBlur: q('shadowBlur'),
+      shadowBlurVal: q('shadowBlurVal'),
+      shadowColor: q('shadowColor'),
+      effect: q('effect'),
+      glowColor: q('glowColor'),
+      bgA: q('bgA'),
+      bgB: q('bgB'),
+      previewBtn: q('previewBtn'),
+      recordBtn: q('recordBtn'),
+      stopBtn: q('stopBtn'),
+      duration: q('duration'),
+      fps: q('fps'),
+      downloadLink: q('downloadLink')
+    };
+
+    // helper update UI values
+    function bindRangeDisplay(rangeEl, displayEl, unit=''){
+      rangeEl.addEventListener('input', ()=> {
+        displayEl.textContent = rangeEl.value + unit;
+      });
+      displayEl.textContent = rangeEl.value + unit;
+    }
+
+    bindRangeDisplay(cfgElements.fontSize, cfgElements.fontSizeVal, ' px');
+    bindRangeDisplay(cfgElements.mainAmp, cfgElements.mainAmpVal, '°');
+    bindRangeDisplay(cfgElements.mainFreq, cfgElements.mainFreqVal, ' Hz');
+    bindRangeDisplay(cfgElements.shadowAmp, cfgElements.shadowAmpVal, ' px');
+    bindRangeDisplay(cfgElements.shadowFreq, cfgElements.shadowFreqVal, ' Hz');
+    bindRangeDisplay(cfgElements.shadowBlur, cfgElements.shadowBlurVal, ' px');
+
+    // State
+    let startTime = null;
+    let rafId = null;
+    let playing = false;
+
+    // Animation parameters
+    function getParams(){
+      return {
+        text: cfgElements.textInput.value || 'Tang Gino',
+        font: cfgElements.fontFamily.value,
+        fontSize: Number(cfgElements.fontSize.value),
+        mainAmp: Number(cfgElements.mainAmp.value) * Math.PI / 180, // radians
+        mainFreq: Number(cfgElements.mainFreq.value),
+        shadowEnable: cfgElements.shadowEnable.checked,
+        shadowSeparate: cfgElements.shadowSeparate.checked,
+        shadowAmp: Number(cfgElements.shadowAmp.value),
+        shadowFreq: Number(cfgElements.shadowFreq.value),
+        shadowBlur: Number(cfgElements.shadowBlur.value),
+        shadowColor: cfgElements.shadowColor.value,
+        effect: cfgElements.effect.value,
+        glowColor: cfgElements.glowColor.value,
+        bgA: cfgElements.bgA.value,
+        bgB: cfgElements.bgB.value
+      };
+    }
+
+    // Draw one frame at time t (seconds)
+    function drawFrame(t){
+      const p = getParams();
+      // Background gradient
+      const g = ctx.createLinearGradient(0,0,0,H);
+      g.addColorStop(0, p.bgA);
+      g.addColorStop(1, p.bgB);
+      ctx.clearRect(0,0,W,H);
+      ctx.fillStyle = g;
+      ctx.fillRect(0,0,W,H);
+
+      // Center transform
+      const cx = W/2, cy = H/2;
+
+      // Compute rotation
+      const mainAngle = Math.sin(2*Math.PI*p.mainFreq*t) * p.mainAmp; // radians
+      // Shadow rotation: either independent or follow mainAngle with different amplitude
+      const shadowAngle = p.shadowSeparate ? Math.sin(2*Math.PI*p.shadowFreq*t) : Math.sin(2*Math.PI*p.mainFreq*t);
+
+      // Draw optional scanlines
+      if (p.effect === 'scan'){
+        ctx.save();
+        ctx.globalAlpha = 0.06;
+        ctx.fillStyle = '#ffffff';
+        for (let y=0;y<H;y+=4) {
+          ctx.fillRect(0,y,W,1);
+        }
+        ctx.restore();
+      }
+
+      // Text style
+      const fs = p.fontSize;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+
+      // optional chromatic
+      if (p.effect === 'chromatic'){
+        // draw three layers (r,g,b) with offsets
+        const offsets = [
+          {c:'rgba(255,50,80,0.85)', dx: -6*Math.sin(t*2.3), dy: -6*Math.cos(t*1.7)},
+          {c:'rgba(80,255,200,0.9)', dx: 6*Math.sin(t*2.1), dy: 6*Math.cos(t*1.3)}
+        ];
+        // shadow for each layer is subtle
+        offsets.forEach((o, idx)=>{
+          ctx.save();
+          ctx.translate(cx + o.dx, cy + o.dy);
+          ctx.rotate(mainAngle);
+          ctx.font = `${fs}px ${p.font}`;
+          ctx.fillStyle = o.c;
+          if (p.shadowEnable){
+            // place layer shadows slightly offset
+            const sa = shadowAngle;
+            const sr = p.shadowAmp * (0.6 + 0.4*idx);
+            ctx.shadowColor = p.shadowColor;
+            ctx.shadowBlur = p.shadowBlur * 0.6;
+            ctx.shadowOffsetX = Math.cos(sa)*sr;
+            ctx.shadowOffsetY = Math.sin(sa)*sr;
+          } else {
+            ctx.shadowColor = 'transparent';
+            ctx.shadowBlur = 0;
+            ctx.shadowOffsetX = 0;
+            ctx.shadowOffsetY = 0;
+          }
+          ctx.fillText(p.text, 0, 0);
+          ctx.restore();
+        });
+        // central white
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.rotate(mainAngle);
+        ctx.font = `${fs}px ${p.font}`;
+        ctx.fillStyle = '#fff';
+        ctx.fillText(p.text, 0, 0);
+        ctx.restore();
+        return;
+      }
+
+      // For glow effect, draw blurred strokes beneath
+      if (p.effect === 'glow'){
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.rotate(mainAngle);
+        ctx.font = `${fs}px ${p.font}`;
+        // multiple blurred layers for big glow
+        ctx.fillStyle = p.glowColor;
+        for (let i=6;i>=1;i--){
+          ctx.globalAlpha = 0.12;
+          ctx.shadowColor = p.glowColor;
+          ctx.shadowBlur = i*6;
+          ctx.fillText(p.text, 0, 0);
+        }
+        ctx.restore();
+      }
+
+      // Draw shadow (if enabled)
+      if (p.shadowEnable){
+        ctx.save();
+        // calculate shadow offset as rotation around center with radius shadowAmp
+        const sa = shadowAngle * (p.shadowSeparate ? 1 : 1); // value in [-1,1]
+        const sr = p.shadowAmp;
+        const sx = Math.cos(sa * Math.PI*2) * sr;
+        const sy = Math.sin(sa * Math.PI*2) * sr * 0.8;
+        ctx.translate(cx + sx, cy + sy);
+        ctx.rotate(mainAngle + 0.03); // tiny extra rotation for shadow skew
+        ctx.font = `${fs}px ${p.font}`;
+        ctx.fillStyle = p.shadowColor;
+        ctx.globalAlpha = 0.95;
+        ctx.shadowColor = p.shadowColor;
+        ctx.shadowBlur = p.shadowBlur;
+        ctx.fillText(p.text, 0, 0);
+        ctx.restore();
+      }
+
+      // Main text draw (top)
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(mainAngle);
+      ctx.font = `${fs}px ${p.font}`;
+      // choose vivid fill
+      // Gradient fill
+      const tg = ctx.createLinearGradient(-fs*1.8, -fs, fs*1.8, fs);
+      tg.addColorStop(0, '#fff');
+      tg.addColorStop(0.25, '#ffd6ff');
+      tg.addColorStop(0.5, '#ff6ec7');
+      tg.addColorStop(1, '#00ffd5');
+      ctx.fillStyle = tg;
+
+      // Outline for stronger look
+      ctx.lineWidth = Math.max(6, fs/22);
+      ctx.strokeStyle = 'rgba(0,0,0,0.35)';
+      ctx.miterLimit = 2;
+
+      // If effect is none, add a subtle outer stroke and maybe glow
+      if (p.effect !== 'glow'){
+        ctx.strokeText(p.text, 0, 0);
+      }
+
+      ctx.fillText(p.text, 0, 0);
+      ctx.restore();
+
+      // Optional small highlight
+      ctx.save();
+      ctx.globalAlpha = 0.12;
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.ellipse(cx + W*0.18*Math.sin(t*1.2), cy - H*0.28, W*0.22, H*0.04, 0, 0, Math.PI*2);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    // Preview loop
+    function playPreview(){
+      if (playing) return;
+      playing = true;
+      startTime = performance.now();
+      function loop(now){
+        const t = (now - startTime)/1000;
+        drawFrame(t);
+        rafId = requestAnimationFrame(loop);
+      }
+      rafId = requestAnimationFrame(loop);
+    }
+    function stopPreview(){
+      playing = false;
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = null;
+    }
+
+    // Bind preview button
+    cfgElements.previewBtn.addEventListener('click', ()=>{
+      if (!playing){
+        playPreview();
+        cfgElements.previewBtn.textContent = '停止预览';
+      } else {
+        stopPreview();
+        cfgElements.previewBtn.textContent = '开始预览';
+      }
+    });
+
+    // Recording logic
+    let mediaRecorder = null;
+    let recordedChunks = [];
+    let recording = false;
+
+    async function startRecording(){
+      if (recording) return;
+      // ensure preview running for consistent frames
+      if (!playing) playPreview();
+      const duration = Number(cfgElements.duration.value) || 6;
+      const fps = Number(cfgElements.fps.value) || 30;
+      const stream = canvas.captureStream(fps);
+      const mime = (MediaRecorder.isTypeSupported('video/webm;codecs=vp9') ? 'video/webm;codecs=vp9' :
+                    (MediaRecorder.isTypeSupported('video/webm;codecs=vp8') ? 'video/webm;codecs=vp8' : 'video/webm'));
+      recordedChunks = [];
+      try {
+        mediaRecorder = new MediaRecorder(stream, {mimeType: mime});
+      } catch (err){
+        alert('无法启动 MediaRecorder: ' + err.message);
+        return;
+      }
+      mediaRecorder.ondataavailable = e => { if (e.data && e.data.size) recordedChunks.push(e.data); };
+      mediaRecorder.onstop = () => {
+        const blob = new Blob(recordedChunks, {type: mime});
+        const url = URL.createObjectURL(blob);
+        cfgElements.downloadLink.href = url;
+        cfgElements.downloadLink.download = `tang-gino-${Date.now()}.webm`;
+        cfgElements.downloadLink.textContent = '点击下载录制结果 (WebM)';
+        recording = false;
+      };
+      mediaRecorder.start(100); // timeslice
+      recording = true;
+      cfgElements.recordBtn.textContent = '正在录制...';
+      cfgElements.recordBtn.disabled = true;
+      cfgElements.stopBtn.disabled = false;
+
+      // drive time-based animation to match duration
+      const start = performance.now();
+      const totalMs = duration * 1000;
+      return new Promise(resolve=>{
+        const tick = (now)=>{
+          const elapsed = now - start;
+          const t = elapsed / 1000;
+          drawFrame(t);
+          if (elapsed < totalMs && recording){
+            requestAnimationFrame(tick);
+          } else {
+            // stop
+            if (mediaRecorder && mediaRecorder.state !== 'inactive') mediaRecorder.stop();
+            cfgElements.recordBtn.textContent = '开始录制并下载';
+            cfgElements.recordBtn.disabled = false;
+            cfgElements.stopBtn.disabled = true;
+            resolve();
+          }
+        };
+        requestAnimationFrame(tick);
+      });
+    }
+
+    function stopRecording(){
+      if (!recording) return;
+      recording = false;
+      if (mediaRecorder && mediaRecorder.state !== 'inactive'){
+        mediaRecorder.stop();
+      }
+      cfgElements.recordBtn.textContent = '开始录制并下载';
+      cfgElements.recordBtn.disabled = false;
+      cfgElements.stopBtn.disabled = true;
+    }
+
+    cfgElements.recordBtn.addEventListener('click', async ()=>{
+      try {
+        await startRecording();
+      } catch (err){
+        alert('录制失败: ' + (err.message || err));
+      }
+    });
+    cfgElements.stopBtn.addEventListener('click', ()=>{
+      stopRecording();
+    });
+    cfgElements.stopBtn.disabled = true;
+
+    // When parameters change, redraw one frame
+    const inputs = Array.from(document.querySelectorAll('input, select'));
+    inputs.forEach(i=>{
+      i.addEventListener('input', ()=>{
+        if (!playing) drawFrame(0);
+      });
+      i.addEventListener('change', ()=>{
+        if (!playing) drawFrame(0);
+      });
+    });
+
+    // Initial draw
+    drawFrame(0);
+
+    // Make download link downloadable in case of previously recorded blob
+    cfgElements.downloadLink.addEventListener('click', (e)=>{
+      if (cfgElements.downloadLink.href === '#'){
+        e.preventDefault();
+      }
+    });
+
+    // Small UX: stop preview when user closes tab
+    window.addEventListener('beforeunload', ()=>{
+      stopRecording();
+      stopPreview();
+    });
+
+  })();
+  </script>
+</body>
+</html>
