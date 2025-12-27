@@ -1,71 +1,418 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manim 与 QAManim 社团</title>
-    <!-- Favicon -->
-    <link rel="icon" type="image/jpeg" href="https://i0.wp.com/mrshed.net/wp-content/uploads/2022/07/mr-shed-emblom-7.jpg">
-    <link rel="shortcut icon" href="https://i0.wp.com/mrshed.net/wp-content/uploads/2022/07/mr-shed-emblom-7.jpg">
-    <link rel="apple-touch-icon" href="https://i0.wp.com/mrshed.net/wp-content/uploads/2022/07/mr-shed-emblom-7.jpg">
-    <!-- 引入Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- 引入Font Awesome -->
-    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <!-- 配置Tailwind -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#3B82F6',
-                        secondary: '#10B981',
-                        accent: '#8B5CF6',
-                        dark: '#1E293B',
-                        light: '#F8FAFC'
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'system-ui', 'sans-serif'],
-                        display: ['Poppins', 'sans-serif']
-                    }
-                }
-            }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#3B82F6" />
+  <title>Qingdao Academy 非官方论坛</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="https://i0.wp.com/mrshed.net/wp-content/uploads/2022/07/mr-shed-emblom-7.jpg" />
+  <link rel="shortcut icon" href="https://i0.wp.com/mrshed.net/wp-content/uploads/2022/07/mr-shed-emblom-7.jpg" />
+  <link rel="apple-touch-icon" href="https://i0.wp.com/mrshed.net/wp-content/uploads/2022/07/mr-shed-emblom-7.jpg" />
+
+  <!-- Preconnect fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@500;600&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <!-- Tailwind (CDN) + config -->
+  <script>
+    tailwindConfig = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#3B82F6',
+            secondary: '#10B981',
+            accent: '#8B5CF6',
+            dark: '#0F1724',
+            light: '#F8FAFC'
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['Poppins', 'sans-serif']
+          }
         }
-    </script>
-    <style type="text/tailwindcss">
-        @layer utilities {
-            .text-shadow {
-                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            }
-            .text-gradient {
-                background-clip: text;
-                -webkit-background-clip: text;
-                color: transparent;
-            }
-            .transition-transform-opacity {
-                transition-property: transform, opacity;
-            }
-        }
-    </style>
-    <!-- 引入Google字体 -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+      }
+    }
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    /* 小量自定义，使用 Tailwind 为主 */
+    .glass {
+      background: rgba(255,255,255,0.6);
+      backdrop-filter: blur(6px);
+    }
+    .dark .glass {
+      background: rgba(15,23,36,0.55);
+    }
+    .avatar-placeholder {
+      background: linear-gradient(135deg,#3B82F6,#8B5CF6);
+      color: white;
+    }
+    /* 微调滚动条（暗色/亮色） */
+    ::-webkit-scrollbar { width: 10px; height:10px; }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(0,0,0,0.12);
+      border-radius: 999px;
+    }
+    .dark ::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,0.08);
+    }
+  </style>
 </head>
-<body class="bg-light text-dark antialiased">
-    <script src="https://giscus.app/client.js"
-        data-repo="int64-fast/int64-fast.github.io"
-        data-repo-id="R_kgDOP-lGKQ"
-        data-category="Ideas"
-        data-category-id="DIC_kwDOP-lGKc4C0Pqh"
-        data-mapping="pathname"
-        data-strict="0"
-        data-reactions-enabled="1"
-        data-emit-metadata="0"
-        data-input-position="top"
-        data-theme="light"
-        data-lang="zh-CN"
-        crossorigin="anonymous"
-        async>
-    </script>
+<body class="antialiased text-gray-800 bg-gray-50 dark:bg-dark dark:text-gray-100" id="page-root">
+  <!-- 页眉 / 导航 -->
+  <header class="sticky top-0 z-30 backdrop-blur-md glass border-b border-gray-200 dark:border-gray-800">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center gap-3">
+          <a href="#" class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-md avatar-placeholder flex items-center justify-center text-lg font-semibold shadow">
+              QA
+            </div>
+            <div>
+              <div class="text-sm font-semibold">Qingdao Academy</div>
+              <div class="text-xs text-gray-500 dark:text-gray-400">非官方论坛</div>
+            </div>
+          </a>
+        </div>
+
+        <nav class="hidden md:flex items-center gap-6 text-sm" aria-label="主导航">
+          <a href="#" class="hover:text-primary transition">首页</a>
+          <a href="#topics" class="hover:text-primary transition">讨论区</a>
+          <a href="#resources" class="hover:text-primary transition">资源</a>
+          <a href="#about" class="hover:text-primary transition">关于</a>
+          <a href="https://github.com/int64-fast" target="_blank" rel="noopener" class="hover:text-primary transition">GitHub</a>
+        </nav>
+
+        <div class="flex items-center gap-3">
+          <button id="theme-toggle" aria-label="切换暗色模式" class="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+            <i id="theme-icon" class="fa fa-moon-o"></i>
+          </button>
+          <a href="#topics" class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-md bg-primary text-white text-sm shadow hover:opacity-95 transition">
+            <i class="fa fa-comments-o"></i> 进入论坛
+          </a>
+
+          <!-- 手机菜单（简单） -->
+          <button id="mobile-menu-btn" class="md:hidden p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition" aria-label="打开菜单">
+            <i class="fa fa-bars"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="md:hidden hidden border-t border-gray-200 dark:border-gray-800">
+      <div class="px-4 py-3 space-y-2">
+        <a href="#" class="block">首页</a>
+        <a href="#topics" class="block">讨论区</a>
+        <a href="#resources" class="block">资源</a>
+        <a href="#about" class="block">关于</a>
+        <a href="https://github.com/int64-fast" target="_blank" rel="noopener" class="block">GitHub</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <main>
+    <section class="bg-gradient-to-r from-primary to-accent text-white">
+      <div class="max-w-6xl mx-auto px-4 py-16 sm:py-24 lg:py-32">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <div>
+            <h1 class="text-4xl sm:text-5xl font-display font-extrabold leading-tight drop-shadow">
+              Qingdao Academy <span class="text-sm font-normal opacity-90">非官方论坛</span>
+            </h1>
+            <p class="mt-4 text-lg max-w-xl opacity-95">
+              一个面向 Qingdao Academy 社区的轻量非官方交流平台 — 分享经验、发布活动与协作项目。
+            </p>
+            <div class="mt-6 flex flex-wrap gap-3">
+              <a href="#topics" class="inline-flex items-center gap-2 px-5 py-3 bg-white text-primary rounded-md font-medium shadow hover:translate-y-0.5 transition-transform">
+                <i class="fa fa-comments"></i> 浏览讨论
+              </a>
+              <a href="#resources" class="inline-flex items-center gap-2 px-4 py-3 bg-white/20 border border-white/30 text-white rounded-md hover:bg-white/10 transition">
+                <i class="fa fa-book"></i> 资源共享
+              </a>
+            </div>
+            <div class="mt-6 text-sm text-white/80">
+              <span class="inline-flex items-center gap-2"><i class="fa fa-clock-o"></i> 活跃成员：120+</span>
+              <span class="mx-4">•</span>
+              <span class="inline-flex items-center gap-2"><i class="fa fa-user"></i> 最后更新：2025-12-27</span>
+            </div>
+          </div>
+
+          <div class="hidden md:block">
+            <div class="rounded-xl p-6 bg-white/10 border border-white/20 shadow-lg">
+              <h3 class="text-lg font-semibold mb-3">热门话题</h3>
+              <ul class="space-y-3">
+                <li class="flex items-start gap-3">
+                  <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white">
+                    <i class="fa fa-code"></i>
+                  </div>
+                  <div>
+                    <a href="#" class="font-medium hover:underline">如何优化 Go 并发性能？</a>
+                    <div class="text-xs text-white/70">讨论 · 56 条回复</div>
+                  </div>
+                </li>
+                <li class="flex items-start gap-3">
+                  <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white">
+                    <i class="fa fa-database"></i>
+                  </div>
+                  <div>
+                    <a href="#" class="font-medium hover:underline">数据工程实践分享</a>
+                    <div class="text-xs text-white/70">资源 · 24 条</div>
+                  </div>
+                </li>
+                <li class="flex items-start gap-3">
+                  <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                  <div>
+                    <a href="#" class="font-medium hover:underline">线下活动：新年聚会</a>
+                    <div class="text-xs text-white/70">活动 · 立即报名</div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 功能卡片 -->
+    <section id="features" class="max-w-6xl mx-auto px-4 py-12 sm:py-16">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="p-5 rounded-xl bg-white shadow hover:shadow-lg transition dark:bg-gray-800">
+          <div class="text-primary text-2xl mb-3"><i class="fa fa-comments"></i></div>
+          <h4 class="font-semibold">讨论区</h4>
+          <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">按话题组织讨论，便于查找与订阅你感兴趣的主题。</p>
+        </div>
+
+        <div class="p-5 rounded-xl bg-white shadow hover:shadow-lg transition dark:bg-gray-800">
+          <div class="text-secondary text-2xl mb-3"><i class="fa fa-book"></i></div>
+          <h4 class="font-semibold">资源共享</h4>
+          <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">教程、笔记与代码片段，一键下载与预览。</p>
+        </div>
+
+        <div class="p-5 rounded-xl bg-white shadow hover:shadow-lg transition dark:bg-gray-800">
+          <div class="text-accent text-2xl mb-3"><i class="fa fa-calendar"></i></div>
+          <h4 class="font-semibold">活动与讲座</h4>
+          <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">发布并报名社区活动，线上 / 线下均支持。</p>
+        </div>
+
+        <div class="p-5 rounded-xl bg-white shadow hover:shadow-lg transition dark:bg-gray-800">
+          <div class="text-yellow-500 text-2xl mb-3"><i class="fa fa-life-ring"></i></div>
+          <h4 class="font-semibold">帮助与文档</h4>
+          <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">FAQ、指南与常见问题解答，快速上手。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 最新主题（示例） -->
+    <section id="topics" class="max-w-6xl mx-auto px-4 py-8 sm:py-12">
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="text-2xl font-semibold">最新主题</h2>
+        <a href="#" class="text-sm text-primary hover:underline">查看更多</a>
+      </div>
+
+      <div class="space-y-4">
+        <!-- 单条主题卡 -->
+        <article class="p-4 rounded-lg bg-white shadow flex items-start gap-4 dark:bg-gray-800">
+          <div class="flex-shrink-0">
+            <div class="w-12 h-12 rounded-full avatar-placeholder flex items-center justify-center text-white font-semibold">ZX</div>
+          </div>
+          <div class="flex-1">
+            <div class="flex items-center justify-between">
+              <a href="#" class="text-lg font-medium hover:underline">如何优化 Go 并发性能？</a>
+              <div class="text-xs text-gray-500 dark:text-gray-400">56 回复</div>
+            </div>
+            <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">近期在微服务项目中遇到协程泄露与调度延迟的问题，分享一下定位思路与工具链（pprof / trace）…</p>
+            <div class="mt-3 text-xs text-gray-500 dark:text-gray-400">发布者：alex · 2 小时前</div>
+          </div>
+        </article>
+
+        <article class="p-4 rounded-lg bg-white shadow flex items-start gap-4 dark:bg-gray-800">
+          <div class="flex-shrink-0">
+            <div class="w-12 h-12 rounded-full avatar-placeholder flex items-center justify-center text-white font-semibold">MJ</div>
+          </div>
+          <div class="flex-1">
+            <div class="flex items-center justify-between">
+              <a href="#" class="text-lg font-medium hover:underline">数据工程实践分享</a>
+              <div class="text-xs text-gray-500 dark:text-gray-400">24 回复</div>
+            </div>
+            <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">基于 Airflow 的调度改造与 S3 数据湖实践，包含 DAG 设计与监控指标建议。</p>
+            <div class="mt-3 text-xs text-gray-500 dark:text-gray-400">发布者：may · 昨天</div>
+          </div>
+        </article>
+
+        <article class="p-4 rounded-lg bg-white shadow flex items-start gap-4 dark:bg-gray-800">
+          <div class="flex-shrink-0">
+            <div class="w-12 h-12 rounded-full avatar-placeholder flex items-center justify-center text-white font-semibold">LT</div>
+          </div>
+          <div class="flex-1">
+            <div class="flex items-center justify-between">
+              <a href="#" class="text-lg font-medium hover:underline">线下活动：新年聚会</a>
+              <div class="text-xs text-gray-500 dark:text-gray-400">报名中</div>
+            </div>
+            <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">时间：2026-01-10，地点：青岛市中心。欢迎大家报名并推荐讲题~</p>
+            <div class="mt-3 text-xs text-gray-500 dark:text-gray-400">发布者：admin · 3 天前</div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 资源与侧栏（示例） -->
+    <section id="resources" class="max-w-6xl mx-auto px-4 py-8 sm:py-12">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="lg:col-span-2 space-y-6">
+          <div class="p-6 rounded-xl bg-white shadow dark:bg-gray-800">
+            <h3 class="text-xl font-semibold mb-3">精选资源</h3>
+            <ul class="space-y-3">
+              <li class="flex items-start justify-between">
+                <div>
+                  <a href="#" class="font-medium hover:underline">Go 高性能编程实战（笔记）</a>
+                  <div class="text-sm text-gray-500 dark:text-gray-400">作者：alex · 资料 · PDF</div>
+                </div>
+                <a href="#" class="text-sm text-primary">下载</a>
+              </li>
+              <li class="flex items-start justify-between">
+                <div>
+                  <a href="#" class="font-medium hover:underline">数据湖设计指南</a>
+                  <div class="text-sm text-gray-500 dark:text-gray-400">作者：may · 文章</div>
+                </div>
+                <a href="#" class="text-sm text-primary">查看</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="p-6 rounded-xl bg-white shadow dark:bg-gray-800">
+            <h3 class="text-xl font-semibold mb-3">近期活动</h3>
+            <div class="space-y-3 text-sm text-gray-600 dark:text-gray-300">
+              <div class="flex items-start justify-between">
+                <div>
+                  <div class="font-medium">线上讲座：微服务追踪实践</div>
+                  <div class="text-xs text-gray-500 dark:text-gray-400">2026-01-04 · 线上</div>
+                </div>
+                <a href="#" class="text-primary">报名</a>
+              </div>
+              <div class="flex items-start justify-between">
+                <div>
+                  <div class="font-medium">工作坊：性能调优实战</div>
+                  <div class="text-xs text-gray-500 dark:text-gray-400">2026-02-15 · 线下</div>
+                </div>
+                <a href="#" class="text-primary">报名</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="space-y-6">
+          <div class="p-6 rounded-xl bg-white shadow dark:bg-gray-800">
+            <h4 class="font-semibold mb-3">关于我们</h4>
+            <p class="text-sm text-gray-600 dark:text-gray-300">Qingdao Academy 非官方论坛，由社区成员维护，旨在提供轻量、自由的交流空间。</p>
+          </div>
+
+          <div class="p-6 rounded-xl bg-white shadow dark:bg-gray-800">
+            <h4 class="font-semibold mb-3">加入我们</h4>
+            <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">想要成为贡献者？欢迎提交资源或发起话题。</p>
+            <a href="https://github.com/int64-fast" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-md text-sm">
+              <i class="fa fa-github"></i> GitHub
+            </a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- 评论（giscus） -->
+    <section id="discussions" class="max-w-6xl mx-auto px-4 py-8 sm:py-12">
+      <div class="p-6 rounded-xl bg-white shadow dark:bg-gray-800">
+        <h3 class="text-lg font-semibold mb-4">讨论区（使用 GitHub Discussions）</h3>
+        <!-- giscus：替换 data-repo / data-repo-id / data-category / data-category-id 为你的仓库信息 -->
+        <div id="giscus-container" class="min-h-[200px]">
+          <script src="https://giscus.app/client.js"
+            data-repo="int64-fast/int64-fast.github.io"
+            data-repo-id="R_kgDOP-lGKQ"
+            data-category="Ideas"
+            data-category-id="DIC_kwDOP-lGKc4C0Pqh"
+            data-mapping="pathname"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="top"
+            data-theme="light"
+            data-lang="zh-CN"
+            crossorigin="anonymous"
+            async>
+          </script>
+        </div>
+      </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="border-t border-gray-200 dark:border-gray-800">
+      <div class="max-w-6xl mx-auto px-4 py-8 sm:py-10 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="text-sm text-gray-600 dark:text-gray-400">© 2025 Qingdao Academy · 非官方论坛</div>
+        <div class="text-sm text-gray-600 dark:text-gray-400">Built with ♥ · <a href="https://github.com/int64-fast" class="text-primary">int64-fast</a></div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- 脚本：主题切换与移动菜单 -->
+  <script>
+    (function () {
+      const themeToggle = document.getElementById('theme-toggle');
+      const themeIcon = document.getElementById('theme-icon');
+
+      function setIcon(isDark) {
+        // moon for dark (to switch to light), sun for light (to switch to dark)
+        themeIcon.className = isDark ? 'fa fa-sun-o' : 'fa fa-moon-o';
+      }
+
+      function applyTheme(dark) {
+        if (dark) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+        setIcon(dark);
+      }
+
+      // 初始化：优先 localStorage -> prefers-color-scheme -> 默认 light
+      const stored = localStorage.getItem('qa-theme');
+      if (stored === 'dark') {
+        applyTheme(true);
+      } else if (stored === 'light') {
+        applyTheme(false);
+      } else {
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        applyTheme(prefersDark);
+      }
+
+      themeToggle.addEventListener('click', function () {
+        const isDark = document.documentElement.classList.toggle('dark');
+        localStorage.setItem('qa-theme', isDark ? 'dark' : 'light');
+        setIcon(isDark);
+      });
+
+      // Mobile menu
+      const mobileBtn = document.getElementById('mobile-menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      mobileBtn.addEventListener('click', function () {
+        mobileMenu.classList.toggle('hidden');
+      });
+
+      // Accessibility: close mobile menu on outside click
+      document.addEventListener('click', function (e) {
+        if (!mobileMenu.contains(e.target) && !mobileBtn.contains(e.target)) {
+          if (!mobileMenu.classList.contains('hidden')) mobileMenu.classList.add('hidden');
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
-
