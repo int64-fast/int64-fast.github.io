@@ -1,2 +1,1 @@
-# int64-fast.github.io
-青岛中学 Manim 社。社长：G7 ********
+这是青岛中学 Qingdao Academy 的非官方论坛。还有很多好玩功能以供使用。
