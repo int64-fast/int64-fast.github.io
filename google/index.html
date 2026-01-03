@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>俄罗斯对谷歌罚款计算器</title>
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--muted:#94a3b8;--glass:rgba(255,255,255,0.03)}
+    html,body{height:100%;margin:0;font-family:Inter,Segoe UI,Helvetica,Arial,sans-serif;background:linear-gradient(180deg,#071025 0%, #08142a 100%);color:#e6eef6}
+    .wrap{min-height:100%;display:flex;align-items:center;justify-content:center;padding:32px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.04);backdrop-filter:blur(6px);padding:28px;border-radius:12px;max-width:760px;width:100%;box-shadow:0 8px 30px rgba(2,6,23,0.6)}
+    h1{margin:0 0 8px 0;font-size:20px}
+    p.lead{margin:0 0 18px 0;color:var(--muted);font-size:13px}
+    .row{display:flex;gap:12px;flex-wrap:wrap}
+    label{font-size:13px;color:var(--muted)}
+    input[type=date]{padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:var(--glass);color:inherit}
+    .btn{background:linear-gradient(90deg,var(--accent),#3b82f6);color:#021124;padding:9px 12px;border-radius:8px;border:none;cursor:pointer;font-weight:600}
+    .result{margin-top:20px;background:rgba(255,255,255,0.02);padding:16px;border-radius:8px;border:1px solid rgba(255,255,255,0.02)}
+    .line{display:flex;justify-content:space-between;align-items:flex-start;padding:6px 0;border-bottom:1px dashed rgba(255,255,255,0.02);gap:12px;flex-wrap:wrap}
+    .line:last-child{border-bottom:0}
+    .key{color:var(--muted);font-size:13px;flex:0 0 160px}
+    .value{font-weight:700;font-family:monospace;flex:1 1 0;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-all}
+    .small{font-size:12px;color:var(--muted)}
+    .controls{display:flex;gap:8px;align-items:center;margin-left:auto}
+    @media (max-width:560px){.row{flex-direction:column}.controls{margin-left:0}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>俄罗斯对谷歌罚款计算器</h1>
+      <p class="lead">起始罚款：100,000 卢布（2020-01-01 宣布）。若到 2020-09-01 后仍未缴纳，则从 2020-09-02 起每日翻一番。请选择一个 2020-09-01 以后的日期以计算罚款。</p>
+
+      <div class="row" style="align-items:center">
+        <div>
+          <label for="date">选择日期（必须在 2020-09-01 之后）</label><br>
+          <input id="date" type="date" />
+        </div>
+        <div style="display:flex;align-items:end;gap:8px">
+          <button id="calc" class="btn">计算</button>
+          <button id="now" title="设为今天" class="btn" style="background:#475569">今天</button>
+        </div>
+      </div>
+
+      <div class="result" aria-live="polite">
+        <div class="line"><div class="key">截止日期</div><div id="out-date" class="value">—</div></div>
+        <div class="line"><div class="key">起始罚款</div><div class="value">100,000 ₽</div></div>
+        <div class="line"><div class="key">已翻倍天数</div><div id="out-days" class="value">—</div></div>
+        <div class="line"><div class="key">精确金额（整数）</div><div style="display:flex;gap:8px;align-items:center"><div id="out-raw" class="value">—</div><div class="controls"><button id="copy" class="btn" style="background:#0ea5a4">复制</button></div></div></div>
+        <div class="line"><div class="key">格式化金额（千分位）</div><div id="out-fmt" class="value">—</div></div>
+        <div class="line"><div class="key">科学记数法（高精度）</div><div id="out-sci" class="value">—</div></div>
+        <div class="line"><div class="key">近似（SI）</div><div id="out-sim" class="value">—</div></div>
+        <div style="padding-top:10px" class="small">注：所有计算使用高精度整数（BigInt），金额以卢布为单位。</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const initial = 100000n;
+      const thresholdUTC = Date.UTC(2020,8,1,0,0,0); // 2020-09-01 UTC midnight
+      const msDay = 24*60*60*1000;
+      const dateInput = document.getElementById('date');
+      const calcBtn = document.getElementById('calc');
+      const nowBtn = document.getElementById('now');
+      const outDate = document.getElementById('out-date');
+      const outDays = document.getElementById('out-days');
+      const outRaw = document.getElementById('out-raw');
+      const outFmt = document.getElementById('out-fmt');
+      const outSci = document.getElementById('out-sci');
+      const outSim = document.getElementById('out-sim');
+      const copyBtn = document.getElementById('copy');
+
+      function setMinDate(){
+        // min is 2020-09-02 (must be after 2020-09-01)
+        dateInput.min = '2020-09-02';
+      }
+      function toISODate(d){
+        const y=d.getFullYear();const m=('0'+(d.getMonth()+1)).slice(-2);const dd=('0'+d.getDate()).slice(-2);return `${y}-${m}-${dd}`;
+      }
+      function setToday(){
+        const t=new Date();dateInput.value = toISODate(t);
+      }
+
+      function bigIntWithSep(n){
+        const s = n.toString();
+        let res='';let cnt=0;
+        for(let i=s.length-1;i>=0;i--){res = s[i]+res;cnt++; if(cnt%3===0 && i>0) res = ','+res}
+        return res;
+      }
+
+      function bigIntToScientific(n, sig=6){
+        const s = n.toString();
+        if(s.length<=sig) return s;
+        const exp = s.length-1;
+        const first = s.slice(0, sig);
+        return first[0]+'.'+first.slice(1).replace(/0+$/,'') + 'e+'+exp;
+      }
+
+      function bigIntToSI(n, digits=4){
+        const s = n.toString();
+        const len = s.length;
+        if(len<=3) return s + ' ₽';
+        const groups = Math.floor((len-1)/3);
+        const units = ['','K','M','B','T','P','E','Z','Y'];
+        const unit = units[groups]||('e'+(groups*3));
+        const lead = s.slice(0, Math.min(digits, s.length));
+        const decCount = Math.min(Math.max(digits - 1, 0), s.length-1);
+        const value = lead[0] + (decCount>0?'.'+lead.slice(1,1+decCount):'');
+        return value + ' ' + unit + ' ₽';
+      }
+
+      function computeFor(dateStr){
+        if(!dateStr) return null;
+        const parts = dateStr.split('-');
+        const dUTC = Date.UTC(parseInt(parts[0],10), parseInt(parts[1],10)-1, parseInt(parts[2],10));
+        if(isNaN(dUTC)) return null;
+        const diff = Math.floor((dUTC - thresholdUTC)/msDay);
+        const days = diff>0?diff:0;
+        const amount = initial * (1n << BigInt(days));
+        return {days, amount, date: new Date(dUTC)};
+      }
+
+      function render(res){
+        if(!res){
+          outDate.textContent='—';outDays.textContent='—';outRaw.textContent='—';outFmt.textContent='—';outSci.textContent='—';outSim.textContent='—';
+          return;
+        }
+        outDate.textContent = res.date.toISOString().slice(0,10);
+        outDays.textContent = String(res.days);
+        outRaw.textContent = res.amount.toString() + ' ₽';
+        outFmt.textContent = bigIntWithSep(res.amount) + ' ₽';
+        outSci.textContent = bigIntToScientific(res.amount, 7);
+        outSim.textContent = bigIntToSI(res.amount, 4);
+      }
+
+      calcBtn.addEventListener('click', ()=>{
+        const v = dateInput.value;
+        if(!v){alert('请选择日期（必须在 2020-09-01 之后）。');return}
+        const r = computeFor(v);
+        if(!r){alert('日期格式错误');return}
+        render(r);
+      });
+
+      nowBtn.addEventListener('click', ()=>{setToday(); calcBtn.click();});
+
+      copyBtn.addEventListener('click', ()=>{
+        const text = outRaw.textContent || '';
+        navigator.clipboard?.writeText(text).then(()=>{copyBtn.textContent='已复制';setTimeout(()=>copyBtn.textContent='复制',1200)}, ()=>{alert('复制失败，请手动复制：\n'+text)})
+      });
+
+      // init
+      setMinDate();
+      setToday();
+      // auto calculate once on load
+      calcBtn.click();
+    })();
+  </script>
+</body>
+</html>
