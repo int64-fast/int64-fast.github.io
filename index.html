@@ -1,387 +1,536 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="theme-color" content="#3B82F6" />
-  <title>Qingdao Academy 非官方论坛</title>
-
-  <!-- Favicon -->
-  <link rel="icon" href="https://i0.wp.com/mrshed.net/wp-content/uploads/2022/07/mr-shed-emblom-7.jpg" />
-  <link rel="shortcut icon" href="https://i0.wp.com/mrshed.net/wp-content/uploads/2022/07/mr-shed-emblom-7.jpg" />
-  <link rel="apple-touch-icon" href="https://i0.wp.com/mrshed.net/wp-content/uploads/2022/07/mr-shed-emblom-7.jpg" />
-
-  <!-- Preconnect fonts -->
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@500;600&display=swap" rel="stylesheet">
-
-  <!-- Font Awesome -->
-  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-
-  <!-- Tailwind (CDN) + config -->
-  <script>
-    tailwindConfig = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            primary: '#3B82F6',
-            secondary: '#10B981',
-            accent: '#8B5CF6',
-            dark: '#0F1724',
-            light: '#F8FAFC'
-          },
-          fontFamily: {
-            sans: ['Inter', 'system-ui', 'sans-serif'],
-            display: ['Poppins', 'sans-serif']
-          }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>北京 · 古今辉映 | 帝都指南</title>
+    <!-- 简洁现代风格，Font Awesome 6 免费图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-      }
-    }
-  </script>
-  <script src="https://cdn.tailwindcss.com"></script>
 
-  <style>
-    /* 小量自定义，使用 Tailwind 为主 */
-    .glass {
-      background: rgba(255,255,255,0.6);
-      backdrop-filter: blur(6px);
-    }
-    .dark .glass {
-      background: rgba(15,23,36,0.55);
-    }
-    .avatar-placeholder {
-      background: linear-gradient(135deg,#3B82F6,#8B5CF6);
-      color: white;
-    }
-    /* 微调滚动条（暗色/亮色） */
-    ::-webkit-scrollbar { width: 10px; height:10px; }
-    ::-webkit-scrollbar-thumb {
-      background: rgba(0,0,0,0.12);
-      border-radius: 999px;
-    }
-    .dark ::-webkit-scrollbar-thumb {
-      background: rgba(255,255,255,0.08);
-    }
-  </style>
+        body {
+            background: #f8fafc;
+            font-family: system-ui, -apple-system, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+            color: #0f172a;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        /* 主容器 */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 3rem;
+        }
+
+        /* 头部区域 */
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #b91c1c, #7f1a1a, #1e3a8a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.01em;
+            margin-bottom: 0.75rem;
+        }
+
+        .hero .sub {
+            font-size: 1.2rem;
+            color: #334155;
+            max-width: 650px;
+            margin: 0 auto 1rem;
+            font-weight: 400;
+        }
+
+        .hero .desc {
+            font-size: 1rem;
+            color: #475569;
+            max-width: 720px;
+            margin: 0 auto;
+            background: rgba(255,255,240,0.6);
+            padding: 0.8rem 1.2rem;
+            border-radius: 2rem;
+            backdrop-filter: blur(2px);
+            display: inline-block;
+        }
+
+        /* 搜索互动区域 — 自己搜索北京的核心模块 */
+        .search-section {
+            background: white;
+            border-radius: 2rem;
+            padding: 0.5rem 1rem 0.5rem 1.5rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            justify-content: space-between;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s ease;
+        }
+
+        .search-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: #f1f5f9;
+            padding: 0.4rem 1rem;
+            border-radius: 2.5rem;
+            transition: 0.2s;
+        }
+
+        .search-wrapper i {
+            color: #6c757d;
+            font-size: 1.1rem;
+        }
+
+        .search-wrapper input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 0.8rem 0;
+            font-size: 1rem;
+            outline: none;
+            font-weight: 500;
+            color: #0f172a;
+        }
+
+        .search-wrapper input::placeholder {
+            color: #94a3b8;
+            font-weight: 400;
+        }
+
+        .clear-btn {
+            background: #eef2ff;
+            border: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: 2rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #1e40af;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: 0.2s;
+            font-family: inherit;
+        }
+
+        .clear-btn:hover {
+            background: #e0e7ff;
+            color: #1e3a8a;
+        }
+
+        .result-stats {
+            font-size: 0.85rem;
+            background: #eef2ff;
+            padding: 0.3rem 1rem;
+            border-radius: 2rem;
+            color: #1e40af;
+            font-weight: 500;
+        }
+
+        /* 卡片网格 */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.8rem;
+            margin-top: 1rem;
+        }
+
+        /* 卡片样式 */
+        .card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            transition: all 0.25s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.02), 0 2px 4px rgba(0, 0, 0, 0.03);
+            border: 1px solid #eef2f6;
+            cursor: default;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 28px -12px rgba(0, 0, 0, 0.12);
+            border-color: #f1c1c1;
+        }
+
+        .card-icon {
+            font-size: 2.2rem;
+            color: #b91c1c;
+            margin-bottom: 1rem;
+            background: #fff1f0;
+            width: 52px;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 1.2rem;
+        }
+
+        .card h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.2px;
+        }
+
+        .card .category-badge {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            background: #f1f5f9;
+            color: #334155;
+            padding: 0.25rem 0.7rem;
+            border-radius: 2rem;
+            margin-bottom: 0.8rem;
+            width: fit-content;
+            letter-spacing: 0.3px;
+        }
+
+        .card p {
+            color: #334155;
+            font-size: 0.9rem;
+            line-height: 1.45;
+            margin-top: 0.25rem;
+            flex: 1;
+        }
+
+        /* 无结果区域 */
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 3rem 2rem;
+            background: #ffffffcc;
+            border-radius: 2rem;
+            color: #475569;
+            border: 1px dashed #cbd5e1;
+        }
+
+        .no-results i {
+            font-size: 2.5rem;
+            color: #cbd5e1;
+            margin-bottom: 1rem;
+        }
+
+        .no-results p {
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        /* 底部 */
+        .footer {
+            margin-top: 3.5rem;
+            text-align: center;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 2rem;
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+
+        .footer a {
+            color: #b91c1c;
+            text-decoration: none;
+        }
+
+        /* 响应式微调 */
+        @media (max-width: 640px) {
+            .container {
+                padding: 1.2rem 1rem 2rem;
+            }
+            .hero h1 {
+                font-size: 2.4rem;
+            }
+            .hero .sub {
+                font-size: 1rem;
+            }
+            .search-section {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 0.8rem;
+            }
+            .search-wrapper {
+                width: 100%;
+            }
+            .clear-btn {
+                justify-content: center;
+                width: 100%;
+            }
+            .result-stats {
+                text-align: center;
+            }
+            .cards-grid {
+                gap: 1.2rem;
+            }
+        }
+
+        /* 点缀圆点 */
+        .bg-dot {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+            pointer-events: none;
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 28px 28px;
+        }
+    </style>
 </head>
-<body class="antialiased text-gray-800 bg-gray-50 dark:bg-dark dark:text-gray-100" id="page-root">
-  <!-- 页眉 / 导航 -->
-  <header class="sticky top-0 z-30 backdrop-blur-md glass border-b border-gray-200 dark:border-gray-800">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16">
-        <div class="flex items-center gap-3">
-          <a href="#" class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-md avatar-placeholder flex items-center justify-center text-lg font-semibold shadow">
-              QA
-            </div>
-            <div>
-              <div class="text-sm font-semibold">Qingdao Academy</div>
-              <div class="text-xs text-gray-500 dark:text-gray-400">非官方论坛</div>
-            </div>
-          </a>
+<body>
+<div class="bg-dot"></div>
+<div class="container">
+    <div class="hero">
+        <h1>北京 · 中轴线上的千年之韵</h1>
+        <div class="sub">六朝古都 · 世界名城 · 摩登与烟火共生</div>
+        <div class="desc">
+            <i class="fas fa-map-marker-alt" style="color:#b91c1c; margin-right:6px;"></i> 三千余年建城史，八百余年建都史，传统与现代在此完美交融。
         </div>
-
-        <nav class="hidden md:flex items-center gap-6 text-sm" aria-label="主导航">
-          <a href="#" class="hover:text-primary transition">首页</a>
-          <a href="#topics" class="hover:text-primary transition">讨论区</a>
-          <a href="#resources" class="hover:text-primary transition">资源</a>
-          <a href="#about" class="hover:text-primary transition">关于</a>
-          <a href="https://github.com/int64-fast" target="_blank" rel="noopener" class="hover:text-primary transition">GitHub</a>
-        </nav>
-
-        <div class="flex items-center gap-3">
-          <button id="theme-toggle" aria-label="切换暗色模式" class="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition">
-            <i id="theme-icon" class="fa fa-moon-o"></i>
-          </button>
-          <a href="#topics" class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-md bg-primary text-white text-sm shadow hover:opacity-95 transition">
-            <i class="fa fa-comments-o"></i> 进入论坛
-          </a>
-
-          <!-- 手机菜单（简单） -->
-          <button id="mobile-menu-btn" class="md:hidden p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition" aria-label="打开菜单">
-            <i class="fa fa-bars"></i>
-          </button>
-        </div>
-      </div>
     </div>
 
-    <!-- Mobile menu -->
-    <div id="mobile-menu" class="md:hidden hidden border-t border-gray-200 dark:border-gray-800">
-      <div class="px-4 py-3 space-y-2">
-        <a href="#" class="block">首页</a>
-        <a href="#topics" class="block">讨论区</a>
-        <a href="#resources" class="block">资源</a>
-        <a href="#about" class="block">关于</a>
-        <a href="https://github.com/int64-fast" target="_blank" rel="noopener" class="block">GitHub</a>
-      </div>
+    <!-- 搜索区域：实现“自己搜索北京”交互  -->
+    <div class="search-section">
+        <div class="search-wrapper">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="🔍 搜索北京 — 输入景点、美食、胡同、文化..." autocomplete="off">
+        </div>
+        <button class="clear-btn" id="clearSearchBtn"><i class="fas fa-eraser"></i> 清空搜索</button>
+        <div class="result-stats" id="resultStats">✨ 全部精彩</div>
     </div>
-  </header>
 
-  <!-- Hero -->
-  <main>
-    <section class="bg-gradient-to-r from-primary to-accent text-white">
-      <div class="max-w-6xl mx-auto px-4 py-16 sm:py-24 lg:py-32">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-          <div>
-            <h1 class="text-4xl sm:text-5xl font-display font-extrabold leading-tight drop-shadow">
-              Qingdao Academy <span class="text-sm font-normal opacity-90">非官方论坛</span>
-            </h1>
-            <p class="mt-4 text-lg max-w-xl opacity-95">
-              一个面向 Qingdao Academy 社区的轻量非官方交流平台 — 分享经验、发布活动与协作项目。
-            </p>
-            <div class="mt-6 flex flex-wrap gap-3">
-              <a href="#topics" class="inline-flex items-center gap-2 px-5 py-3 bg-white text-primary rounded-md font-medium shadow hover:translate-y-0.5 transition-transform">
-                <i class="fa fa-comments"></i> 浏览讨论
-              </a>
-              <a href="#resources" class="inline-flex items-center gap-2 px-4 py-3 bg-white/20 border border-white/30 text-white rounded-md hover:bg-white/10 transition">
-                <i class="fa fa-book"></i> 资源共享
-              </a>
-            </div>
-            <div class="mt-6 text-sm text-white/80">
-              <span class="inline-flex items-center gap-2"><i class="fa fa-clock-o"></i> 活跃成员：0</span>
-              <span class="mx-4">•</span>
-              <span class="inline-flex items-center gap-2"><i class="fa fa-user"></i> 最后更新：2025-12-27</span>
-            </div>
-          </div>
+    <!-- 卡片容器 -->
+    <div id="cardsContainer" class="cards-grid"></div>
 
-          
+    <div class="footer">
+        <i class="fas fa-city"></i>  ·  漫步北京，从红墙黄瓦到摩天大厦  ·  
+        <a href="#" aria-label="探索北京"><i class="fas fa-compass"></i> 搜索你心中的京城</a>
+    </div>
+</div>
 
-        </div>
-      </div>
-    </section>
+<script>
+    // --------------------------------------------------------------
+    // 北京相关数据 — 涵盖景点、美食、文化、艺术街区等
+    // 每个卡片包含 名称、类别、简介、对应图标 (FontAwesome 6)
+    // 数据真实且可搜索, 用户输入关键词即可筛选出自己感兴趣的内容
+    // --------------------------------------------------------------
+    const beijingData = [
+        {
+            name: "故宫博物院",
+            category: "🏯 皇家古迹",
+            desc: "世界五大宫之首，明清两代皇家宫殿，珍藏文物186万余件，红墙金瓦诉说着六百年风云。",
+            icon: "fa-landmark"
+        },
+        {
+            name: "八达岭长城",
+            category: "⛰️ 雄关要塞",
+            desc: "万里长城精华所在，『不到长城非好汉』，登高远眺，群山巍峨，民族之魂。",
+            icon: "fa-mountain-city"
+        },
+        {
+            name: "天坛",
+            category: "🛕 祭天圣坛",
+            desc: "明清皇帝祭天祈谷之所，祈年殿堪称中式建筑美学巅峰，古柏森森。",
+            icon: "fa-place-of-worship"
+        },
+        {
+            name: "颐和园",
+            category: "🌊 皇家园林",
+            desc: "中国古典园林之首，昆明湖碧波万顷，长廊彩绘如诗，慈禧夏宫。",
+            icon: "fa-tree"
+        },
+        {
+            name: "南锣鼓巷",
+            category: "🏮 胡同烟火",
+            desc: "北京最古老街区之一，纵横交错的胡同，文艺小店与老北京小吃并存。",
+            icon: "fa-store"
+        },
+        {
+            name: "北京烤鸭",
+            category: "🍽️ 必吃美食",
+            desc: "外皮酥脆，肉质鲜嫩，荷叶饼卷甜面酱与葱丝，享誉世界的京味名片。",
+            icon: "fa-utensils"
+        },
+        {
+            name: "炸酱面",
+            category: "🍜 地道小吃",
+            desc: "老北京家常灵魂，酱香浓郁，配菜丰富，一碗面里藏着胡同的四季。",
+            icon: "fa-bowl-food"
+        },
+        {
+            name: "京剧",
+            category: "🎭 国粹艺术",
+            desc: "中国戏曲之集大成，生旦净末丑，脸谱变幻演绎忠奸善恶。",
+            icon: "fa-mask"
+        },
+        {
+            name: "胡同文化",
+            category: "🚲 京味生活",
+            desc: "青砖灰瓦，鸽哨悠悠，穿行于胡同深处，触摸老北京的肌理与温度。",
+            icon: "fa-road"
+        },
+        {
+            name: "涮羊肉",
+            category: "🍲 铜锅记忆",
+            desc: "铜锅炭火，清汤麻酱，手切羊肉鲜嫩无比，冬日暖心盛宴。",
+            icon: "fa-fire"
+        },
+        {
+            name: "四合院",
+            category: "🏡 传统建筑",
+            desc: "天棚鱼缸石榴树，老爷肥狗胖丫头，合院生活是北京最温暖的居住记忆。",
+            icon: "fa-house-chimney"
+        },
+        {
+            name: "798艺术区",
+            category: "🎨 先锋艺术",
+            desc: "老厂房变身艺术殿堂，画廊、设计店、涂鸦墙，潮流与文化碰撞。",
+            icon: "fa-palette"
+        },
+        {
+            name: "鸟巢 & 水立方",
+            category: "🏟️ 奥运地标",
+            desc: "2008年北京奥运会主场馆，现代建筑奇迹，夜晚灯光秀璀璨夺目。",
+            icon: "fa-futbol"
+        },
+        {
+            name: "大栅栏",
+            category: "🏮 百年商街",
+            desc: "老北京商业中心，瑞蚨祥、张一元、内联升，前门繁华今犹在。",
+            icon: "fa-shop"
+        },
+        {
+            name: "豆汁焦圈",
+            category: "🥣 京味小吃",
+            desc: "独特的发酵豆汁配酥脆焦圈，老北京最『个色』的早餐记忆。",
+            icon: "fa-mug-hot"
+        }
+    ];
 
-    <!-- 功能卡片 -->
-    <section id="features" class="max-w-6xl mx-auto px-4 py-12 sm:py-16">
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div class="p-5 rounded-xl bg-white shadow hover:shadow-lg transition dark:bg-gray-800">
-          <div class="text-primary text-2xl mb-3"><i class="fa fa-comments"></i></div>
-          <h4 class="font-semibold">讨论区</h4>
-          <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">按话题组织讨论，便于查找与订阅你感兴趣的主题。</p>
-        </div>
+    // 获取DOM元素
+    const searchInput = document.getElementById('searchInput');
+    const clearBtn = document.getElementById('clearSearchBtn');
+    const cardsContainer = document.getElementById('cardsContainer');
+    const resultStats = document.getElementById('resultStats');
 
-        <div class="p-5 rounded-xl bg-white shadow hover:shadow-lg transition dark:bg-gray-800">
-          <div class="text-secondary text-2xl mb-3"><i class="fa fa-book"></i></div>
-          <h4 class="font-semibold">资源共享</h4>
-          <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">教程、笔记与代码片段，一键下载与预览。</p>
-        </div>
+    // 渲染卡片函数 (根据筛选关键词)
+    function renderCards(filterKeyword = '') {
+        const keyword = filterKeyword.trim().toLowerCase();
+        let filtered = beijingData;
+        
+        // 如果有关键词则进行模糊匹配：匹配 name、category、desc 字段
+        if (keyword !== '') {
+            filtered = beijingData.filter(item => {
+                return item.name.toLowerCase().includes(keyword) ||
+                       item.category.toLowerCase().includes(keyword) ||
+                       item.desc.toLowerCase().includes(keyword);
+            });
+        }
 
-        <div class="p-5 rounded-xl bg-white shadow hover:shadow-lg transition dark:bg-gray-800">
-          <div class="text-accent text-2xl mb-3"><i class="fa fa-calendar"></i></div>
-          <h4 class="font-semibold">活动与讲座</h4>
-          <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">发布并报名社区活动，线上 / 线下均支持。</p>
-        </div>
-
-        <div class="p-5 rounded-xl bg-white shadow hover:shadow-lg transition dark:bg-gray-800">
-          <div class="text-yellow-500 text-2xl mb-3"><i class="fa fa-life-ring"></i></div>
-          <h4 class="font-semibold">帮助与文档</h4>
-          <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">FAQ、指南与常见问题解答，快速上手。</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- 最新主题（示例） -->
-    <section id="topics" class="max-w-6xl mx-auto px-4 py-8 sm:py-12">
-      <div class="flex items-center justify-between mb-6">
-        <h2 class="text-2xl font-semibold">最新主题</h2>
-        <a href="#" class="text-sm text-primary hover:underline">查看更多</a>
-      </div>
-
-      <div class="space-y-4">
-        <!-- 单条主题卡 -->
-        <article class="p-4 rounded-lg bg-white shadow flex items-start gap-4 dark:bg-gray-800">
-          <div class="flex-shrink-0">
-            <div class="w-12 h-12 rounded-full avatar-placeholder flex items-center justify-center text-white font-semibold">ZX</div>
-          </div>
-          <div class="flex-1">
-            <div class="flex items-center justify-between">
-              <a href="#" class="text-lg font-medium hover:underline">如何优化迷你世界帧率？</a>
-              <a href="https://mdownload.mini1.cn/latest/mini1.exe"><div class="text-xs text-gray-500 dark:text-gray-400">114514 回复</div></a>
-            </div>
-            <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">近期在迷你世界中遇到帧率低与野人模型无法加载的问题，分享一下如何重新下载…</p>
-            <div class="mt-3 text-xs text-gray-500 dark:text-gray-400">发布者：迷你世界野人 · 2 小时前</div>
-          </div>
-        </article>
-
-        <article class="p-4 rounded-lg bg-white shadow flex items-start gap-4 dark:bg-gray-800">
-          <div class="flex-shrink-0">
-            <div class="w-12 h-12 rounded-full avatar-placeholder flex items-center justify-center text-white font-semibold">MJ</div>
-          </div>
-          <div class="flex-1">
-            <div class="flex items-center justify-between">
-              <a href="#" class="text-lg font-medium hover:underline">数据工程实践分享</a>
-              <div class="text-xs text-gray-500 dark:text-gray-400">24 回复</div>
-            </div>
-            <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">基于 Airflow 的调度改造与 S3 数据湖实践，包含 DAG 设计与监控指标建议。</p>
-            <div class="mt-3 text-xs text-gray-500 dark:text-gray-400">发布者：may · 昨天</div>
-          </div>
-        </article>
-
-        <article class="p-4 rounded-lg bg-white shadow flex items-start gap-4 dark:bg-gray-800">
-          <div class="flex-shrink-0">
-            <div class="w-12 h-12 rounded-full avatar-placeholder flex items-center justify-center text-white font-semibold">LT</div>
-          </div>
-          <div class="flex-1">
-            <div class="flex items-center justify-between">
-              <a href="#" class="text-lg font-medium hover:underline">线下活动：新年聚会</a>
-              <div class="text-xs text-gray-500 dark:text-gray-400">报名中</div>
-            </div>
-            <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">时间：2026-01-10，地点：青岛市中心。欢迎大家报名并推荐讲题~</p>
-            <div class="mt-3 text-xs text-gray-500 dark:text-gray-400">发布者：admin · 3 天前</div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- 资源与侧栏（示例） -->
-    <section id="resources" class="max-w-6xl mx-auto px-4 py-8 sm:py-12">
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div class="lg:col-span-2 space-y-6">
-          <div class="p-6 rounded-xl bg-white shadow dark:bg-gray-800">
-            <h3 class="text-xl font-semibold mb-3">精选资源</h3>
-            <ul class="space-y-3">
-              <li class="flex items-start justify-between">
-                <div>
-                  <a href="#" class="font-medium hover:underline">迷你世界高性能编程实战（笔记）</a>
-                  <div class="text-sm text-gray-500 dark:text-gray-400">作者：alex · 资料 · PDF</div>
-                </div>
-                <a href="https://mdownload.mini1.cn/latest/miniworld.exe" class="text-sm text-primary">下载</a>
-              </li>
-              <li class="flex items-start justify-between">
-                <div>
-                  <a href="#" class="font-medium hover:underline">数据湖设计指南</a>
-                  <div class="text-sm text-gray-500 dark:text-gray-400">作者：may · 文章</div>
-                </div>
-                <a href="#" class="text-sm text-primary">查看</a>
-              </li>
-            </ul>
-          </div>
-
-          <div class="p-6 rounded-xl bg-white shadow dark:bg-gray-800">
-            <h3 class="text-xl font-semibold mb-3">近期活动</h3>
-            <div class="space-y-3 text-sm text-gray-600 dark:text-gray-300">
-              <div class="flex items-start justify-between">
-                <div>
-                  <div class="font-medium">线上讲座：微服务追踪实践</div>
-                  <div class="text-xs text-gray-500 dark:text-gray-400">2026-01-04 · 线上</div>
-                </div>
-                <a href="#" class="text-primary">报名</a>
-              </div>
-              <div class="flex items-start justify-between">
-                <div>
-                  <div class="font-medium">工作坊：性能调优实战</div>
-                  <div class="text-xs text-gray-500 dark:text-gray-400">2026-02-15 · 线下</div>
-                </div>
-                <a href="#" class="text-primary">报名</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <aside class="space-y-6">
-          <div class="p-6 rounded-xl bg-white shadow dark:bg-gray-800">
-            <h4 class="font-semibold mb-3">关于我们</h4>
-            <p class="text-sm text-gray-600 dark:text-gray-300">Qingdao Academy 非官方论坛，由社区成员维护，旨在提供轻量、自由的交流空间。</p>
-          </div>
-
-          <div class="p-6 rounded-xl bg-white shadow dark:bg-gray-800">
-            <h4 class="font-semibold mb-3">加入我们</h4>
-            <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">想要成为贡献者？欢迎提交资源或发起话题。</p>
-            <a href="https://github.com/int64-fast" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-md text-sm">
-              <i class="fa fa-github"></i> GitHub
-            </a>
-          </div>
-        </aside>
-      </div>
-    </section>
-
-    <!-- 评论（giscus） -->
-    <section id="discussions" class="max-w-6xl mx-auto px-4 py-8 sm:py-12">
-      <div class="p-6 rounded-xl bg-white shadow dark:bg-gray-800">
-        <h3 class="text-lg font-semibold mb-4">讨论区（使用 GitHub Discussions）</h3>
-        <!-- giscus：替换 data-repo / data-repo-id / data-category / data-category-id 为你的仓库信息 -->
-        <div id="giscus-container" class="min-h-[200px]">
-          <script src="https://giscus.app/client.js"
-            data-repo="int64-fast/int64-fast.github.io"
-            data-repo-id="R_kgDOP-lGKQ"
-            data-category="Ideas"
-            data-category-id="DIC_kwDOP-lGKc4C0Pqh"
-            data-mapping="pathname"
-            data-strict="0"
-            data-reactions-enabled="1"
-            data-emit-metadata="0"
-            data-input-position="top"
-            data-theme="light"
-            data-lang="zh-CN"
-            crossorigin="anonymous"
-            async>
-          </script>
-        </div>
-      </div>
-    </section>
-
-    <!-- 页脚 -->
-    <footer class="border-t border-gray-200 dark:border-gray-800">
-      <div class="max-w-6xl mx-auto px-4 py-8 sm:py-10 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div class="text-sm text-gray-600 dark:text-gray-400">© 2025 Qingdao Academy · 非官方论坛</div>
-        <div class="text-sm text-gray-600 dark:text-gray-400">Built with ♥ · <a href="https://github.com/int64-fast" class="text-primary">int64-fast</a></div>
-      </div>
-    </footer>
-  </main>
-
-  <!-- 脚本：主题切换与移动菜单 -->
-  <script>
-    (function () {
-      const themeToggle = document.getElementById('theme-toggle');
-      const themeIcon = document.getElementById('theme-icon');
-
-      function setIcon(isDark) {
-        // moon for dark (to switch to light), sun for light (to switch to dark)
-        themeIcon.className = isDark ? 'fa fa-sun-o' : 'fa fa-moon-o';
-      }
-
-      function applyTheme(dark) {
-        if (dark) {
-          document.documentElement.classList.add('dark');
+        // 更新统计信息
+        const totalFound = filtered.length;
+        const allCount = beijingData.length;
+        if (keyword === '') {
+            resultStats.innerHTML = `🏮 全城共 ${allCount} 处精彩 · 指尖漫游北京`;
         } else {
-          document.documentElement.classList.remove('dark');
+            resultStats.innerHTML = `🔎 找到 ${totalFound} 项关于 “${escapeHtml(keyword)}” 的北京记忆`;
         }
-        setIcon(dark);
-      }
 
-      // 初始化：优先 localStorage -> prefers-color-scheme -> 默认 light
-      const stored = localStorage.getItem('qa-theme');
-      if (stored === 'dark') {
-        applyTheme(true);
-      } else if (stored === 'light') {
-        applyTheme(false);
-      } else {
-        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        applyTheme(prefersDark);
-      }
-
-      themeToggle.addEventListener('click', function () {
-        const isDark = document.documentElement.classList.toggle('dark');
-        localStorage.setItem('qa-theme', isDark ? 'dark' : 'light');
-        setIcon(isDark);
-      });
-
-      // Mobile menu
-      const mobileBtn = document.getElementById('mobile-menu-btn');
-      const mobileMenu = document.getElementById('mobile-menu');
-      mobileBtn.addEventListener('click', function () {
-        mobileMenu.classList.toggle('hidden');
-      });
-
-      // Accessibility: close mobile menu on outside click
-      document.addEventListener('click', function (e) {
-        if (!mobileMenu.contains(e.target) && !mobileBtn.contains(e.target)) {
-          if (!mobileMenu.classList.contains('hidden')) mobileMenu.classList.add('hidden');
+        // 如果无结果，显示友好提示
+        if (filtered.length === 0) {
+            cardsContainer.innerHTML = `
+                <div class="no-results">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <p>❄️ 未搜到相关京城风物 · 换个词再试试吧</p>
+                    <p style="font-size:0.8rem; margin-top:8px;">试试「长城」「胡同」「烤鸭」「艺术」等关键词</p>
+                </div>
+            `;
+            return;
         }
-      });
-    })();
-  </script>
+
+        // 动态生成卡片 HTML (简洁且美观)
+        let cardsHTML = '';
+        for (let item of filtered) {
+            // 安全转义简介中的特殊字符（避免XSS）
+            const safeName = escapeHtml(item.name);
+            const safeCategory = escapeHtml(item.category);
+            const safeDesc = escapeHtml(item.desc);
+            // FontAwesome 图标类处理
+            const iconClass = item.icon || 'fa-flag-checkered';
+            cardsHTML += `
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas ${iconClass}"></i>
+                    </div>
+                    <h3>${safeName}</h3>
+                    <span class="category-badge"><i class="fas fa-tag"></i> ${safeCategory}</span>
+                    <p>${safeDesc}</p>
+                </div>
+            `;
+        }
+        cardsContainer.innerHTML = cardsHTML;
+    }
+
+    // 简易防XSS辅助函数
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
+            return c;
+        });
+    }
+
+    // 搜索输入监听 (实时过滤)
+    function handleSearch() {
+        const searchTerm = searchInput.value;
+        renderCards(searchTerm);
+    }
+
+    // 清空搜索框并重置全部卡片
+    function clearSearch() {
+        searchInput.value = '';
+        renderCards('');
+        // 让输入框获取焦点，提升体验
+        searchInput.focus();
+    }
+
+    // 绑定事件 + 初始化
+    function init() {
+        renderCards('');          // 初始加载所有卡片
+        searchInput.addEventListener('input', handleSearch);
+        clearBtn.addEventListener('click', clearSearch);
+        // 可选：按回车时保持搜索效果已经实时，不需要额外动作，但保留优雅
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                // 已经实时搜索，无需额外动作，只是防止提交表单（如果有）
+            }
+        });
+    }
+
+    init();
+</script>
 </body>
 </html>
-
-
