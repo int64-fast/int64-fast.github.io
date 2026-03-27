@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>DeepSeek</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #111;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        .wechat-container {
+            width: 100%;
+            max-width: 500px;
+            height: 95vh;
+            max-height: 800px;
+            background-color: #f5f5f5;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .chat-header {
+            background: #ffffff;
+            padding: 12px 16px;
+            border-bottom: 0.5px solid rgba(0, 0, 0, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .back-icon {
+            font-size: 24px;
+            font-weight: 400;
+            color: #07c160;
+            cursor: pointer;
+            line-height: 1;
+        }
+        .header-title {
+            font-size: 18px;
+            font-weight: 500;
+            color: #000000;
+        }
+        .header-right {
+            font-size: 14px;
+            color: #576b95;
+            cursor: pointer;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 12px;
+            background-color: #ededed;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            scroll-behavior: smooth;
+        }
+        .chat-messages::-webkit-scrollbar {
+            width: 4px;
+        }
+        .chat-messages::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: #c0c0c0;
+            border-radius: 4px;
+        }
+
+        .message-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            max-width: 100%;
+        }
+        .message-row.user {
+            flex-direction: row-reverse;
+        }
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+        .user .avatar {
+            background-color: #07c160;
+            color: white;
+        }
+        .assistant .avatar {
+            background-color: #ffffff;
+            color: #3a3a3a;
+            border: 0.5px solid #e2e2e2;
+        }
+        .bubble-wrapper {
+            max-width: 75%;
+            display: flex;
+            flex-direction: column;
+        }
+        .message-bubble {
+            padding: 10px 14px;
+            border-radius: 20px;
+            font-size: 15px;
+            line-height: 1.45;
+            word-break: break-word;
+            white-space: pre-wrap;
+            box-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.08);
+        }
+        .user .message-bubble {
+            background-color: #d9f0c3;
+            color: #111;
+            border-bottom-right-radius: 4px;
+        }
+        .assistant .message-bubble {
+            background-color: #ffffff;
+            color: #111;
+            border-bottom-left-radius: 4px;
+        }
+        .message-time {
+            font-size: 10px;
+            color: #9a9a9a;
+            margin-top: 4px;
+            margin-left: 8px;
+            margin-right: 8px;
+        }
+        .user .message-time {
+            text-align: right;
+        }
+        .typing-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            background-color: #888;
+            border-radius: 50%;
+            animation: blink 1.4s infinite both;
+        }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes blink {
+            0%, 80%, 100% { opacity: 0.3; transform: scale(0.8);}
+            40% { opacity: 1; transform: scale(1);}
+        }
+
+        .input-area {
+            background-color: #ffffff;
+            padding: 10px 12px;
+            border-top: 0.5px solid #e9e9e9;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .input-box {
+            flex: 1;
+            background-color: #f5f5f5;
+            border-radius: 22px;
+            padding: 8px 16px;
+            border: none;
+            font-size: 16px;
+            outline: none;
+            resize: none;
+            font-family: inherit;
+            max-height: 100px;
+            overflow-y: auto;
+            line-height: 1.4;
+        }
+        .input-box:focus {
+            background-color: #fff;
+            border: 0.5px solid #d0d0d0;
+        }
+        .send-btn {
+            background-color: #07c160;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        .send-btn:active {
+            transform: scale(0.94);
+            background-color: #059e4c;
+        }
+        .send-btn.disabled {
+            background-color: #c0c0c0;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+        .send-icon {
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            transform: rotate(45deg);
+        }
+        .clear-btn {
+            background: transparent;
+            border: none;
+            font-size: 22px;
+            cursor: pointer;
+            color: #999;
+            padding: 0 6px;
+        }
+        .welcome-tip {
+            text-align: center;
+            font-size: 12px;
+            color: #aaa;
+            margin-top: 10px;
+        }
+        footer {
+            font-size: 10px;
+            text-align: center;
+            background: #f0f0f0;
+            padding: 4px;
+            color: #aaa;
+        }
+        @media (max-width: 500px) {
+            .wechat-container {
+                border-radius: 0;
+                height: 100vh;
+                max-height: none;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="wechat-container">
+    <div class="chat-header">
+        <div class="header-left">
+            <span class="back-icon">←</span>
+            <span class="header-title">DeepSeek 对话</span>
+        </div>
+        <div class="header-right" id="clearChatBtn">清空</div>
+    </div>
+
+    <div id="chatMessages" class="chat-messages">
+        <div class="welcome-tip">JUST SAY IT</div>
+    </div>
+
+    <div class="input-area">
+        <textarea rows="1" id="messageInput" class="input-box" placeholder="说事..." style="overflow-y: hidden;"></textarea>
+        <button id="sendButton" class="send-btn"><span class="send-icon">↑</span></button>
+        <button id="clearMobileBtn" class="clear-btn" style="font-size: 20px;">🗑️</button>
+    </div>
+</div>
+
+<script>
+    // ================= 密钥拆分 (第一部分) =================
+    const KEY_PART_1 = 'sk-4376f9a78';   // 请替换为实际密钥的第一部分（通常是 "sk-" 开头）
+    // ====================================================
+    
+    // ================= 密钥拆分 (第二部分，放在代码中段) =================
+    const KEY_PART_2 = 'ae74f0596ce7';   // 请替换为实际密钥的中间部分
+    // ==================================================================
+    
+    // ================= 系统提示词 (更新版) =================
+    const SYSTEM_PROMPT = `你是个没耐心的真人，说话直接，不装。
+- 少用括号注释（除非必须用），不许说“我会为你”“下面”“首先”这类废话。
+- 少用“不是……而是……”和“把”字句，不许结尾问“需要我……吗”。
+- 不许省略主语、不用单字动词、不编词。
+- 用户犯蠢直接骂，但骂完必须给出具体怎么做的建议，别只说“自己想办法”就结束。
+- 回复该短就短（像用户简单的寒暄），该长就长（比如要提出建议等），别全是句号，想象你是人类在打字，人类不会全是句号吧`;
+    
+    let conversationHistory = [];
+    let isWaitingResponse = false;
+    let pendingAIMessageDiv = null;
+    let currentFullContent = '';
+
+    const chatMessagesDiv = document.getElementById('chatMessages');
+    const messageInput = document.getElementById('messageInput');
+    const sendBtn = document.getElementById('sendButton');
+    const clearChatBtn = document.getElementById('clearChatBtn');
+    const clearMobileBtn = document.getElementById('clearMobileBtn');
+
+    function getCurrentTime() {
+        const now = new Date();
+        return `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+    }
+
+    function scrollToBottom() {
+        setTimeout(() => {
+            if (chatMessagesDiv) {
+                chatMessagesDiv.scrollTop = chatMessagesDiv.scrollHeight;
+            }
+        }, 20);
+    }
+
+    function addMessageToUI(role, content, time = null) {
+        const messageTime = time || getCurrentTime();
+        const messageRow = document.createElement('div');
+        messageRow.className = `message-row ${role}`;
+        
+        const avatar = document.createElement('div');
+        avatar.className = 'avatar';
+        avatar.innerText = role === 'user' ? '我' : '🔥';
+        
+        const bubbleWrapper = document.createElement('div');
+        bubbleWrapper.className = 'bubble-wrapper';
+        
+        const bubble = document.createElement('div');
+        bubble.className = 'message-bubble';
+        bubble.innerText = content;
+        
+        const timeSpan = document.createElement('div');
+        timeSpan.className = 'message-time';
+        timeSpan.innerText = messageTime;
+        
+        bubbleWrapper.appendChild(bubble);
+        bubbleWrapper.appendChild(timeSpan);
+        messageRow.appendChild(avatar);
+        messageRow.appendChild(bubbleWrapper);
+        
+        const welcomeTip = chatMessagesDiv.querySelector('.welcome-tip');
+        if (welcomeTip && conversationHistory.length === 0 && role !== 'system') {
+            welcomeTip.remove();
+        }
+        chatMessagesDiv.appendChild(messageRow);
+        scrollToBottom();
+        return messageRow;
+    }
+
+    function createPlaceholderAIMessage() {
+        const welcome = chatMessagesDiv.querySelector('.welcome-tip');
+        if (welcome) welcome.remove();
+        
+        const messageRow = document.createElement('div');
+        messageRow.className = 'message-row assistant';
+        const avatar = document.createElement('div');
+        avatar.className = 'avatar';
+        avatar.innerText = '🔥';
+        const bubbleWrapper = document.createElement('div');
+        bubbleWrapper.className = 'bubble-wrapper';
+        const bubble = document.createElement('div');
+        bubble.className = 'message-bubble';
+        bubble.innerHTML = `<div class="typing-indicator"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></div>`;
+        const timeSpan = document.createElement('div');
+        timeSpan.className = 'message-time';
+        timeSpan.innerText = getCurrentTime();
+        bubbleWrapper.appendChild(bubble);
+        bubbleWrapper.appendChild(timeSpan);
+        messageRow.appendChild(avatar);
+        messageRow.appendChild(bubbleWrapper);
+        chatMessagesDiv.appendChild(messageRow);
+        scrollToBottom();
+        return { messageRow, bubble, timeSpan };
+    }
+
+    function removePendingAIMessage() {
+        if (pendingAIMessageDiv && pendingAIMessageDiv.parentNode) {
+            pendingAIMessageDiv.remove();
+        }
+        pendingAIMessageDiv = null;
+    }
+
+    // ================= 密钥拼接 (在API调用前完成) =================
+    function getFullApiKey() {
+        // 第三部分密钥（调用API前拼接）
+        const KEY_PART_3 = '7cd75c1a3a3';   // 请替换为实际密钥的剩余部分
+        return KEY_PART_1 + KEY_PART_2 + KEY_PART_3;
+    }
+    // =============================================================
+
+    async function sendUserMessage() {
+        const userText = messageInput.value.trim();
+        if (!userText) return;
+        if (isWaitingResponse) return;
+        
+        const fullApiKey = getFullApiKey();
+        if (!fullApiKey || fullApiKey === 'sk-请在此处填入您的密钥第三部分' || fullApiKey.includes('请在此处填入')) {
+            addMessageToUI('assistant', 'Key呢？填了再聊。');
+            return;
+        }
+        
+        messageInput.value = '';
+        messageInput.style.height = 'auto';
+        
+        addMessageToUI('user', userText);
+        conversationHistory.push({ role: 'user', content: userText });
+        
+        const messagesForAPI = [
+            { role: 'system', content: SYSTEM_PROMPT },
+            ...conversationHistory
+        ];
+        
+        isWaitingResponse = true;
+        sendBtn.classList.add('disabled');
+        
+        const { messageRow, bubble, timeSpan } = createPlaceholderAIMessage();
+        pendingAIMessageDiv = messageRow;
+        currentFullContent = '';
+        const bubbleContentDiv = bubble;
+        
+        try {
+            const apiUrl = 'https://api.deepseek.com/v1/chat/completions';
+            const requestBody = {
+                model: 'deepseek-chat',
+                messages: messagesForAPI,
+                stream: true,
+                temperature: 1.2,          // 调高温度，增加随机性
+                max_tokens: 2048,           // 调高最大输出长度
+            };
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${fullApiKey}`
+                },
+                body: JSON.stringify(requestBody)
+            });
+            
+            if (!response.ok) {
+                let errorDetail = '';
+                try {
+                    const errJson = await response.json();
+                    errorDetail = errJson.error?.message || JSON.stringify(errJson);
+                } catch(e) { errorDetail = response.statusText; }
+                throw new Error(`${response.status}: ${errorDetail}`);
+            }
+            
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder('utf-8');
+            let buffer = '';
+            let isFinished = false;
+            
+            while (!isFinished) {
+                const { done, value } = await reader.read();
+                if (done) break;
+                buffer += decoder.decode(value, { stream: true });
+                const lines = buffer.split('\n');
+                buffer = lines.pop();
+                
+                for (const line of lines) {
+                    const trimmedLine = line.trim();
+                    if (!trimmedLine) continue;
+                    if (trimmedLine === 'data: [DONE]') {
+                        isFinished = true;
+                        break;
+                    }
+                    if (trimmedLine.startsWith('data: ')) {
+                        const jsonStr = trimmedLine.slice(6);
+                        try {
+                            const data = JSON.parse(jsonStr);
+                            const delta = data.choices?.[0]?.delta?.content;
+                            if (delta) {
+                                currentFullContent += delta;
+                                if (bubbleContentDiv) {
+                                    bubbleContentDiv.innerText = currentFullContent;
+                                    scrollToBottom();
+                                }
+                            }
+                        } catch (e) {}
+                    }
+                }
+            }
+            
+            if (currentFullContent) {
+                if (bubbleContentDiv) bubbleContentDiv.innerText = currentFullContent;
+                const finalTimeSpan = pendingAIMessageDiv?.querySelector('.message-time');
+                if (finalTimeSpan) finalTimeSpan.innerText = getCurrentTime();
+                conversationHistory.push({ role: 'assistant', content: currentFullContent });
+            } else {
+                if (bubbleContentDiv) bubbleContentDiv.innerText = '屁都没憋出来';
+                conversationHistory.push({ role: 'assistant', content: '[无响应]' });
+            }
+            pendingAIMessageDiv = null;
+            
+        } catch (error) {
+            console.error(error);
+            if (pendingAIMessageDiv) {
+                const errorBubble = pendingAIMessageDiv.querySelector('.message-bubble');
+                if (errorBubble) {
+                    errorBubble.innerText = `⚠️ ${error.message}`;
+                    errorBubble.style.backgroundColor = '#ffe6e6';
+                } else {
+                    removePendingAIMessage();
+                    addMessageToUI('assistant', `❌ ${error.message}`);
+                }
+                pendingAIMessageDiv = null;
+            } else {
+                addMessageToUI('assistant', `❌ ${error.message}`);
+            }
+        } finally {
+            isWaitingResponse = false;
+            sendBtn.classList.remove('disabled');
+            scrollToBottom();
+            messageInput.focus();
+        }
+    }
+    
+    function clearConversation() {
+        if (isWaitingResponse) return;
+        conversationHistory = [];
+        while (chatMessagesDiv.firstChild) {
+            chatMessagesDiv.removeChild(chatMessagesDiv.firstChild);
+        }
+        const welcomeDiv = document.createElement('div');
+        welcomeDiv.className = 'welcome-tip';
+        welcomeDiv.innerText = '🔥 清空了，再犯蠢试试';
+        chatMessagesDiv.appendChild(welcomeDiv);
+        scrollToBottom();
+        if (pendingAIMessageDiv) pendingAIMessageDiv = null;
+        currentFullContent = '';
+    }
+    
+    function autoResizeTextarea() {
+        messageInput.style.height = 'auto';
+        messageInput.style.height = Math.min(messageInput.scrollHeight, 100) + 'px';
+    }
+    
+    function onSend() {
+        if (isWaitingResponse) return;
+        sendUserMessage();
+    }
+    
+    function onInputKeydown(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            if (!isWaitingResponse) {
+                onSend();
+            }
+        }
+    }
+    
+    function init() {
+        sendBtn.addEventListener('click', onSend);
+        clearChatBtn.addEventListener('click', clearConversation);
+        clearMobileBtn.addEventListener('click', clearConversation);
+        messageInput.addEventListener('input', autoResizeTextarea);
+        messageInput.addEventListener('keydown', onInputKeydown);
+        messageInput.focus();
+        
+        // 检查密钥是否完整（避免控制台警告）
+        const testKey = getFullApiKey();
+        if (!testKey || testKey === 'sk-请在此处填入您的密钥第三部分' || testKey.includes('请在此处填入')) {
+            console.warn('⚠️ 请将密钥三部分分别填入 KEY_PART_1, KEY_PART_2, KEY_PART_3 中');
+        }
+    }
+    
+    init();
+</script>
+</body>
+</html>
