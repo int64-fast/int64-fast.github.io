@@ -1,0 +1,451 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>★★★ 极品题目.pdf 免费下载 白金豪华版 2005 ★★★</title>
+<style type="text/css">
+  html, body { height: 100%; }
+  body {
+    margin: 0; padding: 20px 10px 80px;
+    background-color: #000033;
+    background-image:
+      radial-gradient(#ffffff 1px, transparent 1px),
+      radial-gradient(#ffff99 1px, transparent 1px),
+      radial-gradient(circle at 50% 50%, rgba(255,0,255,.18), transparent 60%);
+    background-size: 50px 50px, 80px 80px, 100% 100%;
+    background-position: 0 0, 25px 25px, 0 0;
+    font-family: "Times New Roman", "宋体", serif;
+    color: #000000;
+    overflow-x: hidden;
+  }
+
+  a { color: #0000FF; text-decoration: underline; }
+  a:hover { color: #FF0000; background: #FFFF00; }
+
+  .blink { animation: blink 1s steps(1) infinite; -webkit-animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  @-webkit-keyframes blink { 50% { opacity: 0; } }
+
+  .fast-blink { animation: blink .35s steps(1) infinite; }
+
+  /* ============ 主角按钮 ============ */
+  .btn {
+    background: linear-gradient(#ffffff, #ffff00 45%, #ff9900);
+    border: 6px outset #ffff00;
+    padding: 22px 34px;
+    font-size: 32px;
+    font-weight: bold;
+    font-family: "Arial Black", "黑体", sans-serif;
+    color: #FF0000;
+    cursor: pointer;
+    text-shadow: 2px 2px 0 #FFFFFF, 0 0 12px #ffff00;
+    box-shadow: 0 0 18px #ffff00, 0 0 42px #ff0000, inset 0 0 22px rgba(255,255,0,.6);
+    animation: btnPulse .6s infinite alternate;
+    letter-spacing: 3px;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform .08s;
+  }
+  .btn:hover { background: #FFFF00; border-style: inset; }
+  .btn:active { transform: translateY(4px) scale(.98); }
+  .btn:disabled {
+    cursor: default;
+    filter: saturate(.6) brightness(.9);
+    animation: none;
+  }
+  @keyframes btnPulse {
+    from { box-shadow: 0 0 14px #ffff00, 0 0 28px #ff0000, inset 0 0 18px rgba(255,255,0,.5); }
+    to   { box-shadow: 0 0 30px #ffff00, 0 0 70px #ff0000, inset 0 0 34px rgba(255,255,0,.9); }
+  }
+
+  /* ============ 计数器 / 倒计时 ============ */
+  .counter {
+    display: inline-block;
+    background: #000000;
+    color: #00FF00;
+    border: 3px inset #C0C0C0;
+    padding: 4px 10px;
+    font-family: "Courier New", monospace;
+    font-size: 18px;
+    letter-spacing: 3px;
+  }
+
+  /* ============ 鼠标跟随广告 ============ */
+  .follower {
+    position: fixed; z-index: 9999; pointer-events: none;
+    background: #FF0000; color: #FFFF00;
+    border: 1px solid #FFFFFF;
+    padding: 3px 8px;
+    font-size: 13px; font-weight: bold;
+    font-family: "Arial Black", "黑体", sans-serif;
+    text-shadow: 1px 1px 0 #000;
+    box-shadow: 0 0 10px #ff0;
+    white-space: nowrap;
+  }
+
+  /* ============ 下载进度条 ============ */
+  .bar-wrap {
+    width: 90%; max-width: 480px; margin: 12px auto 6px;
+    height: 26px; border: 3px inset #C0C0C0;
+    background: #000; overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%; width: 0%;
+    background: repeating-linear-gradient(45deg, #00FF00 0 10px, #008800 10px 20px);
+    transition: width .1s linear;
+  }
+  .bar-text {
+    font-family: "Courier New", monospace;
+    font-size: 16px; color: #FFFF00;
+    text-shadow: 0 0 8px #f80;
+  }
+
+  /* ============ 通用小字 ============ */
+  .tiny { font-size: 12px; color: #666; }
+  .red { color: #FF0000; }
+  .green { color: #008000; }
+  .strike { text-decoration: line-through; color: #FF8080; font-weight: bold; }
+</style>
+</head>
+
+<body>
+<center>
+
+<table width="820" border="0" cellpadding="0" cellspacing="0"
+       style="background:#FFFFFF; border:10px ridge #FF00FF; box-shadow:0 0 40px #ff00ff;">
+  <tr>
+    <td bgcolor="#000000" align="center">
+      <marquee behavior="alternate" scrollamount="8">
+        <font color="#FFFF00" size="6" face="Arial Black">
+          ★★★ 极品题目.pdf 限时 0 元！原价 888888 现在白送！不点不是中国人！ ★★★
+        </font>
+      </marquee>
+    </td>
+  </tr>
+
+  <tr>
+    <td align="center" bgcolor="#C0C0C0">
+      <font size="2">
+        <a href="#">首页</a> |
+        <a href="#">下载</a> |
+        <a href="#">购买</a> |
+        <a href="#">联系站长</a> |
+        <a href="#">加入收藏</a> |
+        <a href="#">把这页转发给 10 个群</a> |
+        <a href="#">把电脑扔出窗外</a>
+      </font>
+    </td>
+  </tr>
+
+  <tr>
+    <td align="center" bgcolor="#FFFFFF">
+      <br>
+      <h1>
+        <font color="#FF0000" face="Impact, Arial Black" size="7">
+          极 品 题 目 . PDF
+        </font>
+      </h1>
+      <h2>
+        <font color="#0000FF" face="Arial Black">
+          全网独家 · 内部绝密 · 白金无敌豪华版
+        </font>
+      </h2>
+      <p>
+        <font color="#FF00FF" size="5" class="blink">
+          让您的 56K 猫下载出 T3 光纤速度！100% 保证！*
+        </font>
+      </p>
+      <br>
+    </td>
+  </tr>
+
+  <!-- 警告条 -->
+  <tr>
+    <td>
+      <table width="100%" bgcolor="#FFFF00" border="3" bordercolor="#FF0000"
+             cellpadding="8" cellspacing="0">
+        <tr>
+          <td align="center">
+            <font color="#FF0000" size="5" class="fast-blink">
+              <b>
+                警告：检测到您尚未下载本文件！您的成绩可能正在流失！
+              </b>
+            </font>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  <!-- 主体两栏 -->
+  <tr>
+    <td>
+      <table width="100%" border="0" cellpadding="10" cellspacing="0">
+        <tr>
+          <td width="58%" valign="top" bgcolor="#FFFFFF">
+            <h3>
+              <font color="#008000">为什么您必须拥有它？</font>
+            </h3>
+
+            <ul>
+              <li><font size="4">一键清空不会做的题、空白的卷、脆弱的自尊</font></li>
+              <li><font size="4">提升解题速度 3000%</font></li>
+              <li><font size="4">让草稿纸物理进化成答题卡</font></li>
+              <li><font size="4">自动满分：每天 5 套卷，无需复习</font></li>
+              <li><font size="4">下载即瘦 10 公斤</font></li>
+              <li><font size="4">附赠 10,000 道小题、100 个公式、50 首 MIDI</font></li>
+              <li><font size="4">兼容 Windows 95 / 98 / ME / 2000 / XP / 未来</font></li>
+            </ul>
+
+            <p>
+              <font color="#FF0000" size="5">
+                <span class="strike">原价 ￥888888</span>
+                <span class="strike">￥666666</span>
+                <span class="strike">￥199999</span>
+                <span class="strike">￥50000</span>
+              </font><br>
+              <font color="#008000" size="7"><b>现价 ￥0.00</b></font>
+            </p>
+
+            <p>
+              <font color="#FF0000" class="blink" size="6">
+                仅限今天！倒计时：<span id="countdown">00:04:59</span>
+              </font>
+            </p>
+
+            <p>
+              <font color="#0000FF" size="4">
+                [ 金奖 ] 2005 年度最佳题目金奖<br>
+                （由本公司自己颁发）
+              </font>
+            </p>
+
+            <h4>
+              <font color="#800080">系统要求：</font>
+            </h4>
+            <ul>
+              <li>Windows 95 / 98 / ME / 2000 / XP</li>
+              <li>16MB 内存</li>
+              <li>56K 调制解调器</li>
+              <li>一颗愿意相信奇迹的心</li>
+            </ul>
+          </td>
+
+          <td width="42%" valign="top" bgcolor="#FFFFCC" align="center">
+            <font color="#FF0000" size="7" class="blink">
+              免费！
+            </font>
+            <br><br>
+
+            <button id="dlBtn" class="btn" type="button" onclick="startDownload(this)">
+              立即免费下载！
+            </button>
+
+            <br><br>
+            <font size="2" color="#FF0000">
+              * 需要提供姓名、班级、课代表好感度
+            </font>
+            <br><br>
+
+            <!-- 下载区（默认隐藏） -->
+            <div id="dlZone" style="display:none;">
+              <div class="bar-wrap">
+                <div id="barFill" class="bar-fill"></div>
+              </div>
+              <div id="barText" class="bar-text">正在连接高速下载服务器……</div>
+              <div id="count" style="font-family:'Courier New',monospace;font-size:34px;font-weight:bold;color:#FFFF00;text-shadow:0 0 12px #f80;">
+                3
+              </div>
+            </div>
+
+            <br>
+            <div class="counter">
+              您是第 <span id="visitors">000123456</span> 位幸运访客
+            </div>
+
+            <br><br>
+            <font color="#0000FF" size="2">
+              本站最佳浏览：IE6，800×600
+            </font>
+            <br><br>
+
+            <marquee scrollamount="3" width="90%">
+              <font color="#008000" size="3">
+                [ 本站正在建设中，请稍后再来，或者现在就下载 ]
+              </font>
+            </marquee>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  <!-- 兜底手动链接 -->
+  <tr>
+    <td align="center" bgcolor="#FFFFCC">
+      <div id="fallback" style="display:none; padding:10px; font-size:15px; color:#800000;">
+        下载已开始。若浏览器没有自动弹出，请
+        <a id="directLink" href="#" target="_blank" rel="noopener">点此手动下载</a>。
+      </div>
+      <br>
+    </td>
+  </tr>
+
+  <tr>
+    <td bgcolor="#000000" align="center">
+      <br>
+      <font color="#FFFFFF" size="2">
+        © 2005 超级软件公司。保留所有权利，尤其是您的分数。<br>
+        ISO 9001 | NASA | FBI | 联合国 | 班主任都说好<br>
+        <font color="#808080">
+          本页面为讽刺恶搞，产品不存在，效果从未发生。但文件是真能下。
+        </font>
+      </font>
+      <br><br>
+    </td>
+  </tr>
+</table>
+
+</center>
+
+<script type="text/javascript">
+  /* ================= 真实下载地址 ================= */
+  var FILE_URL = "https://developer4.lanrar.com/file/?VDIAPgw9VGUACQA4ADVXOwM8DzcFKgNtUDZRIwI4UD5TIQc9D3wPOAAlUGELcQV0UmxSMQN6C28CbFI4XWRSDFQ9ADMMbFQzAGQAZABmV2EDbw86BWMDOFBxUTECLVBsU2EHYw9hD2wAZ1AyC3kFdFJ4UmoDbgs5AjdSYl0uUmJUZAB4DGFUNAB5AGUAbVdgA2APPAVuAzJQM1E1AmlQZlNhBzUPYg8+AG9QYAtrBTVSP1JgAz4LOAIxUmNdYFJqVDAAYQw1VDMAZgB4ACRXMgM/DywFLwNyUDJRJQI3UDVTbgdlD2YPbwBvUDULaAU1Ui5SIwM1C2QCYFIyXTxSYlRjAG4MYFQwAG8AbgBnV2cDbQ8kBXQDJ1AxUTsCKVBsU2MHdg8nDysAIVA7C24FM1IxUmYDbAswAjNSYV0xUmBUcgAiDDhUcABrAGcAZVdkA3cPMwV0AzBQb1FnAnBQYFNrB2YPfA99ADJQaQsoBWpSV1I0AzcLNAI1UnpdJ1InVC0AJww0VF8AIwA3AGlXZg==&toolsdown";
+
+  /* ================= 1. 假倒计时 ================= */
+  var seconds = 299;
+  function updateCountdown() {
+    var m = Math.floor(seconds / 60);
+    var s = seconds % 60;
+    document.getElementById("countdown").innerHTML =
+      (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
+    if (seconds-- <= 0) { seconds = 299; }
+  }
+  setInterval(updateCountdown, 1000);
+  updateCountdown();
+
+  /* ================= 2. 假访客计数器 ================= */
+  var visitors = 123456;
+  setInterval(function () {
+    visitors += Math.floor(Math.random() * 7) + 1;
+    var str = String(visitors);
+    while (str.length < 9) { str = "0" + str; }
+    document.getElementById("visitors").innerHTML = str;
+  }, 1500);
+
+  /* ================= 3. 鼠标跟随广告 ================= */
+  var follower = document.createElement("div");
+  follower.className = "follower";
+  follower.innerHTML = "★ 限时免费 ★";
+  document.body.appendChild(follower);
+  document.onmousemove = function (e) {
+    follower.style.left = (e.clientX + 15) + "px";
+    follower.style.top  = (e.clientY + 15) + "px";
+  };
+
+  /* ================= 4. 下载按钮：3 秒倒计时 + 99% 卡死 + 真下载 ================= */
+  var busy = false;
+
+function reallyDownload() {
+  // 用隐藏 iframe 触发下载，不弹窗、不跳页
+  var iframe = document.createElement("iframe");
+  iframe.style.display = "none";
+  iframe.src = FILE_URL;
+  document.body.appendChild(iframe);
+
+  // 60 秒后清理这个 iframe
+  setTimeout(function () {
+    if (iframe.parentNode) iframe.parentNode.removeChild(iframe);
+  }, 60000);
+
+  // 同时显示手动兜底链接
+  document.getElementById("directLink").href = FILE_URL;
+  document.getElementById("fallback").style.display = "block";
+}
+
+  function startDownload(btn) {
+    if (busy) return;
+    busy = true;
+
+    btn.disabled = true;
+    btn.innerHTML = "正 在 连 接 服 务 器 ...";
+
+    var zone    = document.getElementById("dlZone");
+    var barFill = document.getElementById("barFill");
+    var barText = document.getElementById("barText");
+    var countEl = document.getElementById("count");
+
+    zone.style.display = "block";
+    barFill.style.width = "0%";
+    barText.innerHTML = "正在连接高速下载服务器……";
+    countEl.innerHTML = "3";
+
+    /* ---- 阶段一：3 秒倒计时 ---- */
+    var WAIT = 3000;
+    var start = Date.now();
+
+    var t1 = setInterval(function () {
+      var elapsed = Date.now() - start;
+      var p = Math.min(elapsed / WAIT, 1);
+
+      barFill.style.width = (p * 90).toFixed(1) + "%";
+      countEl.innerHTML = Math.max(1, Math.ceil((WAIT - elapsed) / 1000));
+
+      if (elapsed < 800)       barText.innerHTML = "正在连接高速下载服务器……";
+      else if (elapsed < 1600) barText.innerHTML = "正在校验文件完整性……";
+      else if (elapsed < 2400) barText.innerHTML = "正在开启多线程加速……";
+      else                     barText.innerHTML = "文件准备就绪，即将开始下载……";
+
+      if (elapsed >= WAIT) {
+        clearInterval(t1);
+        countEl.innerHTML = "0";
+        goPhaseTwo();
+      }
+    }, 50);
+
+    /* ---- 阶段二：卡在 99% ---- */
+    function goPhaseTwo() {
+      barText.innerHTML = "正在下载：极品题目.pdf";
+      countEl.innerHTML = "&nbsp;";
+
+      var pct = 90;
+      var t2 = setInterval(function () {
+        pct += Math.random() * 2.5;
+        if (pct >= 99) {
+          pct = 99;
+          clearInterval(t2);
+          barFill.style.width = "99%";
+          barText.innerHTML = "99% —— 正在整理题目……（卡住了）";
+
+          setTimeout(function () {
+            barFill.style.width = "100%";
+            barText.innerHTML = "✔ 下载完成！正在唤起浏览器……";
+
+            /* 真正触发下载 */
+            reallyDownload();
+
+            btn.disabled = false;
+            btn.innerHTML = "再 下 一 次 ！";
+            busy = false;
+
+            setTimeout(function () {
+              alert(
+                "下载完成提示：\n\n" +
+                "文件已开始下载：极品题目.pdf\n\n" +
+                "如果您没看到，说明：\n" +
+                "· 浏览器太旧、太新、或刚好在星期三；\n" +
+                "· 或者您忘了先给课代表倒杯水。\n\n" +
+                "（本弹窗纯属恶搞，文件是真的。）"
+              );
+            }, 400);
+          }, 1800); /* 99% 卡 1.8 秒，仪式感 */
+        } else {
+          barFill.style.width = pct.toFixed(0) + "%";
+          barText.innerHTML = "正在下载：极品题目.pdf —— " + pct.toFixed(0) + "%";
+        }
+      }, 130);
+    }
+  }
+</script>
+
+</body>
+</html>
