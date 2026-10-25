@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#070c11">
+  <title>北京地铁1号线/八通线 · DKZ4 驾驶模拟</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <canvas id="sim-canvas" aria-label="3D 驾驶场景"></canvas>
+  <div id="world-vignette"></div>
+  <div id="scanlines"></div>
+  <div id="model-toast" class="model-toast" role="status" aria-live="polite">
+    <i></i><span id="modelToastText">DKZ4 模型加载中…</span>
+  </div>
+
+  <!-- ============================== 游戏 HUD ============================== -->
+  <div id="game-ui" class="hidden">
+    <header id="topbar">
+      <div class="brand-block">
+        <div class="line-badge">1</div>
+        <div class="brand-copy">
+          <strong>北京地铁 <span>1号线</span><i>/</i><span>八通线</span></strong>
+          <small>贯通运营 · DKZ4 电动客车</small>
+        </div>
+      </div>
+
+      <div class="next-station-block">
+        <div class="next-kicker"><span id="nextLabel">下一站</span><i></i><span id="nextDistance">0 m</span></div>
+        <div id="nextStationName" class="next-name">—</div>
+        <div id="nextStationEn" class="next-en">—</div>
+        <div id="nextTransfer" class="next-transfer"></div>
+      </div>
+
+      <div class="top-right">
+        <div class="clock-block">
+          <span id="simClock" class="clock">07:30:00</span>
+          <span id="periodBadge" class="period-badge">早高峰</span>
+        </div>
+        <div class="speed-buttons" title="模拟倍率">
+          <button class="mini-btn speed-btn active" data-speed="1">1×</button>
+          <button class="mini-btn speed-btn" data-speed="2">2×</button>
+          <button class="mini-btn speed-btn" data-speed="4">4×</button>
+          <button class="mini-btn speed-btn" data-speed="8">8×</button>
+        </div>
+        <button id="mapBtn" class="icon-btn" title="列车追踪 (Tab)" aria-label="列车追踪">⇄</button>
+        <button id="muteBtn" class="icon-btn" title="声音 / 报站 (M)" aria-label="声音与报站">♪</button>
+        <button id="helpBtn" class="icon-btn" title="操作说明" aria-label="操作说明">?</button>
+        <button id="pauseBtn" class="icon-btn" title="暂停 (P)" aria-label="暂停">Ⅱ</button>
+      </div>
+    </header>
+
+    <!-- 左侧 DMI / 速度表 -->
+    <aside id="left-hud">
+      <section class="panel gauge-panel">
+        <div class="panel-head">
+          <span>速度表 / ATP</span>
+          <span id="modeBadge" class="mode-badge">ATO</span>
+        </div>
+        <div class="gauge-wrap">
+          <svg id="speedGauge" viewBox="0 0 220 220" aria-label="速度表">
+            <defs>
+              <linearGradient id="gaugeGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#46d7e8"/>
+                <stop offset="68%" stop-color="#dce84d"/>
+                <stop offset="100%" stop-color="#ff5c45"/>
+              </linearGradient>
+              <filter id="gaugeGlow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="2.6" result="blur"/>
+                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+            <path id="gaugeTrack" class="gauge-track" d=""></path>
+            <path id="gaugeArc" class="gauge-arc" d=""></path>
+            <g id="gaugeTicks"></g>
+            <g id="atpNeedle" class="atp-needle">
+              <path d="M110 12 L105 25 L115 25 Z"></path>
+            </g>
+            <g id="speedNeedle" class="speed-needle">
+              <line x1="110" y1="110" x2="191" y2="110"></line>
+              <circle cx="110" cy="110" r="8"></circle>
+            </g>
+            <circle cx="110" cy="110" r="3.6" class="gauge-hub"></circle>
+          </svg>
+          <div class="gauge-readout">
+            <div><span id="speedValue">0</span><small>km/h</small></div>
+            <div class="limit-line">线路限速 <b>70</b></div>
+          </div>
+        </div>
+        <div class="atp-permit-row">
+          <div>
+            <span class="label">ATP 允许</span>
+            <strong id="permitValue">70</strong><small>km/h</small>
+          </div>
+          <div class="target-box">
+            <span class="label" id="targetLabel">目标距离</span>
+            <strong id="targetValue">—</strong>
+            <small id="targetType">下一站</small>
+          </div>
+        </div>
+        <div class="curve-status">
+          <div class="curve-bar"><i id="curveFill"></i><b id="atpMark"></b></div>
+          <span id="atpStatus">ATP 监控中</span>
+        </div>
+      </section>
+
+      <section class="panel tracking-panel">
+        <div class="panel-head"><span>移动闭塞 · 追踪</span><span id="headwayBadge">1分45秒</span></div>
+        <div class="tracking-grid">
+          <div><span>前车距离</span><strong id="leaderDistance">—</strong></div>
+          <div><span>后车距离</span><strong id="followerDistance">—</strong></div>
+          <div><span>前车速度</span><strong id="leaderSpeed">—</strong></div>
+          <div><span>后车速度</span><strong id="followerSpeed">—</strong></div>
+        </div>
+        <div class="interlock-row">
+          <span id="doorLamp" class="lamp">车门 —</span>
+          <span id="atoLamp" class="lamp">ATO</span>
+          <span id="holdLamp" class="lamp">保持制动</span>
+        </div>
+        <div class="atp-profile">
+          <div class="atp-profile-head">
+            <span>ATP 连续速度曲线</span>
+            <em id="atpProfileTarget">—</em>
+          </div>
+          <svg viewBox="0 0 260 58" preserveAspectRatio="none" aria-label="ATP 速度曲线">
+            <path class="atp-grid" d="M6 13 H254 M6 29 H254 M6 45 H254"></path>
+            <path id="atpProfileFill" class="atp-fill" d=""></path>
+            <path id="atpProfileLine" class="atp-line" d=""></path>
+            <line id="atpProfileTargetLine" class="atp-target-line" x1="254" y1="5" x2="254" y2="50"></line>
+            <circle id="atpProfileDot" class="atp-dot" cx="6" cy="48" r="2.5"></circle>
+          </svg>
+          <div class="atp-profile-foot"><span>当前位置</span><span>目标点</span></div>
+        </div>
+      </section>
+
+      <section class="panel score-panel">
+        <div class="score-main">
+          <span class="label">本次评分</span>
+          <div><strong id="liveScore">100</strong><em id="liveGrade">S</em></div>
+        </div>
+        <div class="score-bars">
+          <div><span>停车</span><i><b id="barParking"></b></i><em id="scoreParking">—</em></div>
+          <div><span>安全</span><i><b id="barSafety"></b></i><em id="scoreSafety">100</em></div>
+          <div><span>准点</span><i><b id="barPunctual"></b></i><em id="scorePunctual">100</em></div>
+          <div><span>操作</span><i><b id="barOperation"></b></i><em id="scoreOperation">100</em></div>
+        </div>
+      </section>
+    </aside>
+
+    <!-- 中央小提示 -->
+    <div id="center-hint">
+      <span id="centerHintText"></span>
+    </div>
+
+    <!-- 右侧控制台 -->
+    <aside id="right-hud">
+      <section class="panel service-panel">
+        <div class="service-row">
+          <div>
+            <span class="label">当前交路</span>
+            <strong id="serviceType">大交路</strong>
+          </div>
+          <div>
+            <span class="label">终点站</span>
+            <strong id="terminalName">环球度假区</strong>
+          </div>
+        </div>
+        <div class="route-line" id="routeLine">古城 → 环球度假区 · 东行</div>
+        <div class="service-meta">
+          <span id="modeText">ATO 自动驾驶</span>
+          <span id="stopProgress">0 / 35 站</span>
+        </div>
+      </section>
+
+      <section class="panel controller-panel">
+        <div class="panel-head"><span>主控制器</span><span id="handleReadout">0 · 运转位</span></div>
+        <div class="controller-body">
+          <div id="notchLadder" class="notch-ladder">
+            <div class="notch-group traction">
+              <button class="notch-tile" data-notch="4"><span>P4</span></button>
+              <button class="notch-tile" data-notch="3"><span>P3</span></button>
+              <button class="notch-tile" data-notch="2"><span>P2</span></button>
+              <button class="notch-tile" data-notch="1"><span>P1</span></button>
+            </div>
+            <button class="notch-tile neutral active" data-notch="0"><span>0</span><small>运转</small></button>
+            <div class="notch-group brake">
+              <button class="notch-tile" data-notch="-1"><span>B1</span></button>
+              <button class="notch-tile" data-notch="-2"><span>B2</span></button>
+              <button class="notch-tile" data-notch="-3"><span>B3</span></button>
+              <button class="notch-tile" data-notch="-4"><span>B4</span></button>
+              <button class="notch-tile" data-notch="-5"><span>B5</span></button>
+              <button class="notch-tile" data-notch="-6"><span>B6</span></button>
+              <button class="notch-tile" data-notch="-7"><span>B7</span></button>
+            </div>
+          </div>
+          <div class="handle-column">
+            <button id="tractionBtn" class="handle-btn traction" title="牵引 + (W / ↑)"><b>牵引</b><span>+</span></button>
+            <button id="neutralBtn" class="handle-btn neutral" title="回零 (X)"><b>回零</b><span>N</span></button>
+            <button id="brakeBtn" class="handle-btn brake" title="制动 + (S / ↓)"><b>制动</b><span>−</span></button>
+          </div>
+        </div>
+        <div class="controller-footer">
+          <span>牵引 4 段</span>
+          <span>常用制动 7 段</span>
+          <span class="eb-hint">EB 独立按钮</span>
+        </div>
+      </section>
+
+      <section class="panel action-panel">
+        <div class="action-grid">
+          <button id="doorBtn" class="action-btn door"><span class="action-icon">◫</span><b>车门</b><small id="doorBtnState">关闭</small></button>
+          <button id="departBtn" class="action-btn depart"><span class="action-icon">▶</span><b>发车</b><small id="departHint">ATO</small></button>
+          <button id="ebBtn" class="action-btn eb"><span class="action-icon">!</span><b>紧急制动</b><small>EB</small></button>
+          <button id="resetBtn" class="action-btn reset"><span class="action-icon">↺</span><b>复位</b><small id="resetHint">R</small></button>
+          <button id="atoBtn" class="action-btn ato"><span class="action-icon">A</span><b>ATO</b><small id="atoState">开</small></button>
+          <button id="viewBtn" class="action-btn view"><span class="action-icon">◉</span><b>视角</b><small>V</small></button>
+          <button id="hornBtn" class="action-btn horn"><span class="action-icon">≋</span><b>鸣笛</b><small>H</small></button>
+          <button id="helpBtn2" class="action-btn help"><span class="action-icon">?</span><b>帮助</b><small>?</small></button>
+        </div>
+      </section>
+    </aside>
+
+    <!-- 底部线路条 -->
+    <footer id="bottom-hud">
+      <div class="route-progress">
+        <div class="route-progress-head">
+          <span id="positionText">古城 · 0.00 km</span>
+          <span id="progressPercent">0%</span>
+        </div>
+        <div class="progress-rail"><i id="progressFill"></i><b id="progressTrain">●</b></div>
+      </div>
+      <div id="routeStrip" class="route-strip"></div>
+      <div class="bottom-meta">
+        <span id="speedModeText">ATP 人工</span>
+        <span id="delayText">正点</span>
+        <span id="scoreSmall">100 分</span>
+      </div>
+    </footer>
+
+    <div id="toast-stack" aria-live="polite"></div>
+    <div id="big-alert" class="hidden">
+      <strong id="bigAlertTitle"></strong>
+      <span id="bigAlertSub"></span>
+    </div>
+
+    <div id="terminal-banner" class="hidden">
+      <div class="terminal-copy">
+        <span id="terminalKicker">终点站</span>
+        <strong id="terminalBannerTitle">环球度假区</strong>
+        <p id="terminalBannerText">列车已停稳</p>
+      </div>
+      <div class="terminal-actions">
+        <button id="reverseBtn" class="terminal-btn primary hidden">立即折返</button>
+        <button id="finishBtn" class="terminal-btn">结束值乘</button>
+      </div>
+    </div>
+
+    <!-- 列车追踪小地图 -->
+    <div id="tracking-map" class="tracking-map hidden">
+      <div class="tracking-map-head">
+        <div>
+          <span class="map-kicker">MOVING BLOCK · 列车追踪</span>
+          <strong id="mapInterval">当前区间 —</strong>
+        </div>
+        <button id="mapCloseBtn" class="modal-close" title="关闭 (Tab)">×</button>
+      </div>
+      <canvas id="trackingCanvas" width="900" height="210"></canvas>
+      <div class="tracking-map-legend">
+        <span class="map-legend-item"><i class="map-dot player"></i>本列</span>
+        <span class="map-legend-item"><i class="map-dot leader"></i>前车 <b id="mapLeaderValue">—</b></span>
+        <span class="map-legend-item"><i class="map-dot follower"></i>后车 <b id="mapFollowerValue">—</b></span>
+        <span class="map-legend-hint">Tab 关闭 · 后方 ← → 前方</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================== 点击进入（HTTPS 音频解锁） ============================== -->
+  <div id="entry-gate" class="entry-gate" role="dialog" aria-modal="true" aria-label="进入 DKZ4 驾驶模拟">
+    <div class="start-backdrop"></div>
+    <div class="entry-card">
+      <div class="entry-kicker">BEIJING SUBWAY LINE 1 · BATONG LINE</div>
+      <div class="entry-title">
+        <span class="big-line">1</span>
+        <h2>北京地铁 1号线 <em>/</em> 八通线</h2>
+      </div>
+      <p class="entry-sub">DKZ4 电动客车 · 古城 ⇄ 环球度假区 · CBTC / GoA2</p>
+      <div class="entry-release"><span>Release</span><b>0.0.1</b></div>
+      <button id="entryBtn" class="entry-btn" type="button">
+        <span>点击进入</span>
+        <small>CLICK TO START · 同时启用声音与语音报站</small>
+      </button>
+      <p class="entry-note">
+        纯前端静态站点，无需后端。浏览器要求先有一次性用户交互，才允许播放声音与语音合成。
+      </p>
+    </div>
+  </div>
+
+  <!-- ============================== 开始界面 ============================== -->
+  <div id="start-screen" class="screen">
+    <div class="start-backdrop"></div>
+    <div class="start-grid-lines"></div>
+    <main class="start-shell">
+      <div class="start-header">
+        <div class="start-eyebrow-row">
+          <div class="start-eyebrow">BEIJING SUBWAY · DKZ4 CAB SIMULATOR</div>
+          <div class="release-chip">Release 0.0.1</div>
+        </div>
+        <h1>
+          <span class="big-line">1</span>
+          北京地铁 1号线 <em>/</em> 八通线
+        </h1>
+        <p class="start-subtitle">贯通运营 · 古城 ⇄ 环球度假区 · 最高等级 GoA2 / ATP 监督</p>
+        <div class="data-ribbon">
+          <div><strong>54.47</strong><span>km 全线</span></div>
+          <div><strong>48.29</strong><span>km 站间</span></div>
+          <div><strong>35</strong><span>座车站</span></div>
+          <div><strong>85</strong><span>min 全程</span></div>
+          <div><strong>DKZ4</strong><span>3M3T / 6节</span></div>
+          <div><strong>CBTC</strong><span>Urbalis 888</span></div>
+        </div>
+      </div>
+
+      <div class="start-columns">
+        <section class="start-config panel">
+          <div class="config-head">
+            <span>值乘任务</span>
+            <small>RUN CONFIGURATION</small>
+          </div>
+
+          <div class="field">
+            <label>运营时段</label>
+            <div class="segmented" id="periodSegment">
+              <button class="seg-btn active" data-period="am">工作日早高峰<small>1分45秒间隔</small></button>
+              <button class="seg-btn" data-period="pm">工作日晚高峰<small>2分20秒间隔</small></button>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>交路类型</label>
+            <div class="route-cards" id="typeCards">
+              <button class="route-card active" data-type="large">
+                <span class="route-card-top"><b>大交路</b><em>全程</em></span>
+                <strong>古城 ⇄ 环球度假区</strong>
+                <small>35 站 · 约 85 分钟 · 全程贯通</small>
+              </button>
+              <button class="route-card" data-type="small">
+                <span class="route-card-top"><b>小交路</b><em>区间</em></span>
+                <strong id="smallRouteName">公主坟 ⇄ 果园</strong>
+                <small id="smallRouteMeta">共线运行 · 终点自动折返</small>
+              </button>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>运行方向</label>
+            <div class="direction-row" id="directionRow">
+              <button class="dir-btn active" data-dir="1"><span>东行</span><small>古城 → 环球度假区</small></button>
+              <button class="dir-btn" data-dir="-1"><span>西行</span><small>环球度假区 → 古城</small></button>
+            </div>
+          </div>
+
+          <div class="field two-col">
+            <div>
+              <label>驾驶模式</label>
+              <div class="mode-toggle" id="modeToggle">
+                <button class="mode-btn active" data-ato="1">ATO 自动驾驶<small>按图控速/惰行，人工开关门/发车</small></button>
+                <button class="mode-btn" data-ato="0">ATP 人工驾驶<small>手柄操纵，ATP 后台监控</small></button>
+              </div>
+            </div>
+            <div>
+              <label>小交路终点</label>
+              <div class="toggle-line">
+                <button id="reverseToggle" class="switch on" aria-label="自动折返"><i></i></button>
+                <span>自动折返</span>
+              </div>
+              <p class="field-note">仅小交路生效。到达终点关妥车门后自动反向投入服务。</p>
+            </div>
+          </div>
+
+          <button id="startBtn" class="start-btn">
+            <span>进入 DKZ4 驾驶室</span>
+            <small>按 ENTER 开始值乘</small>
+          </button>
+          <div class="start-foot-note">
+            键盘 <b>W / S</b> 推手柄 · <b>O</b> 开关门 · <b>SPACE</b> ATO 发车 · <b>E</b> 紧急制动
+          </div>
+        </section>
+
+        <aside class="start-info">
+          <section class="panel info-panel">
+            <div class="info-head"><span>DKZ4 · 车辆履历</span><small>1999—</small></div>
+            <div class="train-spec-grid">
+              <div><span>编组</span><b>Mc-T+M-T′+T-Mc</b></div>
+              <div><span>控制</span><b>VVVF / GTO · 1C4M</b></div>
+              <div><span>电机</span><b>180kW × 12</b></div>
+              <div><span>供电</span><b>DC 750V 第三轨</b></div>
+              <div><span>设计速度</span><b>80 km/h</b></div>
+              <div><span>运营速度</span><b>70 km/h</b></div>
+              <div><span>起动加速度</span><b>0.83 m/s²</b></div>
+              <div><span>常用减速度</span><b>0.94 m/s²</b></div>
+              <div><span>紧急减速度</span><b>1.19 m/s²</b></div>
+              <div><span>车门</span><b>4 对 / 节 · 内藏门</b></div>
+            </div>
+            <div class="spec-foot">车体 19,000 × 2,800 × 3,510 mm · 耐候钢鼓型车体 · 全列 186 辆 / 31 组</div>
+          </section>
+
+          <section class="panel info-panel">
+            <div class="info-head"><span>线路环境</span><small>54.47 km</small></div>
+            <div class="env-list">
+              <div><i class="env-dot underground"></i><span>古城 — 四惠东</span><b>地下 · 隧道</b></div>
+              <div><i class="env-dot elevated"></i><span>四惠东 — 土桥</span><b>高架 / 地面 · 侧式站台</b></div>
+              <div><i class="env-dot underground"></i><span>花庄 — 环球度假区</span><b>地下 / 半地下 · 岛式</b></div>
+            </div>
+            <div class="platform-note">四惠东：一岛两侧式 · 高碑店—临河里：高架侧式 · 花庄：地下岛式</div>
+          </section>
+
+          <section class="panel info-panel warning-info">
+            <div class="info-head"><span>驾驶规则</span><small>CBTC / GoA2</small></div>
+            <p>连续速度曲线监控，无固定闭塞信号机。列车停稳、且位于站台门区域后方可开门；车门未关闭时牵引被封锁。越过 ATP 允许速度将报警，持续超速触发 EB。</p>
+            <div class="rule-chips">
+              <span>追尾防护</span><span>±0.5m 停车提示</span><span>±1m 冲标/欠标</span><span>EB 需停稳复位</span>
+            </div>
+          </section>
+        </aside>
+      </div>
+
+      <div class="start-bottom">
+        <span>Release 0.0.1 · 纯前端 Three.js 驾驶模拟 · 线路/车辆数据硬编码</span>
+        <span>建议全屏 · 立体声耳机体验更佳</span>
+      </div>
+    </main>
+  </div>
+
+  <!-- ============================== 帮助 ============================== -->
+  <div id="help-modal" class="modal hidden">
+    <div class="modal-card">
+      <div class="modal-head">
+        <div><span class="modal-kicker">OPERATION MANUAL</span><h2>驾驶操作说明</h2></div>
+        <button class="modal-close" data-close="help">×</button>
+      </div>
+      <div class="help-grid">
+        <div class="help-col">
+          <h3>主控制器</h3>
+          <table>
+            <tr><td><kbd>W</kbd> / <kbd>↑</kbd></td><td>牵引 +1 段（P1–P4）</td></tr>
+            <tr><td><kbd>S</kbd> / <kbd>↓</kbd></td><td>制动 +1 段（B1–B7）</td></tr>
+            <tr><td><kbd>X</kbd></td><td>手柄回零</td></tr>
+            <tr><td><kbd>E</kbd></td><td>紧急制动 EB</td></tr>
+            <tr><td><kbd>R</kbd></td><td>停稳后复位 EB</td></tr>
+            <tr><td><kbd>Space</kbd></td><td>ATO 发车授权</td></tr>
+          </table>
+        </div>
+        <div class="help-col">
+          <h3>列车与视角</h3>
+          <table>
+            <tr><td><kbd>O</kbd></td><td>开门 / 关门</td></tr>
+            <tr><td><kbd>H</kbd></td><td>鸣笛</td></tr>
+            <tr><td><kbd>V</kbd></td><td>驾驶室 / DKZ4 外观视角</td></tr>
+            <tr><td><kbd>拖动</kbd></td><td>外观视角：绕列车旋转（驾驶室：转头）</td></tr>
+            <tr><td><kbd>滚轮</kbd> / <kbd>+</kbd> <kbd>-</kbd></td><td>外观视角缩放</td></tr>
+            <tr><td><kbd>双击</kbd> / <kbd>Shift</kbd>+<kbd>R</kbd></td><td>外观视角复位（视线也复位）</td></tr>
+            <tr><td><kbd>T</kbd></td><td>ATO / 人工模式切换</td></tr>
+            <tr><td><kbd>Tab</kbd></td><td>列车追踪小地图</td></tr>
+            <tr><td><kbd>M</kbd></td><td>静音（含报站语音）</td></tr>
+            <tr><td><kbd>P</kbd> / <kbd>Esc</kbd></td><td>暂停</td></tr>
+          </table>
+        </div>
+        <div class="help-col wide">
+          <h3>ATP 与运营规则</h3>
+          <ul>
+            <li><b>连续速度曲线：</b>DMI 显示允许速度与目标距离。目标可能是下一站停车点或前方虚拟列车车尾。</li>
+            <li><b>超速：</b>超过允许速度 2 km/h 报警；持续超过 4 km/h 约 0.9 秒或瞬间超过 9 km/h 触发 EB。</li>
+            <li><b>按图运行：</b>ATO 检测到早点时会自动降低目标速度或惰行，进站提前量不会超过 5 秒。</li>
+            <li><b>追踪：</b>系统同时模拟前车与后车，按早高峰 1分45秒 / 晚高峰 2分20秒的间隔运行。按 Tab 可查看三车距离示意图。</li>
+            <li><b>报站：</b>使用浏览器语音合成动态播报下一站与到站信息；换乘站会播报可换乘线路。静音会同时关闭报站。</li>
+            <li><b>停车：</b>误差 ±0.5m 内为精准；0.5–1m 提示“停车不准”；超过 1m 判定“冲标/欠标”。</li>
+            <li><b>车门联锁：</b>必须停稳且处于站台范围；车门未关闭时牵引被封锁；EB 停稳后才能复位。</li>
+            <li><b>EB 复位：</b>触发后手柄与牵引全部锁闭，列车完全停稳后面板“复位”按钮才生效。</li>
+            <li><b>小交路：</b>到达终点关妥车门后自动折返，或点击“结束值乘”结算。</li>
+          </ul>
+        </div>
+      </div>
+      <div class="modal-foot">CBTC 移动闭塞 · 卡斯柯 Urbalis 888 · GoA 2 · DC 750V 第三轨</div>
+    </div>
+  </div>
+
+  <!-- ============================== 暂停 ============================== -->
+  <div id="pause-modal" class="modal hidden">
+    <div class="modal-card small-modal">
+      <span class="modal-kicker">SIMULATION PAUSED</span>
+      <h2>值乘暂停</h2>
+      <p>时间、列车与 ATP 监控已暂停。</p>
+      <div class="pause-actions">
+        <button id="resumeBtn" class="start-btn compact">继续值乘</button>
+        <button id="pauseFinishBtn" class="ghost-btn">结束并查看评分</button>
+        <button id="pauseMenuBtn" class="ghost-btn">返回任务选择</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================== 评分 ============================== -->
+  <div id="score-modal" class="modal hidden">
+    <div class="modal-card score-modal-card">
+      <div class="score-hero">
+        <div class="score-grade" id="reportGrade">S</div>
+        <div>
+          <span class="modal-kicker">RUN COMPLETE</span>
+          <h2 id="reportTitle">值乘结束</h2>
+          <p id="reportReason">到达终点站 环球度假区</p>
+        </div>
+        <div class="score-total"><strong id="reportTotal">100</strong><span>/ 100</span></div>
+      </div>
+      <div class="report-grid">
+        <div class="report-bars">
+          <div><span>停车精度</span><i><b id="reportParkingBar"></b></i><em id="reportParking">100</em></div>
+          <div><span>安全运行</span><i><b id="reportSafetyBar"></b></i><em id="reportSafety">100</em></div>
+          <div><span>准点率</span><i><b id="reportPunctualBar"></b></i><em id="reportPunctual">100</em></div>
+          <div><span>操作规范</span><i><b id="reportOperationBar"></b></i><em id="reportOperation">100</em></div>
+        </div>
+        <div class="report-stats">
+          <div><span>已停站</span><strong id="reportStops">0</strong></div>
+          <div><span>平均停车误差</span><strong id="reportError">—</strong></div>
+          <div><span>EB 次数</span><strong id="reportEb">0</strong></div>
+          <div><span>超速时间</span><strong id="reportOverspeed">0s</strong></div>
+          <div><span>平均发车偏差</span><strong id="reportDelay">0s</strong></div>
+          <div><span>最高速度</span><strong id="reportMaxSpeed">0 km/h</strong></div>
+        </div>
+      </div>
+      <div class="report-stop-list" id="reportStopList"></div>
+      <div class="report-actions">
+        <button id="reportRestartBtn" class="start-btn compact">再次值乘</button>
+        <button id="reportMenuBtn" class="ghost-btn">返回任务选择</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="loading-overlay" class="hidden">
+    <div class="loader-ring"></div>
+    <strong>正在构建 54.47 km 贯通线路</strong>
+    <span>生成隧道、高架、35 座车站与 CBTC 数据…</span>
+  </div>
+
+  <div id="fatal-overlay" class="hidden">
+    <div>
+      <strong>场景加载失败</strong>
+      <p id="fatalMessage"></p>
+      <button onclick="location.reload()">重新加载</button>
+    </div>
+  </div>
+
+  <script src="vendor/three.min.js"></script>
+  <script src="vendor/GLTFLoader.js"></script>
+  <script src="js/core.js"></script>
+  <script src="js/world.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

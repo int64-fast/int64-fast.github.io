@@ -1,0 +1,10 @@
+{
+  "name": "beijing-line1-dkz4-simulator",
+  "version": "0.0.1",
+  "private": true,
+  "description": "北京地铁1号线/八通线贯通运营 DKZ4 纯前端 3D 驾驶模拟器（Release 0.0.1）",
+  "scripts": {
+    "test": "node tests/core.test.js && node tests/model.test.js && node tests/release.test.js && node tests/world.smoke.test.js && node tests/app.smoke.test.js",
+    "glb": "node tools/gltf-to-glb.js dkz4_0.gltf dkz4.glb"
+  }
+}
